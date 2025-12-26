@@ -491,11 +491,6 @@ ${mystery.description}
 
     eventContainer.innerHTML = `
       <div style="text-align: center; padding: 2rem;">
-        <div id="regionItems" style="font-size: 3rem; margin-bottom: 1rem; display: flex; justify-content: center; gap: 2rem;">
-          <span id="regionItem1">${selectedSet[0]}</span>
-          <span id="regionItem2">${selectedSet[1]}</span>
-          <span id="regionItem3">${selectedSet[2]}</span>
-        </div>
         <div class="travel-animation" style="font-size: 6rem;">
           <div class="travel-bus"><pre style="display: inline-block; font-size: 6rem; line-height: 1; margin: 0;">${vehicleIcon}</pre></div>
         </div>
