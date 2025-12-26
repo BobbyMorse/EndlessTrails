@@ -118,7 +118,8 @@
     "totalDistance": 3100,
     "vehicle": {
       "name": "VW Bus",
-      "icon": "🚐"
+      "icon": "🌸🚐🌺",
+      "singleIcon": "🚐"
     },
     "phases": [
       {
