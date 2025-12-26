@@ -1142,6 +1142,7 @@ ${mystery.description}
 
     // Save high score
     const playerName = document.getElementById('playerName')?.value || 'Anonymous';
+    console.log('Saving high score:', { theme: this.theme.name, playerName, finalScore });
     const scoreResult = await highScoreManager.addScore(
       this.theme.name,
       playerName,
@@ -1153,6 +1154,7 @@ ${mystery.description}
         survived: stillCommitted
       }
     );
+    console.log('High score result:', scoreResult);
 
     // Generate epilogue
     const epilogue = this.generateEpilogue(stillCommitted, state);
@@ -1278,6 +1280,7 @@ ${mystery.description}
     const playerName = document.getElementById('playerName')?.value || 'Anonymous';
     const stillCommitted = state.party.filter(m => !m.abandoned).length;
 
+    console.log('Saving high score (game over):', { theme: this.theme.name, playerName, finalScore });
     const scoreResult = await highScoreManager.addScore(
       this.theme.name,
       playerName,
@@ -1290,6 +1293,7 @@ ${mystery.description}
         failed: true
       }
     );
+    console.log('High score result (game over):', scoreResult);
 
     let scoreDisplay = `
       <div style="margin: 1.5rem 0; padding: 1rem; background: rgba(255, 107, 107, 0.1); border: 1px solid #ff6b6b; border-radius: 8px;">
