@@ -136,6 +136,9 @@
       box-shadow: 4px 4px 0 #000;
       text-transform: uppercase;
       letter-spacing: 2px;
+      word-wrap: break-word;
+      white-space: normal;
+      line-height: 1.2;
     }
 
     button:hover {
@@ -564,11 +567,13 @@
       }
 
       button {
-        padding: 1.2rem 1.5rem;
-        font-size: 1.3rem;
+        padding: 1rem 0.8rem;
+        font-size: 1.2rem;
         /* Larger tap targets for mobile */
         min-height: 50px;
         touch-action: manipulation;
+        letter-spacing: 1px;
+        word-break: break-word;
       }
 
       .button-group {
