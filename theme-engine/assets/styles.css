@@ -489,9 +489,9 @@
         display: block;
       }
 
-      /* Condensed stats bar for mobile - single row */
+      /* Condensed stats bar for mobile - two rows of 3 */
       .stats-bar {
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 0.3rem;
         padding: 0.4rem;
         margin-bottom: 0.5rem;
@@ -505,6 +505,9 @@
       .stat-label {
         font-size: 0.7rem;
         margin-bottom: 0.1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .stat-value {
@@ -677,8 +680,19 @@
         font-size: 1rem;
       }
 
+      /* Keep 3-column grid for stats on small screens */
       .stats-bar {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.2rem;
+        padding: 0.3rem;
+      }
+
+      .stat-label {
+        font-size: 0.65rem;
+      }
+
+      .stat-value {
+        font-size: 0.95rem;
       }
 
       button {
