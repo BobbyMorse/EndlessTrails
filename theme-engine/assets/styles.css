@@ -139,6 +139,8 @@
       word-wrap: break-word;
       white-space: normal;
       line-height: 1.2;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     button:hover {
