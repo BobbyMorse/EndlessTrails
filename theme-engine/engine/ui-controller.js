@@ -1333,7 +1333,7 @@ ${mystery.description}
           <span id="mc-cities">Cities: 6</span> |
           <span id="mc-ammo">Ammo: 30</span>
         </div>
-        <canvas id="missileCommandCanvas" width="800" height="600" style="border: 2px solid #00ff00; display: block; margin: 0 auto; background: #000; max-width: 100%; height: auto; touch-action: none;"></canvas>
+        <canvas id="missileCommandCanvas" width="800" height="600" style="border: 2px solid #00ff00; display: block; margin: 0 auto; background: #000; width: 100%; max-width: 800px; touch-action: none;"></canvas>
         <p style="color: #ff6b6b; text-align: center; margin-top: 0.5rem; font-size: 0.9rem;">
           Click or tap to fire missiles! Defend the cities from alien attack!
         </p>
@@ -1403,8 +1403,11 @@ ${mystery.description}
       if (!game.running || game.ammo <= 0) return;
 
       const rect = canvas.getBoundingClientRect();
-      const targetX = clientX - rect.left;
-      const targetY = clientY - rect.top;
+      // Account for canvas scaling on mobile
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const targetX = (clientX - rect.left) * scaleX;
+      const targetY = (clientY - rect.top) * scaleY;
 
       // Fire player missile
       game.ammo--;
@@ -1435,7 +1438,12 @@ ${mystery.description}
         const touch = e.touches[0];
         fireMissile(touch.clientX, touch.clientY);
       }
-    });
+    }, { passive: false });
+
+    // Additional touch handler for better responsiveness
+    canvas.addEventListener('touchend', (e) => {
+      e.preventDefault();
+    }, { passive: false });
 
     // Game loop
     const gameLoop = () => {
