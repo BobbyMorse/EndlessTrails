@@ -11,7 +11,13 @@ class HighScoreManager {
     const SUPABASE_URL = 'https://pusahwnnzjmfpxzadlng.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB1c2Fod25uemptZnB4emFkbG5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUwNzg0ODAsImV4cCI6MjA1MDY1NDQ4MH0.oy7LRcICbC70kFWlXJ9Wii9B1D_WOeAIBNX0FaKjZI0';
 
-    this.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    if (!window.supabase) {
+      console.error('Supabase library not loaded!');
+      this.supabase = null;
+    } else {
+      this.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      console.log('Supabase client initialized successfully');
+    }
 
     // Generate session ID for analytics
     this.sessionId = this.generateSessionId();
@@ -88,6 +94,11 @@ class HighScoreManager {
    * Add a new score
    */
   async addScore(themeName, playerName, score, details = {}) {
+    if (!this.supabase) {
+      console.error('Cannot save score: Supabase not initialized');
+      return { madeTopTen: false, rank: -1 };
+    }
+
     if (!playerName || playerName.trim() === '') {
       playerName = 'Anonymous';
     }
