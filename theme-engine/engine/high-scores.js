@@ -7,21 +7,24 @@
 
 class HighScoreManager {
   constructor() {
-    // Initialize Supabase client
-    const SUPABASE_URL = 'https://pusahwnnzjmfpxzadlng.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB1c2Fod25uemptZnB4emFkbG5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUwNzg0ODAsImV4cCI6MjA1MDY1NDQ4MH0.oy7LRcICbC70kFWlXJ9Wii9B1D_WOeAIBNX0FaKjZI0';
-
-    if (!window.supabase) {
-      console.error('Supabase library not loaded!');
-      this.supabase = null;
-    } else {
-      this.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      console.log('Supabase client initialized successfully');
-    }
+    // Store config for lazy initialization
+    this.SUPABASE_URL = 'https://pusahwnnzjmfpxzadlng.supabase.co';
+    this.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB1c2Fod25uemptZnB4emFkbG5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUwNzg0ODAsImV4cCI6MjA1MDY1NDQ4MH0.oy7LRcICbC70kFWlXJ9Wii9B1D_WOeAIBNX0FaKjZI0';
+    this.supabase = null;
 
     // Generate session ID for analytics
     this.sessionId = this.generateSessionId();
     this.sessionStarted = false;
+  }
+
+  // Initialize Supabase client on first use
+  initSupabase() {
+    if (this.supabase) return this.supabase;
+
+    if (typeof window !== 'undefined' && window.supabase && window.supabase.createClient) {
+      this.supabase = window.supabase.createClient(this.SUPABASE_URL, this.SUPABASE_ANON_KEY);
+    }
+    return this.supabase;
   }
 
   /**
@@ -68,10 +71,13 @@ class HighScoreManager {
   async trackSessionStart(themeName) {
     if (this.sessionStarted) return; // Prevent duplicate tracking
 
+    const supabase = this.initSupabase();
+    if (!supabase) return;
+
     try {
       const fingerprint = this.generateFingerprint();
 
-      const { error } = await this.supabase
+      const { error } = await supabase
         .from('game_sessions')
         .insert({
           session_id: this.sessionId,
@@ -94,7 +100,8 @@ class HighScoreManager {
    * Add a new score
    */
   async addScore(themeName, playerName, score, details = {}) {
-    if (!this.supabase) {
+    const supabase = this.initSupabase();
+    if (!supabase) {
       console.error('Cannot save score: Supabase not initialized');
       return { madeTopTen: false, rank: -1 };
     }
@@ -105,7 +112,7 @@ class HighScoreManager {
 
     try {
       // Save to Supabase
-      const { data, error } = await this.supabase
+      const { data, error } = await supabase
         .from('high_scores')
         .insert({
           theme_name: themeName,
@@ -125,7 +132,7 @@ class HighScoreManager {
       }
 
       // Update session with completion
-      await this.supabase
+      await supabase
         .from('game_sessions')
         .update({
           completed_at: new Date().toISOString(),
@@ -136,7 +143,7 @@ class HighScoreManager {
         .eq('session_id', this.sessionId);
 
       // Get rank (check position in top 10)
-      const { data: rankings, error: rankError } = await this.supabase
+      const { data: rankings, error: rankError } = await supabase
         .from('high_scores')
         .select('score')
         .eq('theme_name', themeName)
@@ -164,8 +171,11 @@ class HighScoreManager {
    * Get high scores for a specific theme
    */
   async getScoresForTheme(themeName) {
+    const supabase = this.initSupabase();
+    if (!supabase) return [];
+
     try {
-      const { data, error } = await this.supabase
+      const { data, error } = await supabase
         .from('high_scores')
         .select('*')
         .eq('theme_name', themeName)
