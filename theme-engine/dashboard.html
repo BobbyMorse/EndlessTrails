@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Endless Trails - Analytics Dashboard</title>
+  <script defer src="/_vercel/insights/script.js"></script>
   <style>
     * {
       margin: 0;
@@ -292,11 +293,21 @@
       container.innerHTML = '<div class="loading">Loading analytics data...</div>';
 
       try {
-        // Fetch all analytics data
+        console.log('Fetching analytics...');
         const analytics = await getAnalytics();
+        console.log('Analytics:', analytics);
+
+        console.log('Fetching top scores...');
         const topScores = await getTopScores();
+        console.log('Top scores:', topScores);
+
+        console.log('Fetching recent sessions...');
         const recentSessions = await getRecentSessions();
+        console.log('Recent sessions:', recentSessions);
+
+        console.log('Fetching theme stats...');
         const themeStats = await getThemeStats();
+        console.log('Theme stats:', themeStats);
 
         // Render dashboard
         container.innerHTML = `
@@ -374,32 +385,52 @@
 
     async function getAnalytics() {
       // Total games
-      const { count: totalGames } = await supabase
+      const { count: totalGames, error: error1 } = await supabase
         .from('game_sessions')
         .select('*', { count: 'exact', head: true });
 
+      if (error1) {
+        console.error('Error fetching total games:', error1);
+        throw new Error(`Failed to fetch total games: ${error1.message}`);
+      }
+
       // Completed games
-      const { count: completedGames } = await supabase
+      const { count: completedGames, error: error2 } = await supabase
         .from('game_sessions')
         .select('*', { count: 'exact', head: true })
         .not('completed_at', 'is', null);
 
+      if (error2) {
+        console.error('Error fetching completed games:', error2);
+        throw new Error(`Failed to fetch completed games: ${error2.message}`);
+      }
+
       // Unique players by fingerprint
-      const { data: fingerprints } = await supabase
+      const { data: fingerprints, error: error3 } = await supabase
         .from('game_sessions')
         .select('player_fingerprint')
         .not('player_fingerprint', 'is', null);
 
-      const uniquePlayers = new Set(fingerprints.map(p => p.player_fingerprint)).size;
+      if (error3) {
+        console.error('Error fetching fingerprints:', error3);
+        throw new Error(`Failed to fetch player data: ${error3.message}`);
+      }
+
+      const uniquePlayers = new Set((fingerprints || []).map(p => p.player_fingerprint)).size;
 
       // Games by theme
-      const { data: byTheme } = await supabase
+      const { data: byTheme, error: error4 } = await supabase
         .from('game_sessions')
         .select('theme_name')
         .not('completed_at', 'is', null);
 
+      if (error4) {
+        console.error('Error fetching games by theme:', error4);
+        throw new Error(`Failed to fetch theme data: ${error4.message}`);
+      }
+
       const gamesByTheme = {};
-      byTheme.forEach(g => {
+      (byTheme || []).forEach(g => {
         gamesByTheme[g.theme_name] = (gamesByTheme[g.theme_name] || 0) + 1;
       });
 
