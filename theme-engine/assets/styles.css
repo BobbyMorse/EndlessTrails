@@ -494,6 +494,7 @@
 
       /* Condensed stats bar for mobile - two rows of 3 */
       .stats-bar {
+        display: grid !important;
         grid-template-columns: repeat(3, 1fr);
         gap: 0.3rem;
         padding: 0.4rem;
@@ -515,15 +516,6 @@
 
       .stat-value {
         font-size: 1rem;
-      }
-
-      /* Start collapsed on mobile */
-      .stats-bar {
-        display: none;
-      }
-
-      .stats-bar.expanded {
-        display: grid;
       }
 
       #partyStatus h3 {
