@@ -1276,7 +1276,7 @@
             },
             "message": "Got footage of military harassment! This is solid evidence! They leave eventually. Your hands won't stop shaking...",
             "risk": 0.4,
-            "failMessage": "They land and confiscate ALL your evidence! Detained for hours!",
+            "failMessage": "They land and confiscate important evidence! Detained for hours!",
             "failEffects": {
               "food": -20,
               "currency": -20,
@@ -1304,7 +1304,7 @@
               "food": -20,
               "morale": -20
             },
-            "message": "They confiscate your evidence 'for national security.' You're free to go... for now."
+            "message": "They confiscate some evidence 'for national security.' You're free to go... for now."
           },
           {
             "text": "🪟 Escape out window!",
@@ -1315,7 +1315,7 @@
             },
             "message": "You flee! Lost your motel deposit but kept your evidence!",
             "risk": 0.3,
-            "failMessage": "They catch you climbing out! All evidence seized AND arrested!",
+            "failMessage": "They catch you climbing out! Important evidence seized AND arrested!",
             "failEffects": {
               "food": -20,
               "currency": -20,
