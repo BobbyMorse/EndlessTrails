@@ -492,30 +492,38 @@
         display: block;
       }
 
-      /* Condensed stats bar for mobile - two rows of 3 */
+      /* Condensed stats bar for mobile - show all 6 in 2 rows */
       .stats-bar {
-        display: grid !important;
         grid-template-columns: repeat(3, 1fr);
-        gap: 0.3rem;
-        padding: 0.4rem;
+        gap: 0.2rem;
+        padding: 0.3rem;
         margin-bottom: 0.5rem;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
       }
 
       .stat {
-        padding: 0.2rem;
+        padding: 0.1rem;
       }
 
       .stat-label {
-        font-size: 0.7rem;
-        margin-bottom: 0.1rem;
+        font-size: 0.65rem;
+        margin-bottom: 0.05rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
       .stat-value {
-        font-size: 1rem;
+        font-size: 0.9rem;
+      }
+
+      /* Start collapsed on mobile */
+      .stats-bar {
+        display: none;
+      }
+
+      .stats-bar.expanded {
+        display: grid;
       }
 
       #partyStatus h3 {
