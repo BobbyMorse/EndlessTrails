@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(dir:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nAdd Vercel Analytics to dashboard and main page\n\n- Added Vercel Analytics script to theme-engine/index.html\n- Added Vercel Analytics script to theme-engine/dashboard.html\n- Added debug logging and better error handling to dashboard analytics queries\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(gh repo view:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
