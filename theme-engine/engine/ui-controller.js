@@ -1130,7 +1130,7 @@ ${mystery.description}
   /**
    * Show win screen
    */
-  showWinScreen() {
+  async showWinScreen() {
     this.hideAllScreens();
     document.getElementById('winScreen').classList.remove('hidden');
 
@@ -1142,7 +1142,7 @@ ${mystery.description}
 
     // Save high score
     const playerName = document.getElementById('playerName')?.value || 'Anonymous';
-    const scoreResult = highScoreManager.addScore(
+    const scoreResult = await highScoreManager.addScore(
       this.theme.name,
       playerName,
       finalScore,
@@ -1268,7 +1268,7 @@ ${mystery.description}
   /**
    * Show game over screen (failure)
    */
-  showGameOver(message) {
+  async showGameOver(message) {
     const eventContainer = document.getElementById('eventContainer');
     const buttonsContainer = document.getElementById('actionButtons');
 
@@ -1278,7 +1278,7 @@ ${mystery.description}
     const playerName = document.getElementById('playerName')?.value || 'Anonymous';
     const stillCommitted = state.party.filter(m => !m.abandoned).length;
 
-    const scoreResult = highScoreManager.addScore(
+    const scoreResult = await highScoreManager.addScore(
       this.theme.name,
       playerName,
       finalScore,
