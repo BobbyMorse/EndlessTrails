@@ -1,0 +1,1494 @@
+{
+  "name": "The Roswell Trail",
+  "version": "1.0.1",
+  "metadata": {
+    "author": "Theme Engine",
+    "description": "A conspiracy theorist's road trip from Roswell to Area 51",
+    "era": "1990s",
+    "difficulty": "medium",
+    "tags": ["sci-fi", "conspiracy", "adventure", "aliens", "truth-seeking"]
+  },
+  "ui": {
+    "title": "The Roswell Trail",
+    "subtitle": "The Truth Is Out There ✨",
+    "defaultPartyNames": ["Fox", "Scully", "Bob", "Art"],
+    "statusLabels": {
+      "normal": "🔍 Investigating",
+      "doubting": "🤔",
+      "abandoned": "🏃 Gave Up"
+    },
+    "eventIcons": {
+      "positive": "👽",
+      "negative": "🚨",
+      "neutral": "📡"
+    },
+    "abandonment": {
+      "title": "🏃 GAVE UP THE TRUTH 🏃",
+      "icon": "🤔",
+      "quote": "\"They couldn't handle the truth...\"",
+      "subtext": "Press F to pay respects 🕊️"
+    },
+    "colorScheme": {
+      "primary": "#10b981",
+      "secondary": "#fbbf24",
+      "accent": "#8b5cf6",
+      "danger": "#ef4444"
+    }
+  },
+  "resources": {
+    "fuel": {
+      "name": "Gas",
+      "icon": "⛽",
+      "startValue": 100,
+      "max": 100
+    },
+    "food": {
+      "name": "Evidence",
+      "icon": "📁",
+      "startValue": 0,
+      "max": 200
+    },
+    "morale": {
+      "name": "Belief",
+      "icon": "👽",
+      "startValue": 100,
+      "max": 100
+    },
+    "currency": {
+      "name": "Cash",
+      "icon": "💵",
+      "prefix": "$",
+      "startValue": 0
+    },
+    "specialItem": {
+      "name": "Paranoia",
+      "icon": "😰",
+      "startValue": 20,
+      "max": 100
+    }
+  },
+  "mystery": {
+    "enabled": true,
+    "title": "🚨 URGENT TRANSMISSION 🚨",
+    "description": "A whistleblower contacted you with coordinates to Area 51 and a cryptic message:\n\n'They're planning something BIG. Mass event in 28 days. Need 100+ evidence files to get inside and stop it. Time is running out.'\n\nYou have 28 days to gather evidence and reach Area 51 before it's too late!",
+    "timeLimit": 28,
+    "evidenceGoal": 100,
+    "bonusPointsPerDay": 50
+  },
+  "winCondition": {
+    "type": "resourceThreshold",
+    "resource": "food",
+    "threshold": 100,
+    "message": "You've gathered enough evidence! Time to infiltrate Area 51!"
+  },
+  "area51Endgame": {
+    "enabled": true,
+    "evidenceRequired": 100,
+    "sequences": [
+      {
+        "id": "gate_approach",
+        "text": "🚨 AREA 51 - RESTRICTED AIRSPACE 🚨\n\nYou approach the outer perimeter. Armed guards check your credentials...",
+        "choices": [
+          {
+            "text": "📁 Show your evidence dossier",
+            "requires": {
+              "food": 100
+            },
+            "success": true,
+            "next": "infiltration_success"
+          },
+          {
+            "text": "🏃 Try to sneak in",
+            "success": false,
+            "failMessage": "🚨 SECURITY BREACH! You're immediately detained and escorted away. Game over."
+          }
+        ]
+      },
+      {
+        "id": "infiltration_success",
+        "text": "✅ ACCESS GRANTED\n\nThe guards radio ahead. 'We have a researcher with Level 5 clearance.'\n\nThe gates slowly open. You're IN.\n\nInside the hangar, your jaw drops...",
+        "delay": 3000,
+        "next": "hangar_discovery"
+      },
+      {
+        "id": "hangar_discovery",
+        "text": "🛸 HANGAR 18 🛸\n\n          👽\n      ═══🛸═══\n     ✨  ✨  ✨\n    THEY'RE REAL\n      ALL OF IT\n\nFlying saucers. Alien artifacts. Technology beyond imagination.\n\nYou were RIGHT. The truth WAS out there.\n\nSuddenly—",
+        "delay": 4000,
+        "next": "alarm"
+      },
+      {
+        "id": "alarm",
+        "text": "🚨 ALERT! ALERT! ALERT! 🚨\n\nSirens blare. Red lights flash.\n\n📡 'INCOMING! MULTIPLE BOGIES ON RADAR!'\n\n'THEY'RE COMING! THE GREYS ARE ATTACKING!'\n\n'THIS IS IT! THE EVENT WE'VE BEEN PREPARING FOR!'\n\nGeneral: 'You! Researcher! We need every hand on deck! Man that console!'\n\nThe moment of truth has arrived...",
+        "delay": 3000,
+        "triggersMinigame": true,
+        "minigame": "missileCommand"
+      }
+    ]
+  },
+  "professions": [
+    {
+      "id": "researcher",
+      "displayName": "UFO Researcher",
+      "icon": "🔬",
+      "description": "Dedicated researcher with years of experience. Finds 10% more evidence and has stronger belief, but starts with less cash ($50).",
+      "startingCurrency": 50,
+      "modifiers": {
+        "moraleDrainByPhase": {
+          "early": 3,
+          "middle": 4,
+          "late": 5
+        },
+        "doubtThreshold": 75,
+        "antagonistTargetChance": 0,
+        "forageBonus": 0.1,
+        "forageMoraleChange": 5
+      }
+    },
+    {
+      "id": "blogger",
+      "displayName": "Truth Blogger",
+      "icon": "💻",
+      "description": "Balanced truth seeker documenting the journey. Most resilient to doubt and starts with moderate cash ($75). Normal difficulty.",
+      "startingCurrency": 75,
+      "modifiers": {
+        "moraleDrainByPhase": {
+          "early": 4,
+          "middle": 5,
+          "late": 6
+        },
+        "doubtThreshold": 70,
+        "antagonistTargetChance": 0,
+        "forageBonus": 0,
+        "forageMoraleChange": 0
+      }
+    },
+    {
+      "id": "believer",
+      "displayName": "Skeptic Turned Believer",
+      "icon": "👁️",
+      "description": "Former skeptic now seeking answers. Starts rich ($125) but finds 10% less evidence and struggles more with doubt. Hard mode.",
+      "startingCurrency": 125,
+      "modifiers": {
+        "moraleDrainByPhase": {
+          "early": 5,
+          "middle": 6,
+          "late": 7
+        },
+        "doubtThreshold": 65,
+        "antagonistTargetChance": 0,
+        "forageBonus": -0.1,
+        "forageMoraleChange": 10
+      }
+    }
+  ],
+  "journey": {
+    "startLocation": "Roswell, NM",
+    "endLocation": "Area 51, NV",
+    "totalDistance": 900,
+    "vehicle": {
+      "name": "Research RV",
+      "icon": "🚐",
+      "singleIcon": "🚐",
+      "description": "Modified RV equipped with satellite dishes, antennas, and detection equipment"
+    },
+    "phases": [
+      {
+        "name": "early",
+        "startMile": 0,
+        "endMile": 300
+      },
+      {
+        "name": "middle",
+        "startMile": 300,
+        "endMile": 600
+      },
+      {
+        "name": "late",
+        "startMile": 600,
+        "endMile": 900
+      }
+    ]
+  },
+  "locations": [
+    {
+      "name": "Roswell, NM",
+      "distance": 0,
+      "type": "start",
+      "isShop": true,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🛸 ROSWELL - WHERE IT ALL BEGAN",
+        "art": "       👽\n     🛸✨✨\n    ROSWELL\n   1947 CRASH\n  🏜️🏜️🏜️🏜️",
+        "description": "The site of the famous 1947 UFO incident. Your journey begins where the cover-up started.",
+        "moraleBoost": 20
+      }
+    },
+    {
+      "name": "Socorro, NM",
+      "distance": 120,
+      "isShop": true,
+      "hasLandmark": false
+    },
+    {
+      "name": "Pie Town, NM",
+      "distance": 250,
+      "isShop": true,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🥧 PIE TOWN RADIO OBSERVATORY",
+        "art": "      📡\n     /||\\\n    / || \\\n   🥧SIGNALS🥧\n  ════════════",
+        "description": "Strange signals have been detected from this observatory. Is someone... or something... trying to communicate?",
+        "moraleBoost": 10
+      }
+    },
+    {
+      "name": "Datil, NM",
+      "distance": 320,
+      "isShop": false,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "👁️ THE PLAINS OF SAN AGUSTIN",
+        "art": "    ✨  ✨  ✨\n   CATTLE\n  MUTILATIONS\n    REPORTED\n  🐄═══🐄═══🐄",
+        "description": "Unexplained cattle mutilations in this area. Classic hallmark of extraterrestrial activity.",
+        "moraleBoost": 15
+      }
+    },
+    {
+      "name": "Springerville, AZ",
+      "distance": 450,
+      "isShop": true,
+      "type": "checkpoint",
+      "hasLandmark": false
+    },
+    {
+      "name": "Sedona, AZ",
+      "distance": 600,
+      "isShop": true,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🔮 SEDONA VORTEX",
+        "art": "    ∞  ∞  ∞\n   ENERGY\n   VORTEX\n  🏔️🌀🏔️\n  ═════════",
+        "description": "The energy vortexes of Sedona. Many claim increased psychic abilities and UFO sightings here.",
+        "moraleBoost": 25
+      }
+    },
+    {
+      "name": "Kingman, AZ",
+      "distance": 750,
+      "isShop": true,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🛸 KINGMAN UFO CRASH SITE",
+        "art": "     💥\n    🛸💨\n  1953 CRASH\n   COVERED UP\n  🏜️═══🏜️",
+        "description": "Site of the alleged 1953 UFO crash. Witnesses claim they saw alien bodies retrieved by the military.",
+        "moraleBoost": 20
+      }
+    },
+    {
+      "name": "Extraterrestrial Highway",
+      "distance": 850,
+      "isShop": false,
+      "type": "checkpoint",
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🛣️ EXTRATERRESTRIAL HIGHWAY 👽",
+        "art": "   ═══👽═══\n  HIGHWAY 375\n   UFO CAPITAL\n  🛸  🛸  🛸\n ═════════════",
+        "description": "Nevada State Route 375 - officially designated the Extraterrestrial Highway. You're in UFO country now.",
+        "moraleBoost": 15
+      }
+    },
+    {
+      "name": "Area 51, NV",
+      "distance": 900,
+      "type": "end",
+      "isShop": false,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🚨 AREA 51 - GROOM LAKE 🚨",
+        "art": "    🛸👽✨\n   ⚠️⚠️⚠️\n  USE OF DEADLY\n   FORCE AUTH.\n  🏜️═════🏜️",
+        "description": "The most classified military installation in the United States. What secrets lie beyond the fence?",
+        "moraleBoost": 0
+      }
+    }
+  ],
+  "events": {
+    "doubts": [
+      {
+        "name": "starting to feel crazy",
+        "description": "What if I'm just chasing shadows?",
+        "moraleDrain": 2,
+        "abandonReason": "decided they were wrong all along",
+        "trigger": "lowBelief"
+      },
+      {
+        "name": "afraid of being watched",
+        "description": "They're definitely monitoring us...",
+        "moraleDrain": 3,
+        "abandonReason": "got too paranoid and bailed",
+        "trigger": "highParanoia"
+      },
+      {
+        "name": "losing faith in the mission",
+        "description": "We're risking everything for what?",
+        "moraleDrain": 2,
+        "abandonReason": "lost faith in finding the truth",
+        "trigger": "lowBelief"
+      },
+      {
+        "name": "doubting the evidence",
+        "description": "Maybe it's all explainable...",
+        "moraleDrain": 2,
+        "abandonReason": "became a skeptic again",
+        "trigger": "lowBelief"
+      },
+      {
+        "name": "scared of consequences",
+        "description": "What if we actually find something?",
+        "moraleDrain": 3,
+        "abandonReason": "got cold feet",
+        "trigger": "highParanoia"
+      }
+    ],
+    "early": [
+      {
+        "text": "Roswell UFO Museum gift shop has incredible deals! Do you stock up?",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🛒 Buy equipment package",
+            "effects": {
+              "specialItem": -10,
+              "currency": -30,
+              "morale": 10
+            },
+            "message": "You stock up on UFO detection gear! Having proper equipment calms your nerves."
+          },
+          {
+            "text": "👀 Just browse",
+            "effects": {
+              "morale": 5
+            },
+            "message": "You look around without buying. Still inspiring to be at ground zero!"
+          }
+        ]
+      },
+      {
+        "text": "Local tells you about a crash site nobody talks about. Worth investigating?",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "📸 Investigate immediately",
+            "effects": {
+              "specialItem": 15,
+              "fuel": -10,
+              "morale": 15,
+              "food": 18
+            },
+            "message": "You find strange metal fragments! This could be evidence! But... what if someone sees you?"
+          },
+          {
+            "text": "🗺️ Mark it for later",
+            "effects": {
+              "morale": -5
+            },
+            "message": "You make a note and continue on. You'll come back... right?"
+          }
+        ]
+      },
+      {
+        "text": "A black SUV has been following you for miles. Government?",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "📱 Document everything",
+            "effects": {
+              "specialItem": 20,
+              "morale": -10,
+              "food": 12
+            },
+            "message": "You got photos of the tail! But now they DEFINITELY know you're onto them..."
+          },
+          {
+            "text": "🚗 Lose them on back roads",
+            "effects": {
+              "fuel": -15,
+              "morale": 5,
+              "specialItem": -15
+            },
+            "message": "You take random turns for an hour. Finally lost them! You can breathe again."
+          },
+          {
+            "text": "😰 Just keep driving normally",
+            "effects": {
+              "morale": -8,
+              "specialItem": 10
+            },
+            "message": "Act natural. Act natural. They eventually turn off. Your hands are still shaking..."
+          }
+        ]
+      },
+      {
+        "text": "You meet another truth seeker at a diner. They offer to trade evidence!",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "📁 Trade supplies for documents",
+            "effects": {
+              "fuel": -15,
+              "food": 20,
+              "specialItem": -15
+            },
+            "message": "These documents are INCREDIBLE! You traded some gas and equipment for solid intel. Nice to meet someone who understands."
+          },
+          {
+            "text": "🤝 Share info freely",
+            "effects": {
+              "morale": 15,
+              "specialItem": -10,
+              "food": 12
+            },
+            "message": "They appreciate your generosity and share some files! You're not in this alone!"
+          },
+          {
+            "text": "🚪 Keep to yourself",
+            "effects": {
+              "morale": -5
+            },
+            "message": "Trust no one. You politely decline and leave."
+          }
+        ]
+      },
+      {
+        "text": "Strange lights in the sky! They move in patterns no aircraft can!",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🎥 Film everything!",
+            "effects": {
+              "specialItem": 20,
+              "morale": 20,
+              "food": 20
+            },
+            "message": "Witnessing the impossible! You got it on camera! But... are they watching YOU?"
+          },
+          {
+            "text": "👁️ Just watch in awe",
+            "effects": {
+              "morale": 20,
+              "specialItem": 15,
+              "food": 10
+            },
+            "message": "You watch in stunned silence. Something extraordinary is happening... The truth is out there."
+          },
+          {
+            "text": "🚗 Get out of here fast",
+            "effects": {
+              "fuel": -10,
+              "morale": -10,
+              "specialItem": 20
+            },
+            "message": "You flee the area! What if they saw you? Your heart is pounding..."
+          }
+        ]
+      },
+      {
+        "text": "Gas station attendant: 'You're not the first to come through here...'",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "❓ Ask what happened to the others",
+            "effects": {
+              "morale": -10,
+              "specialItem": 15
+            },
+            "message": "'Most turn back. Some... we never see again.' Chilling. What have you gotten yourself into?"
+          },
+          {
+            "text": "📝 Take their advice",
+            "effects": {
+              "morale": 10
+            },
+            "message": "They mark safe routes on your map. Helpful!"
+          }
+        ]
+      },
+      {
+        "text": "You find an abandoned research facility. Fence is cut open...",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🔦 Explore thoroughly",
+            "effects": {
+              "specialItem": 5,
+              "food": 20,
+              "fuel": -10
+            },
+            "message": "You find classified documents! This is HUGE! Used equipment to scan and photograph everything! But... what if they know someone was here?"
+          },
+          {
+            "text": "📸 Quick photos only",
+            "effects": {
+              "specialItem": -5,
+              "food": 12
+            },
+            "message": "You snap some pics and get out. Smart. Good evidence collected!"
+          },
+          {
+            "text": "🚫 Too dangerous",
+            "effects": {
+              "morale": -8
+            },
+            "message": "You drive away. But you'll always wonder..."
+          }
+        ]
+      }
+    ],
+    "middle": [
+      {
+        "text": "Massive lights over the desert! Moving in impossible patterns!",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🎥 Film everything!",
+            "effects": {
+              "specialItem": 20,
+              "morale": 20,
+              "fuel": -15,
+              "food": 20
+            },
+            "message": "YOU GOT IT ON CAMERA! This is undeniable proof! But now you KNOW... they're real..."
+          },
+          {
+            "text": "👁️ Just watch in awe",
+            "effects": {
+              "morale": 20,
+              "specialItem": 20,
+              "food": 20
+            },
+            "message": "You witness something extraordinary. Changed forever. The implications are terrifying..."
+          },
+          {
+            "text": "🚗 Chase them!",
+            "effects": {
+              "fuel": -20,
+              "specialItem": 20,
+              "food": 20
+            },
+            "message": "You follow for miles! Got some footage before they vanished! What if they noticed you?!"
+          }
+        ]
+      },
+      {
+        "text": "Former base worker approaches: 'I can tell you what I saw...'",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "💰 Pay for information",
+            "effects": {
+              "currency": -20,
+              "food": 18,
+              "morale": 20
+            },
+            "message": "Their testimony is EXPLOSIVE! Worth every penny! Recording everything!"
+          },
+          {
+            "text": "🤔 Could be a trap",
+            "effects": {
+              "morale": -10
+            },
+            "message": "You decline. Can't be too careful..."
+          }
+        ]
+      },
+      {
+        "text": "Car breaks down in the desert. While waiting, you notice strange ground markings...",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "📸 Document everything",
+            "effects": {
+              "specialItem": 20,
+              "fuel": -20,
+              "food": 22
+            },
+            "message": "These patterns are NOT natural! Landing site? Your camera shutter won't stop clicking..."
+          },
+          {
+            "text": "🔧 Just fix the car",
+            "effects": {
+              "currency": -20
+            },
+            "message": "You call a tow truck and get moving again."
+          }
+        ]
+      },
+      {
+        "text": "You intercept military radio chatter. Coordinates to a... cargo transfer?",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🗺️ Follow coordinates",
+            "effects": {
+              "fuel": -20,
+              "specialItem": 20,
+              "morale": -15,
+              "food": 20
+            },
+            "message": "You witness unmarked trucks! Got photos before they spotted you! DID THEY SEE YOU?!"
+          },
+          {
+            "text": "📻 Just record it",
+            "effects": {
+              "specialItem": 10,
+              "food": 15
+            },
+            "message": "The audio alone is valuable evidence! Encrypted coordinates, call signs, everything! But... can they trace radio intercepts?"
+          },
+          {
+            "text": "😰 Too risky",
+            "effects": {
+              "morale": -10
+            },
+            "message": "You delete the recording. Safer that way..."
+          }
+        ]
+      },
+      {
+        "text": "Sheriff pulls you over: 'Turn back while you still can, son.'",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "😎 Play it cool",
+            "effects": {
+              "morale": -5
+            },
+            "message": "'Just sightseeing, officer.' They let you go with a warning."
+          },
+          {
+            "text": "❓ Ask what they know",
+            "effects": {
+              "morale": -15,
+              "specialItem": 25,
+              "food": 8
+            },
+            "message": "Their nervous response tells you EVERYTHING. But now they know WHO you are..."
+          },
+          {
+            "text": "🏖️ Pretend tourist",
+            "effects": {
+              "specialItem": -10
+            },
+            "message": "'Headed to Vegas!' They buy it. You relax a bit knowing your cover is solid."
+          }
+        ]
+      },
+      {
+        "text": "Crashed military drone in the desert! SD card still intact!",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "💾 Take drone AND footage",
+            "effects": {
+              "specialItem": 20,
+              "morale": 20,
+              "currency": -20,
+              "food": 20
+            },
+            "message": "JACKPOT! This is MAJOR evidence! But... stealing military property? What have you done?!",
+            "risk": 0.3,
+            "failMessage": "You take the drone but cops show up! You drop it and run!",
+            "failEffects": {
+              "currency": -20,
+              "morale": -10,
+              "specialItem": 20
+            }
+          },
+          {
+            "text": "📋 Copy footage only",
+            "effects": {
+              "specialItem": 20,
+              "morale": 10,
+              "food": 20
+            },
+            "message": "Smart! You got the data without the legal risk! Still... they'll know someone accessed it."
+          },
+          {
+            "text": "🏃 Leave it alone",
+            "effects": {
+              "morale": -15
+            },
+            "message": "Too risky. You walk away, but doubt creeps in..."
+          }
+        ]
+      },
+      {
+        "text": "Your phone is acting weird. Apps opening randomly. Surveillance?",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "📱 Get burner phone",
+            "effects": {
+              "currency": -40,
+              "morale": 10,
+              "specialItem": -20
+            },
+            "message": "Can't track what doesn't exist! Smart move! You feel safer already."
+          },
+          {
+            "text": "🔄 Factory reset",
+            "effects": {
+              "specialItem": -10,
+              "morale": 5
+            },
+            "message": "Lost some data but phone works normally now. But... what if they already got what they needed?"
+          },
+          {
+            "text": "🤷 Let them watch",
+            "effects": {
+              "morale": -10,
+              "specialItem": 20
+            },
+            "message": "Nothing to hide anyway, right? Every notification makes you jump now."
+          }
+        ]
+      },
+      {
+        "text": "Same car has been behind you for 50 miles. Different driver each time you check...",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🚗 Evasive driving",
+            "effects": {
+              "fuel": -20,
+              "specialItem": -15,
+              "morale": 5
+            },
+            "message": "You lose them with sudden turns! Heart pounding but you're clear!"
+          },
+          {
+            "text": "📸 Document the tail",
+            "effects": {
+              "specialItem": 20,
+              "food": 10,
+              "morale": -15
+            },
+            "message": "Got photos of the license plate! But they DEFINITELY know you noticed..."
+          },
+          {
+            "text": "😰 Pretend not to notice",
+            "effects": {
+              "specialItem": 20,
+              "morale": -20
+            },
+            "message": "You keep driving normally. Hands white-knuckling the steering wheel..."
+          }
+        ]
+      },
+      {
+        "text": "Pulled over by unmarked car. The 'officer' has no badge visible...",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "📹 Record everything",
+            "effects": {
+              "specialItem": 20,
+              "morale": -20,
+              "food": 15
+            },
+            "message": "You film the whole encounter! They let you go but... that wasn't normal.",
+            "risk": 0.4,
+            "failMessage": "They confiscate your phone! All recent footage gone!",
+            "failEffects": {
+              "food": -20,
+              "specialItem": 20,
+              "morale": -20
+            }
+          },
+          {
+            "text": "🤐 Say nothing",
+            "effects": {
+              "specialItem": 20,
+              "morale": -15
+            },
+            "message": "You answer minimally. They circle your RV... taking notes... then let you go."
+          },
+          {
+            "text": "🏃 Drive off quickly",
+            "effects": {
+              "fuel": -20,
+              "specialItem": 20,
+              "morale": -20,
+              "currency": -20
+            },
+            "message": "You floor it! Now you're fleeing from... who exactly?! Was that legal?!"
+          }
+        ]
+      },
+      {
+        "text": "You notice the same person in three different towns. Always watching...",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "📸 Confront them",
+            "effects": {
+              "specialItem": 20,
+              "morale": -20
+            },
+            "message": "They vanish when you approach! Who ARE these people?!",
+            "risk": 0.3,
+            "failMessage": "They confront YOU! 'Stop digging or else.' Then disappear into crowd...",
+            "failEffects": {
+              "specialItem": 20,
+              "morale": -20
+            }
+          },
+          {
+            "text": "🚗 Change route immediately",
+            "effects": {
+              "fuel": -20,
+              "specialItem": -10
+            },
+            "message": "You take back roads. Adds time but... you lost them."
+          },
+          {
+            "text": "📝 Document their pattern",
+            "effects": {
+              "specialItem": 20,
+              "food": 12,
+              "morale": -10
+            },
+            "message": "Sketches, times, locations... you're building a case. But they're DEFINITELY tracking you."
+          }
+        ]
+      },
+      {
+        "text": "Hotel TV turns on by itself. Security camera feed. YOUR room number visible...",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🏃 Leave immediately",
+            "effects": {
+              "fuel": -15,
+              "specialItem": 20,
+              "currency": -20,
+              "morale": -20
+            },
+            "message": "You grab your stuff and RUN! Drive all night! Forfeited the deposit!"
+          },
+          {
+            "text": "📱 Call police",
+            "effects": {
+              "specialItem": -15,
+              "morale": -5
+            },
+            "message": "They find nothing. 'Electrical malfunction.' But you sleep with one eye open...",
+            "risk": 0.3,
+            "failMessage": "The cops take a report... but you notice them radioing someone. They're IN ON IT!",
+            "failEffects": {
+              "specialItem": 20,
+              "morale": -20
+            }
+          },
+          {
+            "text": "🛏️ Sleep in RV",
+            "effects": {
+              "specialItem": -20,
+              "morale": 5
+            },
+            "message": "You move to your RV in the parking lot. Safer. More mobile."
+          }
+        ]
+      },
+      {
+        "text": "Your credit card gets declined. Bank says 'government hold on account...'",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "💵 Switch to cash only",
+            "effects": {
+              "specialItem": -15,
+              "morale": 10
+            },
+            "message": "Can't track cash! You feel safer knowing they can't monitor your spending anymore."
+          },
+          {
+            "text": "☎️ Demand answers",
+            "effects": {
+              "specialItem": 20,
+              "morale": -20,
+              "currency": -20
+            },
+            "message": "'Computer error.' Sure it was. After an hour they 'fix' it."
+          },
+          {
+            "text": "😰 Use backup card",
+            "effects": {
+              "specialItem": 20,
+              "morale": -20
+            },
+            "message": "Works for now... but how long until they freeze that one too?"
+          }
+        ]
+      },
+      {
+        "text": "Drone hovering outside your motel window at 3 AM...",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "📸 Film it",
+            "effects": {
+              "specialItem": 20,
+              "food": 20,
+              "morale": -15
+            },
+            "message": "Got footage! Evidence of harassment! It flies off when you point your camera..."
+          },
+          {
+            "text": "🪨 Knock it down",
+            "effects": {
+              "specialItem": 20,
+              "morale": -20,
+              "currency": -20,
+              "food": 20
+            },
+            "message": "You throw something at it! It crashes! You grab the SD card and memory! But... destruction of property? They might press charges!"
+          },
+          {
+            "text": "🙈 Close curtains",
+            "effects": {
+              "specialItem": 20,
+              "morale": -20
+            },
+            "message": "You hide inside. The buzzing continues for hours... watching... waiting..."
+          }
+        ]
+      }
+    ],
+    "late": [
+      {
+        "text": "3 AM. Camping near the perimeter. MASSIVE lights appear over the base!",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🎬 Film everything!",
+            "effects": {
+              "food": 20,
+              "morale": -20,
+              "fuel": -15,
+              "specialItem": 20
+            },
+            "message": "THE MONEY SHOT! Incredible evidence! But security is responding... ARE THEY COMING FOR YOU?!"
+          },
+          {
+            "text": "👁️ Watch and memorize",
+            "effects": {
+              "morale": 20,
+              "food": 5,
+              "specialItem": 15
+            },
+            "message": "Some things cameras can't capture. You'll never forget this. Mental notes aren't as strong as hard evidence, but the memory is burned into your mind..."
+          },
+          {
+            "text": "🙈 Hide in car",
+            "effects": {
+              "morale": -20
+            },
+            "message": "You're paralyzed with fear. The lights eventually fade."
+          }
+        ]
+      },
+      {
+        "text": "Men in suits at your motel. NDA and a briefcase of cash...",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "💰 Take the money (END)",
+            "effects": {
+              "currency": 20,
+              "food": -20,
+              "morale": -20
+            },
+            "message": "You signed. Game over. They take all your evidence. The truth dies with your signature.",
+            "endsGame": true
+          },
+          {
+            "text": "🚫 Tell them to leave",
+            "effects": {
+              "morale": 20
+            },
+            "message": "'I'm not for sale.' They leave. For now."
+          },
+          {
+            "text": "📱 Record the conversation",
+            "effects": {
+              "food": 20,
+              "morale": 15,
+              "currency": -20
+            },
+            "message": "Got it all on tape! This is incredible evidence! But... they definitely noticed. Lawyer fees incoming.",
+            "risk": 0.4,
+            "failMessage": "They caught you recording! Evidence confiscated and threatened with legal action!",
+            "failEffects": {
+              "food": -20,
+              "currency": -20,
+              "morale": -20
+            }
+          }
+        ]
+      },
+      {
+        "text": "Researcher shares coordinates to a hidden entrance. Too scared to use it...",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🚪 Investigate entrance",
+            "effects": {
+              "food": 20,
+              "morale": 20,
+              "fuel": -10,
+              "specialItem": 20
+            },
+            "message": "HOLY... You saw things. THINGS. You documented EVERYTHING! You can't unsee this. WHAT HAVE THEY BEEN DOING?!"
+          },
+          {
+            "text": "💻 Share with community",
+            "effects": {
+              "food": -10,
+              "morale": 15
+            },
+            "message": "You share the coordinates with the truth-seeking community! You lose exclusive access, but the collective will uncover more than you could alone!"
+          },
+          {
+            "text": "💵 Sell coordinates",
+            "effects": {
+              "currency": 20,
+              "morale": -20
+            },
+            "message": "Someone paid BIG. Your conscience... not so big."
+          }
+        ]
+      },
+      {
+        "text": "Convoy of unmarked trucks entering the base. Huge covered cargo!",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🚗 Follow them (RISKY)",
+            "effects": {
+              "fuel": -20,
+              "food": 20,
+              "morale": -20,
+              "specialItem": 20
+            },
+            "message": "You got close! TOO close! Got incredible footage! Security is responding! THEY SAW YOU!"
+          },
+          {
+            "text": "📸 Photos from distance",
+            "effects": {
+              "food": 20,
+              "morale": 10,
+              "specialItem": 15
+            },
+            "message": "Telephoto lens FTW! Great evidence, stayed safe! But... what were they transporting?"
+          },
+          {
+            "text": "😨 Turn back",
+            "effects": {
+              "morale": -20
+            },
+            "message": "Coward. But alive. The internal debate rages..."
+          }
+        ]
+      },
+      {
+        "text": "Your documentary is ready. Upload now or wait for more evidence?",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🌐 Upload EVERYTHING",
+            "effects": {
+              "morale": 20,
+              "food": -20
+            },
+            "message": "IT'S OUT THERE! Going viral! Evidence uploaded to the world! You did it!"
+          },
+          {
+            "text": "⏳ Wait for more",
+            "effects": {
+              "morale": -15
+            },
+            "message": "Need more evidence. Just a bit more..."
+          },
+          {
+            "text": "📺 Sell to media",
+            "effects": {
+              "currency": 20,
+              "food": -20,
+              "morale": 10
+            },
+            "message": "CNN paid well! Your evidence airs tomorrow!"
+          }
+        ]
+      },
+      {
+        "text": "Crash site! Debris unlike anything you've seen. Still warm to touch!",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🧪 Collect samples",
+            "effects": {
+              "food": 20,
+              "morale": 20,
+              "specialItem": -15
+            },
+            "message": "PHYSICAL EVIDENCE! You've got actual alien materials! This is HUGE! Used some equipment to collect samples."
+          },
+          {
+            "text": "📸 Document only",
+            "effects": {
+              "food": 20,
+              "morale": 20
+            },
+            "message": "Photos and measurements. Great evidence, safer than theft!"
+          },
+          {
+            "text": "📞 Anonymous tip",
+            "effects": {
+              "morale": -10
+            },
+            "message": "You call it in and leave. Someone else's problem now."
+          }
+        ]
+      },
+      {
+        "text": "BASE SECURITY SPOTTED YOU! Alarms! Searchlights! MOVE!",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🏃 RUN!",
+            "effects": {
+              "fuel": -20,
+              "morale": -20
+            },
+            "message": "FLOOR IT! You escape but barely! Heart pounding!"
+          },
+          {
+            "text": "🙋 Surrender",
+            "effects": {
+              "food": -20,
+              "currency": -20,
+              "morale": -20
+            },
+            "message": "Detained. Interrogated. Evidence confiscated. Released with warnings."
+          },
+          {
+            "text": "🌵 Hide and wait",
+            "effects": {
+              "fuel": -20,
+              "morale": -20
+            },
+            "message": "Hours in the desert. Finally safe. Traumatic."
+          }
+        ]
+      },
+      {
+        "text": "{{partyMember}} doubts: 'This is too intense. Maybe we should go home.'",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "📁 Show them evidence",
+            "effects": {
+              "morale": 20
+            },
+            "message": "'You're right. We're SO close!' {{partyMember}} is back in!"
+          },
+          {
+            "text": "🚪 Let them leave",
+            "effects": {
+              "morale": -15
+            },
+            "message": "{{partyMember}} catches a bus home. You continue alone..."
+          },
+          {
+            "text": "💪 Push forward",
+            "effects": {
+              "morale": -20
+            },
+            "message": "'We didn't come this far to quit!' Tension rises with {{partyMember}}..."
+          }
+        ]
+      },
+      {
+        "text": "ROADBLOCK! Federal agents checking vehicles. They look serious...",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🚗 Turn around quickly",
+            "effects": {
+              "fuel": -20,
+              "morale": -20
+            },
+            "message": "Suspicious U-turn but you get away! They radioed it in though..."
+          },
+          {
+            "text": "😎 Act normal",
+            "effects": {
+              "morale": -10
+            },
+            "message": "Just a tourist! They wave you through. Close call!",
+            "risk": 0.5,
+            "failMessage": "They search your vehicle! Found some of your files and equipment! They confiscate it!",
+            "failEffects": {
+              "food": -20,
+              "currency": -20,
+              "morale": -20
+            }
+          },
+          {
+            "text": "📦 Hide evidence first",
+            "effects": {
+              "food": -20,
+              "morale": 5
+            },
+            "message": "You dump your most incriminating evidence. Better safe than sorry!"
+          }
+        ]
+      },
+      {
+        "text": "Black helicopter circling your position. They KNOW you're here...",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🏃 Scatter and hide!",
+            "effects": {
+              "fuel": -20,
+              "morale": -20,
+              "food": -15
+            },
+            "message": "You drop some evidence files while running! But you escape!"
+          },
+          {
+            "text": "📸 Film the helicopter",
+            "effects": {
+              "food": 20,
+              "morale": -20,
+              "specialItem": 20
+            },
+            "message": "Got footage of military harassment! This is solid evidence! They leave eventually. Your hands won't stop shaking...",
+            "risk": 0.4,
+            "failMessage": "They land and confiscate ALL your evidence! Detained for hours!",
+            "failEffects": {
+              "food": -20,
+              "currency": -20,
+              "morale": -20,
+              "specialItem": 20
+            }
+          },
+          {
+            "text": "🌵 Dive into bushes",
+            "effects": {
+              "morale": -20,
+              "fuel": -10
+            },
+            "message": "Hours hiding in the desert. Finally they leave. Brutal."
+          }
+        ]
+      },
+      {
+        "text": "'FBI. We need to talk.' They're at your motel room door...",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🚪 Open door, cooperate",
+            "effects": {
+              "food": -20,
+              "morale": -20
+            },
+            "message": "They confiscate your evidence 'for national security.' You're free to go... for now."
+          },
+          {
+            "text": "🪟 Escape out window!",
+            "effects": {
+              "fuel": -20,
+              "currency": -20,
+              "morale": -20
+            },
+            "message": "You flee! Lost your motel deposit but kept your evidence!",
+            "risk": 0.3,
+            "failMessage": "They catch you climbing out! All evidence seized AND arrested!",
+            "failEffects": {
+              "food": -20,
+              "currency": -20,
+              "morale": -20
+            }
+          },
+          {
+            "text": "🤝 Negotiate",
+            "effects": {
+              "food": -20,
+              "morale": -20,
+              "currency": 20
+            },
+            "message": "You hand over copies, keep originals hidden. They're satisfied... for now."
+          }
+        ]
+      },
+      {
+        "text": "Military police at gas station. They're questioning everyone...",
+        "isChoice": true,
+        "choices": [
+          {
+            "text": "🚗 Leave immediately",
+            "effects": {
+              "fuel": -20,
+              "morale": -15
+            },
+            "message": "You drive off before they notice. Running on fumes though..."
+          },
+          {
+            "text": "😇 Answer questions",
+            "effects": {
+              "morale": -10
+            },
+            "message": "'Just passing through.' They seem to believe you.",
+            "risk": 0.4,
+            "failMessage": "They check your vehicle! Found some of your equipment and documents! They confiscate it!",
+            "failEffects": {
+              "food": -20,
+              "morale": -20,
+              "currency": -20
+            }
+          },
+          {
+            "text": "📱 Destroy evidence",
+            "effects": {
+              "food": -25,
+              "morale": -20
+            },
+            "message": "You wipe your camera cards and delete files. Safe but... was it worth it?"
+          }
+        ]
+      }
+    ]
+  },
+  "shop": {
+    "items": [
+      {
+        "id": "gas",
+        "name": "Gas",
+        "icon": "⛽",
+        "type": "fuel",
+        "amount": 30,
+        "cost": 25
+      },
+      {
+        "id": "files",
+        "name": "Classified Files",
+        "icon": "📄",
+        "type": "food",
+        "amount": 25,
+        "cost": 40
+      },
+      {
+        "id": "security",
+        "name": "Security Equipment Bundle",
+        "icon": "🔒",
+        "type": "specialItem",
+        "amount": -20,
+        "cost": 60,
+        "description": "Locks, cameras, alarms - feel safer"
+      },
+      {
+        "id": "podcast",
+        "name": "Conspiracy Podcast Marathon",
+        "icon": "🎧",
+        "type": "morale",
+        "amount": 20,
+        "cost": 15,
+        "description": "Listen to fellow truth seekers, restore your belief"
+      },
+      {
+        "id": "documentary",
+        "name": "UFO Documentary Marathon",
+        "icon": "📺",
+        "type": "morale",
+        "amount": 30,
+        "cost": 25,
+        "description": "Classic documentaries renew your conviction"
+      },
+      {
+        "id": "community",
+        "name": "Truth Seeker Meetup",
+        "icon": "👥",
+        "type": "morale",
+        "amount": 35,
+        "cost": 40,
+        "description": "Connect with like-minded believers, you're not alone"
+      },
+      {
+        "id": "ancient_aliens",
+        "name": "Ancient Aliens Binge",
+        "icon": "📡",
+        "type": "morale",
+        "amount": 25,
+        "cost": 20,
+        "description": "History Channel classics restore faith in the truth"
+      },
+      {
+        "id": "tinfoil",
+        "name": "Deluxe Tinfoil Hat",
+        "icon": "🎩",
+        "type": "specialItem",
+        "amount": -20,
+        "cost": 10,
+        "description": "Ironically makes you feel safer from mind reading"
+      },
+      {
+        "id": "vpn",
+        "name": "VPN & Encryption Package",
+        "icon": "🔐",
+        "type": "specialItem",
+        "amount": -25,
+        "cost": 45,
+        "description": "Digital security eases your mind about surveillance"
+      }
+    ]
+  },
+  "moneyMaking": {
+    "activities": [
+      {
+        "id": "sell_blog",
+        "name": "Sell Blog Ad Space",
+        "icon": "💻",
+        "description": "Low pay, reduces paranoia (1 day, earn $40-70, -10 paranoia)",
+        "earnings": { "min": 40, "max": 70 },
+        "effects": {
+          "specialItem": -10
+        },
+        "message": "💻 You spend the day writing blog posts and selling ad space to conspiracy sites!<br><br>Your readers love your content! You earned <strong style=\"color: #4ade80;\">$AMOUNT</strong>!<br><br>Sharing your thoughts with supportive readers calms your nerves.<br><br><span style=\"color: #fbbf24;\">+1 day</span> | <span style=\"color: #4ade80;\">+$AMOUNT Cash 💰</span> | <span style=\"color: #8b5cf6;\">-10 Paranoia 😰</span>"
+      },
+      {
+        "id": "freelance_research",
+        "name": "Freelance Research",
+        "icon": "🔍",
+        "description": "Good pay, gain evidence (1 day, earn $60-100, +15 evidence)",
+        "earnings": { "min": 60, "max": 100 },
+        "effects": {
+          "food": 15
+        },
+        "message": "🔍 You spend the day analyzing documents and doing deep research for other investigators!<br><br>They pay well for quality intel! You earned <strong style=\"color: #4ade80;\">$AMOUNT</strong>!<br><br>Plus you discovered some useful evidence in the process!<br><br><span style=\"color: #fbbf24;\">+1 day</span> | <span style=\"color: #4ade80;\">+$AMOUNT Cash 💰</span> | <span style=\"color: #4ade80;\">+15 Evidence 📁</span>"
+      },
+      {
+        "id": "sell_footage",
+        "name": "Sell Footage to News",
+        "icon": "📹",
+        "description": "Best pay, loses evidence (1 day, earn $80-150, -20 evidence)",
+        "earnings": { "min": 80, "max": 150 },
+        "effects": {
+          "food": -20
+        },
+        "message": "📹 You spend the day editing your best footage and pitching it to alternative news outlets!<br><br>They're hungry for content! You earned <strong style=\"color: #4ade80;\">$AMOUNT</strong>!<br><br>Unfortunately you had to hand over your best evidence files to seal the deal.<br><br><span style=\"color: #fbbf24;\">+1 day</span> | <span style=\"color: #4ade80;\">+$AMOUNT Cash 💰</span> | <span style=\"color: #ff6b6b;\">-20 Evidence 📁</span>"
+      }
+    ]
+  }
+}

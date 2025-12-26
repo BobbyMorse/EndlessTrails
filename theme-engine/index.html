@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Endless Trails - Theme Marketplace</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Theme Marketplace Screen -->
+    <div id="marketplaceScreen" class="screen">
+      <h1 id="engineTitle">Endless Trails</h1>
+      <div class="subtitle">Choose Your Adventure</div>
+
+      <div id="themeMarketplace" class="theme-marketplace">
+        <!-- Themes will be loaded here dynamically -->
+      </div>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="startScreen" class="screen hidden">
+      <h1 id="gameTitle">Loading...</h1>
+      <div class="subtitle" id="gameSubtitle">A Journey Awaits</div>
+
+      <div class="message-box">
+        <p id="themeDescription">Theme loading...</p>
+      </div>
+
+      <div class="name-inputs" style="margin: 20px 0;">
+        <label for="playerName" style="display: block; margin-bottom: 10px; font-size: 1.2rem;">Enter Your Name:</label>
+        <input type="text" id="playerName" placeholder="Your Name" maxlength="20" style="width: 100%; padding: 10px; font-size: 1rem;">
+      </div>
+
+      <button onclick="ui.showProfessionSelection()">Start Your Journey</button>
+      <button class="secondary" onclick="showMarketplace()">Change Theme</button>
+      <button class="secondary" onclick="showHighScores()">View High Scores</button>
+    </div>
+
+    <!-- Profession Selection -->
+    <div id="professionScreen" class="screen hidden">
+      <h2>Choose Your Role</h2>
+      <div class="message-box">
+        <p>Each role has different strengths and challenges.</p>
+      </div>
+      <div id="professionButtons" class="button-group"></div>
+    </div>
+
+    <!-- Name Your Party -->
+    <div id="namePartyScreen" class="screen hidden">
+      <h2>Name Your Party</h2>
+      <div class="message-box">
+        <p>Who's traveling with you?</p>
+        <div class="name-inputs">
+          <input type="text" id="name1" placeholder="Party Member 1" maxlength="15">
+          <input type="text" id="name2" placeholder="Party Member 2" maxlength="15">
+          <input type="text" id="name3" placeholder="Party Member 3" maxlength="15">
+          <input type="text" id="name4" placeholder="Party Member 4" maxlength="15">
+        </div>
+      </div>
+      <button onclick="ui.startGame()">Begin Journey!</button>
+    </div>
+
+    <!-- Main Game Screen -->
+    <div id="gameScreen" class="screen hidden">
+      <!-- Stats Toggle (Mobile) -->
+      <div class="stats-toggle" onclick="toggleStats()">
+        📊 <span id="statsToggleText">Show Stats</span>
+        (<span id="fuelIcon">⛽</span><span id="quickFuel">100</span>
+        <span id="foodIcon">🍞</span><span id="quickFood">100</span>
+        <span id="moraleIcon">✌️</span><span id="quickMorale">100</span>
+        <span id="currencyIcon">💰</span><span id="quickCurrency">500</span>)
+      </div>
+
+      <!-- Stats Bar -->
+      <div class="stats-bar" id="statsBar">
+        <div class="stat">
+          <div class="stat-label">Date</div>
+          <div class="stat-value good" id="dateValue">Mar 1</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label" id="fuelLabel">⛽ Fuel</div>
+          <div class="stat-value" id="fuelValue">100</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label" id="foodLabel">🍞 Food</div>
+          <div class="stat-value" id="foodValue">100</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label" id="moraleLabel">✌️ Vibes</div>
+          <div class="stat-value" id="moraleValue">100</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label" id="currencyLabel">💰 Cash</div>
+          <div class="stat-value" id="currencyValue">$500</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label" id="specialItemLabel">🌿 Herbs</div>
+          <div class="stat-value" id="specialItemValue">50</div>
+        </div>
+      </div>
+
+      <!-- Location Bar -->
+      <div class="location-bar">
+        <div class="current" id="currentLocation">Starting Location</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+          <div class="progress-text" id="progressText">0 / 3000 miles</div>
+        </div>
+        <div class="detail">
+          <span id="weatherInfo">☀️ Clear</span> •
+          <span id="paceInfo">Pace: Steady</span> •
+          <span id="rationInfo">Rations: Normal</span>
+        </div>
+      </div>
+
+      <!-- Event Container -->
+      <div id="eventContainer"></div>
+
+      <!-- Mini-Game Container -->
+      <div id="miniGameContainer"></div>
+
+      <!-- Party Status -->
+      <div id="partyStatus">
+        <h3>Your Party: <span id="partySummary"></span></h3>
+        <div id="partyMembers"></div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div id="actionButtons" class="button-group"></div>
+    </div>
+
+    <!-- Win Screen -->
+    <div id="winScreen" class="screen hidden">
+      <div class="message-box">
+        <h2 style="color: #4ade80; font-size: 3rem;">🎉 SUCCESS! 🎉</h2>
+        <p id="winMessage">You made it!</p>
+        <br>
+        <p id="winStats"></p>
+        <br>
+        <button onclick="location.reload()">Play Again</button>
+      </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameOverScreen" class="screen hidden">
+      <div class="message-box">
+        <h2 style="color: #ef4444; font-size: 3rem;">GAME OVER</h2>
+        <p id="gameOverMessage">Your journey has ended.</p>
+        <br>
+        <p id="finalStats"></p>
+        <br>
+        <button onclick="location.reload()">Try Again</button>
+      </div>
+    </div>
+
+    <!-- High Scores Screen -->
+    <div id="highScoresScreen" class="screen hidden">
+      <h1>High Scores</h1>
+      <div class="message-box">
+        <div id="highScoresList"></div>
+      </div>
+      <button onclick="showMarketplace()">Back to Themes</button>
+      <button class="secondary" onclick="clearHighScores()">Clear All Scores</button>
+    </div>
+  </div>
+
+      <!-- Embedded Themes (for file:// compatibility) -->
+  <script type="application/json" data-embedded-theme>
+{
+  "name": "The NorCal Trail",
+  "version": "1.0.0",
+  "metadata": {
+    "author": "Original NorCal Trail Game",
+    "description": "A psychedelic journey from Boston to San Francisco in a VW bus during the 1960s counterculture movement",
+    "era": "1960s",
+    "difficulty": "medium",
+    "tags": ["hippie", "road-trip", "counterculture", "1960s", "music-festival", "freedom"]
+  },
+  "resources": {
+    "fuel": {
+      "name": "Gas",
+      "icon": "⛽",
+      "startValue": 100,
+      "max": 100
+    },
+    "food": {
+      "name": "Food",
+      "icon": "🍎",
+      "startValue": 100,
+      "max": 100
+    },
+    "morale": {
+      "name": "Vibes",
+      "icon": "✌️",
+      "startValue": 100,
+      "max": 100
+    },
+    "currency": {
+      "name": "Cash",
+      "icon": "💰",
+      "prefix": "$",
+      "startValue": 0
+    },
+    "specialItem": {
+      "name": "Herbs",
+      "icon": "🌿",
+      "startValue": 100,
+      "max": 100
+    }
+  },
+  "professions": [
+    {
+      "id": "dealer",
+      "displayName": "Freelance Herbalist",
+      "icon": "🌿",
+      "description": "You've got connections and cash, but the cops are watching you, man.",
+      "startingCurrency": 700,
+      "modifiers": {
+        "moraleDrainByPhase": {
+          "early": 6,
+          "middle": 9,
+          "late": 12
+        },
+        "doubtThreshold": 45,
+        "antagonistTargetChance": 0.7,
+        "forageBonus": 0,
+        "forageMoraleChange": 0
+      }
+    },
+    {
+      "id": "dropout",
+      "displayName": "College Dropout",
+      "icon": "📚",
+      "description": "You left school to find yourself. More resourceful but haunted by doubt.",
+      "startingCurrency": 450,
+      "modifiers": {
+        "moraleDrainByPhase": {
+          "early": 7,
+          "middle": 10,
+          "late": 14
+        },
+        "doubtThreshold": 55,
+        "antagonistTargetChance": 0,
+        "forageBonus": 0.2,
+        "forageMoraleChange": -5
+      }
+    },
+    {
+      "id": "artist",
+      "displayName": "Starving Artist",
+      "icon": "🎨",
+      "description": "You see beauty everywhere but barely have two pennies to rub together.",
+      "startingCurrency": 250,
+      "modifiers": {
+        "moraleDrainByPhase": {
+          "early": 8,
+          "middle": 12,
+          "late": 16
+        },
+        "doubtThreshold": 50,
+        "antagonistTargetChance": 0,
+        "forageBonus": -0.2,
+        "forageMoraleChange": 10
+      }
+    }
+  ],
+  "journey": {
+    "startLocation": "Boston",
+    "endLocation": "San Francisco",
+    "totalDistance": 3100,
+    "vehicle": {
+      "name": "VW Bus",
+      "icon": "🚐"
+    },
+    "phases": [
+      {
+        "name": "early",
+        "startMile": 0,
+        "endMile": 1000
+      },
+      {
+        "name": "middle",
+        "startMile": 1000,
+        "endMile": 2200
+      },
+      {
+        "name": "late",
+        "startMile": 2200,
+        "endMile": 3100
+      }
+    ]
+  },
+  "locations": [
+    {
+      "name": "Boston",
+      "distance": 0,
+      "isShop": true,
+      "isTown": true,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🎓 BOSTON COMMON 🎓",
+        "art": "              🌳    🌳    🌳\n           BOSTON COMMON\n              THE STARTING\n                 POINT\n         🚐  ________________  ☮️\n            |  VW BUS READY |\n            |   LET'S GO!   |\n            |________________|\n                  ||  ||",
+        "description": "Your journey begins in Boston. The bus is packed, the vibes are high. Time to hit the road, man!",
+        "moraleBoost": 0
+      }
+    },
+    {
+      "name": "Woodstock Outskirts",
+      "distance": 150,
+      "isShop": false,
+      "isTown": false,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🎸 WOODSTOCK MEMORIES 🎸",
+        "art": "      ♫  ♪  ♫  ♪  ♫\n       WOODSTOCK\n      \"3 DAYS OF\n     PEACE & MUSIC\"\n    🎸  🎤  🥁  🎺\n         ☮️  ✌️\n    The vibes linger...",
+        "description": "Someone in the back claims they can still smell the porta-potties. Another guy swears he left his sandals here last year. You stop to look for them but find nothing.",
+        "moraleBoost": 0
+      }
+    },
+    {
+      "name": "New York City",
+      "distance": 250,
+      "isShop": true,
+      "isTown": true,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "☮ GREENWICH VILLAGE ☮",
+        "art": "                    🎨\n                 ___|||___\n                |  CAFE  |\n                | WHA?   |\n         🎸    |___________|    🎵\n              /|         |\\\n    ♪  ☮    / |  FOLK   | \\    ☮  ♫\n          /   | MUSIC   |   \\\n    🌻   |    |  CLUB   |    |   🌺\n         |    |_________|    |\n    ===========================\n         BLEECKER STREET",
+        "description": "The heart of the counterculture! Bob Dylan played here, Jack Kerouac wrote here. The revolution starts NOW!",
+        "moraleBoost": 25
+      }
+    },
+    {
+      "name": "Pittsburgh",
+      "distance": 500,
+      "isShop": true,
+      "isTown": true,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "✊ ANTI-WAR RALLY ✊",
+        "art": "         NO MORE WAR!\n         ___________\n        |  ☮ PEACE |\n        | NOT WAR! |\n        |__________|\n         //      \\\\\n        //        \\\\\n    👥 👥 👥 👥 👥 👥\n    MAKE LOVE NOT WAR\n         ☮  ✌️  ☮",
+        "description": "A massive peace demonstration fills the streets! People of all kinds are spreading the message: peace, not war! ✌️",
+        "moraleBoost": 25
+      }
+    },
+    {
+      "name": "Harmony Hollow Commune",
+      "distance": 500,
+      "isShop": false,
+      "isTown": false,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🌻 HARMONY HOLLOW 🌻",
+        "art": "      🌻  🌸  🌻\n       HARMONY\n       HOLLOW\n      __________\n     /  SHARE  \\\n    /  TOGETHER \\\n    \\___________/\n    👥  🎸  🥘  👥\n      ALL WELCOME",
+        "description": "A small commune nestled in the hills. Folks share everything - food, music, dreams. They invite you to stay forever. Maybe someday...",
+        "moraleBoost": 0
+      }
+    },
+    {
+      "name": "Columbus",
+      "distance": 650,
+      "isShop": true,
+      "isTown": true,
+      "hasLandmark": false
+    },
+    {
+      "name": "Rainbow Ridge Rest Stop",
+      "distance": 750,
+      "isShop": true,
+      "isTown": false,
+      "hasLandmark": false
+    },
+    {
+      "name": "Indianapolis Checkpoint",
+      "distance": 850,
+      "isShop": false,
+      "isTown": false,
+      "hasLandmark": true,
+      "specialType": "checkpoint",
+      "landmarkData": {
+        "title": "🚨 THE MAN'S CHECKPOINT 🚨",
+        "art": "              ___________\n             |  STOP!   |\n             |__________|\n                 ||\n    ⚠️          ||          ⚠️\n        ________________\n       |  ___    ___   |\n       | |👮|  |👮|  |\n       | |   |  |   |  |\n       |_|___|__|___|__|\n         CHECKPOINT",
+        "description": "State troopers are checking all vehicles. Keep cool, don't let them harsh your mellow...",
+        "moraleBoost": 0
+      }
+    },
+    {
+      "name": "Bloomington Free Town",
+      "distance": 1000,
+      "isShop": false,
+      "isTown": false,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🏘️ FREE TOWN 🏘️",
+        "art": "     BLOOMINGTON\n      FREE TOWN\n    ✊  NO RULES  ✊\n       JUST LOVE\n    🏠  🌳  🏠  🌳\n      ☮️  ✌️  ☮️\n    REVOLUTION NOW!",
+        "description": "An experimental free town run by students and dropouts. No hierarchy, just consensus. They're building a new world, one day at a time.",
+        "moraleBoost": 0
+      }
+    },
+    {
+      "name": "Highway 70 Gas Stop",
+      "distance": 1050,
+      "isShop": true,
+      "isTown": false,
+      "hasLandmark": false
+    },
+    {
+      "name": "St. Louis",
+      "distance": 1200,
+      "isShop": true,
+      "isTown": true,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🌈 THE GATEWAY ARCH 🌈",
+        "art": "              ✨\n            ⭐ ☮ ⭐\n          /         \\\n         /           \\\n        /     THE     \\\n       /    GATEWAY    \\\n      /       TO        \\\n     /      THE WEST     \\\n    /    ___________      \\\n   /    |           |      \\\n  ☮    |  GROOVY!  |       ✌️\n       |___________|",
+        "description": "Far out! This giant metal rainbow points the way west. California dreamin' is almost real!",
+        "moraleBoost": 0
+      }
+    },
+    {
+      "name": "Ozark Mountain Retreat",
+      "distance": 1350,
+      "isShop": false,
+      "isTown": false,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🏔️ OZARK HIDEAWAY 🏔️",
+        "art": "        🏔️  ⛰️\n     OZARK MOUNTAIN\n       RETREAT\n      ___________\n     /  🌲🌲🌲  \\\n    /   NATURE   \\\n    \\  & PEACE  /\n     \\_________/\n       🦌  🐿️",
+        "description": "Hidden mountain retreat where folks escape the rat race. Simple living, high thinking. The forest whispers ancient wisdom.",
+        "moraleBoost": 0
+      }
+    },
+    {
+      "name": "Kansas City",
+      "distance": 1550,
+      "isShop": true,
+      "isTown": true,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🌻 THE GRASSROOTS GATHERING 🌻",
+        "art": "       ☮  FREE LOVE  ☮\n      _______________\n     |   COMMUNE   |\n     |   WELCOME   |\n     |______________|\n      🌻  🌸  🌺  🌼\n     /              \\\n    /  SHARE FOOD  \\\n   /   SHARE LOVE   \\\n  🚐  ⛺  🔥  ⛺  🚐\n    PEACE & FREEDOM",
+        "description": "A sprawling commune in the heartland! Folks sharing gardens, making music, living FREE! This is what the revolution looks like, man!",
+        "moraleBoost": 100
+      }
+    },
+    {
+      "name": "Prairie Wind Collective",
+      "distance": 1700,
+      "isShop": false,
+      "isTown": false,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🌾 PRAIRIE WIND 🌾",
+        "art": "    🌾  🌻  🌾  🌻\n     PRAIRIE WIND\n      COLLECTIVE\n     ___________\n    |  ORGANIC  |\n    | FARM LIFE |\n    |___________|\n    🐔  🌽  🥕  🐮\n      GROW FREE!",
+        "description": "Organic farming collective on the endless prairie. They grow their own food, make their own rules. Living proof that another way is possible.",
+        "moraleBoost": 0
+      }
+    },
+    {
+      "name": "Roadside Gas & Grub",
+      "distance": 1850,
+      "isShop": true,
+      "isTown": false,
+      "hasLandmark": false
+    },
+    {
+      "name": "Denver",
+      "distance": 2050,
+      "isShop": true,
+      "isTown": true,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🏔️ MILE HIGH MUSIC FESTIVAL 🏔️",
+        "art": "         ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪\n        🎸____________🎤\n       |  ___    ___   |\n       | |🎵|  |🎶|  |\n       | |   |  |   |  |\n    🌻 |_|___|__|___|__| 🌸\n      /  STAGE   STAGE  \\\n     /  🎸  🥁  🎹  🎺  \\\n    /_____________________\\\n      👥👥👥👥👥👥👥\n       PEACE ☮ LOVE",
+        "description": "Psychedelic rock fills the mountain air! Free concert in the park, everyone's groovin'!",
+        "moraleBoost": 100
+      }
+    },
+    {
+      "name": "Rocky Mountain Pass",
+      "distance": 2200,
+      "isShop": true,
+      "isTown": false,
+      "hasLandmark": false,
+      "specialType": "mountain"
+    },
+    {
+      "name": "Crystal Creek Campground",
+      "distance": 2350,
+      "isShop": false,
+      "isTown": false,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🏕️ CRYSTAL CREEK 🏕️",
+        "art": "       💎  🌊  💎\n    CRYSTAL CREEK\n     CAMPGROUND\n    _______________\n       🏕️  🔥  🏕️\n      🌲      🌲\n        ~~~~\n      🐟  💧  🐟\n    PURE MOUNTAIN WATER",
+        "description": "Pristine mountain campground by a crystal-clear creek. Fellow travelers share stories around the fire. You feel connected to everything.",
+        "moraleBoost": 0
+      }
+    },
+    {
+      "name": "Salt Lake City",
+      "distance": 2500,
+      "isShop": true,
+      "isTown": true,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🏕️ DESERT COMMUNE 🏕️",
+        "art": "        ☀️  🌄  ☀️\n      🏕️  COMMUNE  🏕️\n         _______\n        /🌻🌸🌺\\\n       /  PEACE  \\\n      /   & LOVE  \\\n     /______________\\\n      ⛺  ⛺  ⛺  ⛺\n    🌵    🚐    🌵\n       LIVE FREE!",
+        "description": "A desert commune welcomes travelers! Share food, share stories, share the dream of a better world. Far out!",
+        "moraleBoost": 100
+      }
+    },
+    {
+      "name": "Desert Oasis Junction",
+      "distance": 2650,
+      "isShop": true,
+      "isTown": false,
+      "hasLandmark": false
+    },
+    {
+      "name": "Cosmic River Rapids",
+      "distance": 2750,
+      "isShop": false,
+      "isTown": false,
+      "hasLandmark": false,
+      "specialType": "minigame"
+    },
+    {
+      "name": "Reno",
+      "distance": 2900,
+      "isShop": true,
+      "isTown": true,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🎰 THE ELECTRIC DESERT 🎰",
+        "art": "         ✨  RENO  ✨\n      ___________________\n     |🌟 🌟 🌟 🌟 🌟 |\n     | BIGGEST LITTLE  |\n     |  CITY IN THE   |\n     |     WORLD!     |\n     |________________|\n    🎪  🎲  🎰  🃏  🎪\n         🚐  🏜️  🌵",
+        "description": "Desert oasis of neon lights! Almost to California - you can smell the Pacific Ocean!",
+        "moraleBoost": 40
+      }
+    },
+    {
+      "name": "Sierra Summit",
+      "distance": 2950,
+      "isShop": false,
+      "isTown": false,
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "⛰️ SIERRA SUMMIT ⛰️",
+        "art": "        ⛰️\n       /  \\\n      / SF \\\n     /  50  \\\n    / MILES  \\\n    \\_______/\n      🚐  🌲\n    SO CLOSE!",
+        "description": "The final mountain pass! You can see the golden California valleys below. San Francisco awaits! Almost there, far out!",
+        "moraleBoost": 100
+      }
+    },
+    {
+      "name": "San Francisco",
+      "distance": 3100,
+      "isShop": false,
+      "isTown": true,
+      "hasLandmark": false
+    }
+  ],
+  "events": {
+    "early": [
+      {
+        "id": "hitchhiker",
+        "text": "You see a hitchhiker on the roadside. They flag you down. Do you pick them up?",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "💰 Pick them up for cash",
+            "effects": {
+              "currency": 25,
+              "morale": -5
+            },
+            "message": "'Ass, Grass, or Gas - Nobody Rides for Free!' They hand you $25. Good deal, but kinda greedy, man."
+          },
+          {
+            "text": "🌿 Pick them up for herbs",
+            "effects": {
+              "morale": 30,
+              "food": 5
+            },
+            "message": "'Ass, Grass, or Gas!' They contribute to the herb collection! The vibes are EXCELLENT! ✌️"
+          },
+          {
+            "text": "⛽ Pick them up for gas",
+            "effects": {
+              "fuel": 15,
+              "morale": 5
+            },
+            "message": "'Ass, Grass, or Gas!' They pour 15 units of gas from their can into your tank. Far out!"
+          },
+          {
+            "text": "🆓 Give them a free ride",
+            "effects": {
+              "morale": 20
+            },
+            "message": "You give them a free ride. Spread the love, man! They share cool stories and good vibes."
+          },
+          {
+            "text": "👋 Drive past them",
+            "effects": {
+              "morale": -10
+            },
+            "message": "You drive past. They flip you off. Bad karma, dude."
+          }
+        ]
+      },
+      {
+        "id": "breakdown",
+        "text": "💥 BREAKDOWN! Your VW bus sputters and dies on the side of the road! What do you do?",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🔧 Try to fix it yourself (Mini-game)",
+            "effects": {},
+            "message": "You pop the hood and get to work...",
+            "special": "repairGame"
+          },
+          {
+            "text": "💰 Pay a mechanic ($80, 1 day)",
+            "effects": {
+              "currency": -80,
+              "morale": -10,
+              "days": 1
+            },
+            "message": "You find a local mechanic. It's expensive and takes all day, but it's fixed."
+          },
+          {
+            "text": "🔧 Use spare parts",
+            "effects": {
+              "parts": -1,
+              "morale": 5,
+              "days": 0.5
+            },
+            "message": "You use your spare parts and fix it quickly! Smart thinking!",
+            "condition": "hasSpare Parts",
+            "failMessage": "You don't have any spare parts!"
+          }
+        ]
+      },
+      {
+        "id": "music_festival",
+        "text": "🎪 You stumble upon a small music festival in a field! Live bands, dancing, the whole scene! Sunshine's eyes light up: 'Can we STAY?!'",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🎸 Jam with the bands!",
+            "effects": {
+              "morale": 40,
+              "days": 1,
+              "food": 5
+            },
+            "message": "You break out the guitar and JAM for hours! People share food! This is EVERYTHING! ✨🎸",
+            "condition": "hasGuitar"
+          },
+          {
+            "text": "💃 Dance all day!",
+            "effects": {
+              "morale": 35,
+              "food": -10,
+              "days": 1
+            },
+            "message": "You dance until your feet hurt! Worth every second! This is LIVING! 🌈"
+          },
+          {
+            "text": "🌿 Chill and enjoy",
+            "effects": {
+              "morale": 30,
+              "food": -5,
+              "specialItem": -10
+            },
+            "message": "You relax with some herbs, listen to the music, and soak it all in. Perfect vibes! ☮️"
+          },
+          {
+            "text": "🚐 'We gotta keep moving'",
+            "effects": {
+              "morale": -15
+            },
+            "message": "Everyone's bummed. 'We NEVER get to have fun!' Oof. Morale hit."
+          }
+        ]
+      },
+      {
+        "id": "cop_pullover",
+        "text": "🚨 The fuzz pulls you over. 'Your taillight's out, hippie.'",
+        "isChoice": true,
+        "weight": 2,
+        "copEvent": true,
+        "choices": [
+          {
+            "text": "💰 Just pay the ticket ($30)",
+            "effects": {
+              "currency": -30,
+              "morale": -10
+            },
+            "message": "You hand over the cash. The cop smirks and drives off."
+          },
+          {
+            "text": "🌻 'But officer, we're all one...'",
+            "effects": {
+              "morale": -20
+            },
+            "message": "He's not interested in your philosophy. He writes you TWO tickets out of spite.",
+            "risk": 0.3,
+            "failEffects": {
+              "currency": -60,
+              "morale": -25
+            },
+            "failMessage": "He's not interested in your philosophy. He writes you TWO tickets out of spite."
+          },
+          {
+            "text": "🏃 Floor it!",
+            "effects": {
+              "fuel": -20,
+              "morale": -30
+            },
+            "message": "You peel out. Your VW bus goes 0-60 in... never. He doesn't even bother chasing you. But now you're paranoid for 200 miles.",
+            "risk": 0.7,
+            "failEffects": {
+              "currency": -100,
+              "morale": -40,
+              "days": 2
+            },
+            "failMessage": "He catches you immediately. Your bus tops out at 40mph. Now you're getting arrested. This takes DAYS to sort out."
+          }
+        ]
+      },
+      {
+        "id": "diner",
+        "text": "🍽️ Classic roadside diner! Chrome and neon! The waitress calls you 'hon.' Moonbeam is CHARMED.",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🍳 Get the full breakfast ($15)",
+            "effects": {
+              "currency": -15,
+              "food": 30,
+              "morale": 20
+            },
+            "message": "Eggs, bacon, pancakes, toast! Moonbeam: 'This is HEAVEN!' Best $15 you've spent! 🥞"
+          },
+          {
+            "text": "☕ Just coffee and pie ($5)",
+            "effects": {
+              "currency": -5,
+              "food": 10,
+              "morale": 10
+            },
+            "message": "The pie is AMAZING. The coffee could strip paint. Balanced experience! ☕🥧"
+          },
+          {
+            "text": "🎵 Play for tips",
+            "effects": {
+              "morale": 25,
+              "currency": 20,
+              "food": 15
+            },
+            "message": "You play guitar! Tips AND free food! The waitress loves you! 'Y'all come back now!' 🎸",
+            "condition": "hasGuitar"
+          },
+          {
+            "text": "🚐 Too expensive, keep going",
+            "effects": {
+              "morale": -10,
+              "food": -5
+            },
+            "message": "Everyone's disappointed. The smell of bacon haunts you for miles."
+          }
+        ]
+      },
+      {
+        "id": "sunset",
+        "text": "🌅 Sunset over the plains. Sky goes orange, then pink, then purple. River whispers: 'Far out...' Nobody moves for 20 minutes.",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "📸 'Everyone get in frame!'",
+            "effects": {
+              "morale": 40
+            },
+            "message": "You set up the camera on the roof. Timer goes off. PERFECT sunset photo with everyone! This is going on the wall! 📷✨"
+          },
+          {
+            "text": "🌿 Herbs and silence",
+            "effects": {
+              "specialItem": -10,
+              "morale": 45
+            },
+            "message": "You share the herbs in total silence. The colors! The VIBES! This is why you're out here! 🌄💫"
+          },
+          {
+            "text": "🧘 Just be present",
+            "effects": {
+              "morale": 35
+            },
+            "message": "No photos. No words. Just experiencing it. When it's over, everyone exhales. Perfect moment. ☮️"
+          },
+          {
+            "text": "🚗 'We should keep driving'",
+            "effects": {
+              "morale": -20
+            },
+            "message": "Everyone gives you the LOOK. 'SERIOUSLY?!' You stop. Too late, sun's already set. Blew it."
+          }
+        ]
+      },
+      {
+        "id": "flat_tire",
+        "text": "💥 FLAT TIRE. Middle of nowhere. No shade. Stardust kicks the tire: 'Of COURSE.'",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🔧 Change it yourself",
+            "effects": {
+              "morale": -10,
+              "days": 0.5
+            },
+            "message": "Hot, sweaty, miserable work. But you get it done! Everyone's grumpy but impressed. 💪"
+          },
+          {
+            "text": "🌿 Take a break first",
+            "effects": {
+              "specialItem": -15,
+              "morale": 10,
+              "days": 0.5
+            },
+            "message": "You take 20 minutes to chill with the herbs first. Makes the job WAY less annoying! Work smarter, not harder! 😎"
+          },
+          {
+            "text": "💰 Flag down help ($20)",
+            "effects": {
+              "currency": -20,
+              "morale": 0,
+              "days": 0.3
+            },
+            "message": "A trucker stops and helps! You slip him $20. Fixed faster but costs cash."
+          },
+          {
+            "text": "🔧 Use spare parts",
+            "effects": {
+              "parts": -1,
+              "morale": 5,
+              "days": 0.2
+            },
+            "message": "You've got a spare! Quick swap! Back on the road! Smart planning! 🛞",
+            "condition": "hasSpareParts"
+          }
+        ]
+      },
+      {
+        "text": "Some swell folks share home cooking! Far out!",
+        "effects": {
+          "food": 25,
+          "morale": 15
+        }
+      },
+      {
+        "text": "You find a Beatles album in a trash bin! Still plays! The bee's knees!",
+        "effects": {
+          "morale": 30
+        }
+      },
+      {
+        "text": "Camp under the stars. Outta sight.",
+        "effects": {
+          "morale": 25
+        }
+      },
+      {
+        "text": "The bus overheats! Gotta let it cool down. Drag city.",
+        "effects": {
+          "morale": -10,
+          "days": 0.5
+        }
+      },
+      {
+        "text": "You meet traveling musicians who jam with you! Real keen cats!",
+        "effects": {
+          "morale": 35
+        }
+      },
+      {
+        "text": "Someone paints a peace sign on your bus! Groovy!",
+        "effects": {
+          "morale": 20
+        }
+      },
+      {
+        "text": "Radio plays 'Sittin' On The Dock of the Bay'. Everyone sings along! Solid!",
+        "effects": {
+          "morale": 25
+        }
+      },
+      {
+        "text": "You discover a secret swimming hole. Skinny dipping time! It's the cat's pajamas!",
+        "effects": {
+          "morale": 40
+        },
+        "weight": 2
+      },
+      {
+        "text": "A commune invites you to stay the night! Free food and some real hip folks.",
+        "effects": {
+          "food": 30,
+          "morale": 20,
+          "days": 1
+        }
+      },
+      {
+        "text": "Someone gifts you a tie-dye shirt! You look like the real deal now!",
+        "effects": {
+          "morale": 20
+        }
+      },
+      {
+        "text": "You find wild berries growing by the roadside! Neato!",
+        "effects": {
+          "food": 15,
+          "morale": 10
+        }
+      },
+      {
+        "text": "🎪 You pass a carnival. The Ferris wheel looks rad!",
+        "effects": {
+          "morale": 15
+        }
+      },
+      {
+        "text": "🐮 Cows blocking the road. You wait 20 minutes. One moos at you.",
+        "effects": {
+          "morale": 5
+        }
+      },
+      {
+        "text": "🚗 Some squares in a station wagon give you dirty looks.",
+        "effects": {
+          "morale": -5
+        }
+      },
+      {
+        "text": "⛽ You find a gas station with cheaper prices! Score!",
+        "effects": {
+          "morale": 10
+        }
+      },
+      {
+        "text": "🎵 Radio plays a Hendrix solo. Everyone air guitars for 10 minutes.",
+        "effects": {
+          "morale": 20
+        }
+      },
+      {
+        "text": "🌮 Roadside taco stand. Best tacos you've ever had, man.",
+        "effects": {
+          "food": 15,
+          "morale": 15,
+          "currency": -5
+        }
+      },
+      {
+        "text": "💩 Someone ate bad gas station food. The bus smells TERRIBLE for 100 miles.",
+        "effects": {
+          "morale": -15
+        }
+      },
+      {
+        "text": "🦅 A hawk lands on your hood. It stares at you. Then flies away. Wild.",
+        "effects": {
+          "morale": 10
+        }
+      },
+      {
+        "text": "🏠 You drive past identical suburban houses. Gives everyone the creeps.",
+        "effects": {
+          "morale": -10
+        }
+      },
+      {
+        "text": "🎨 Someone paints 'LOVE' on the side of the bus. It's crooked but nice.",
+        "effects": {
+          "morale": 15
+        }
+      },
+      {
+        "text": "🌵 Desert heat is brutal. You're all sweating buckets.",
+        "effects": {
+          "morale": -10,
+          "food": -5
+        }
+      },
+      {
+        "text": "❄️ Unexpected cold snap. Nobody packed warm clothes.",
+        "effects": {
+          "morale": -15
+        }
+      },
+      {
+        "text": "🎪 You see a billboard: 'See the World's Largest Ball of Yarn!' Nobody cares.",
+        "effects": {
+          "morale": 0
+        }
+      },
+      {
+        "text": "🐿️ A squirrel runs across the road. You swerve. Everyone screams. You're fine.",
+        "effects": {
+          "morale": -5
+        }
+      },
+      {
+        "text": "⛰️ The view from this mountain is outta sight! Far out!",
+        "effects": {
+          "morale": 25
+        }
+      },
+      {
+        "text": "🚧 Construction zone. Detour adds an hour. Total drag.",
+        "effects": {
+          "fuel": -5,
+          "morale": -10
+        }
+      },
+      {
+        "text": "🌈 RAINBOW! Everyone loses their minds. It's beautiful, man.",
+        "effects": {
+          "morale": 30
+        }
+      },
+      {
+        "text": "🦨 You ran over a skunk. The smell won't leave. Everyone's gagging.",
+        "effects": {
+          "morale": -25
+        },
+        "weight": 2
+      },
+      {
+        "text": "🎸 You pass a music store. Someone wants to buy new strings ($15).",
+        "effects": {
+          "currency": -15,
+          "morale": 10
+        }
+      },
+      {
+        "text": "📻 Radio picks up a station playing only polka. Nobody knows how to change it.",
+        "effects": {
+          "morale": -10
+        }
+      },
+      {
+        "text": "Rainstorm soaks your sleeping bags. Everyone's morale takes a hit.",
+        "effects": {
+          "morale": -20
+        }
+      },
+      {
+        "text": "You find $50 in an old jacket! Far out!",
+        "effects": {
+          "currency": 50,
+          "morale": 10
+        }
+      }
+    ],
+    "middle": [],
+    "late": [],
+    "doubts": [
+      {
+        "name": "Missing School",
+        "moraleDrain": 2
+      },
+      {
+        "name": "Homesick",
+        "moraleDrain": 2
+      },
+      {
+        "name": "Second Thoughts",
+        "moraleDrain": 3
+      },
+      {
+        "name": "Missing Family",
+        "moraleDrain": 2
+      },
+      {
+        "name": "Questioning the Trip",
+        "moraleDrain": 3
+      },
+      {
+        "name": "Feeling Square",
+        "moraleDrain": 1
+      }
+    ]
+  },
+  "miniGames": {
+    "foraging": {
+      "name": "Foraging for Food",
+      "description": "Click the good food items! Avoid the trash!",
+      "goodItems": ["🍎", "🥕", "🍓", "🍄", "🌰", "🥦", "🐟", "🍇", "🌽", "🥔", "🍊", "🥑", "🍋", "🌵", "🍞"],
+      "badItems": ["🗑️"],
+      "regionalItems": {
+        "early": ["🍎", "🍓", "🥕", "🍄", "🌰", "🥦", "🐟", "🍇"],
+        "middle": ["🌽", "🥔", "🍄", "🌰", "🥕", "🐟", "🍇"],
+        "late": ["🍊", "🥑", "🍋", "🌵", "🍄", "🐟", "🌰"]
+      }
+    },
+    "rapids": {
+      "name": "Cosmic River Rapids",
+      "description": "Navigate the cosmic river! Collect good vibes, avoid the bummers!",
+      "playerIcon": "🌀",
+      "goodItems": [
+        {
+          "emoji": "🌈",
+          "type": "good",
+          "points": 5
+        },
+        {
+          "emoji": "🌿",
+          "type": "good",
+          "points": 3
+        },
+        {
+          "emoji": "✨",
+          "type": "good",
+          "points": 5
+        }
+      ],
+      "badItems": [
+        {
+          "emoji": "💩",
+          "type": "bad",
+          "points": 0
+        },
+        {
+          "emoji": "🗑️",
+          "type": "bad",
+          "points": 0
+        },
+        {
+          "emoji": "🪨",
+          "type": "bad",
+          "points": 0
+        }
+      ]
+    },
+    "repair": {
+      "name": "Bus Repair",
+      "description": "Click the flashing parts before time runs out!",
+      "parts": ["🔧 Spark Plug", "⚙️ Carburetor", "🔩 Fan Belt", "💧 Oil Filter", "⚡ Battery", "🌡️ Radiator"]
+    }
+  },
+  "shop": {
+    "items": [
+      {
+        "id": "gas_25",
+        "name": "Gas (25 units)",
+        "type": "fuel",
+        "amount": 25,
+        "cost": 10,
+        "icon": "⛽"
+      },
+      {
+        "id": "gas_50",
+        "name": "Gas (50 units)",
+        "type": "fuel",
+        "amount": 50,
+        "cost": 18,
+        "icon": "⛽"
+      },
+      {
+        "id": "food_20",
+        "name": "Food (20 units)",
+        "type": "food",
+        "amount": 20,
+        "cost": 15,
+        "icon": "🍎"
+      },
+      {
+        "id": "food_40",
+        "name": "Food (40 units)",
+        "type": "food",
+        "amount": 40,
+        "cost": 25,
+        "icon": "🍎"
+      },
+      {
+        "id": "herbs_20",
+        "name": "Herbs (20 units)",
+        "type": "specialItem",
+        "amount": 20,
+        "cost": 30,
+        "icon": "🌿"
+      },
+      {
+        "id": "parts",
+        "name": "Spare Parts",
+        "type": "parts",
+        "amount": 1,
+        "cost": 50,
+        "icon": "🔧"
+      },
+      {
+        "id": "guitar",
+        "name": "Acoustic Guitar",
+        "type": "guitar",
+        "amount": 1,
+        "cost": 150,
+        "icon": "🎸"
+      }
+    ]
+  },
+  "ui": {
+    "title": "The NorCal Trail",
+    "subtitle": "San Francisco or Bust! ☮️",
+    "defaultPartyNames": ["Sunshine", "Moonbeam", "Stardust", "River"],
+    "statusLabels": {
+      "normal": "✌️ Groovy",
+      "doubting": "💭 Doubting",
+      "abandoned": "👔 Sold Out"
+    },
+    "colorScheme": {
+      "primary": "#ff6b6b",
+      "secondary": "#ffd93d",
+      "accent": "#8b7355",
+      "danger": "#ef4444",
+      "background": "#2c1810",
+      "text": "#f0e68c"
+    }
+  }
+}
+
+
+
+  </script>
+<!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="engine/game-engine.js"></script>
+  <script src="engine/ui-controller.js"></script>
+  <script src="engine/mini-games.js"></script>
+  <script src="engine/high-scores.js"></script>
+  <script src="theme-loader.js"></script>
+
+  <script>
+    // Global game instance
+    let gameEngine = null;
+    let ui = null;
+
+    // Initialize marketplace
+    window.addEventListener('DOMContentLoaded', async () => {
+      // Wait for themes to load
+      await new Promise(resolve => {
+        const checkThemes = setInterval(() => {
+          if (themeLoader.getThemes().length > 0) {
+            clearInterval(checkThemes);
+            resolve();
+          }
+        }, 100);
+      });
+      showMarketplace();
+    });
+
+    // Show marketplace
+    function showMarketplace() {
+      hideAllScreens();
+      document.getElementById('marketplaceScreen').classList.remove('hidden');
+      themeLoader.renderMarketplace('themeMarketplace');
+    }
+
+    // Handle theme selection
+    document.addEventListener('themeSelected', (e) => {
+      const theme = e.detail.theme;
+      console.log('Theme selected:', theme.name);
+
+      // Initialize game with theme
+      gameEngine = new TrailGameEngine(theme);
+      ui = new UIController(gameEngine, theme);
+
+      // Update start screen with theme info
+      document.getElementById('themeDescription').textContent = theme.metadata.description;
+
+      // Show start screen
+      hideAllScreens();
+      ui.initialize();
+    });
+
+    // Helper functions
+    function hideAllScreens() {
+      document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    }
+
+    function toggleStats() {
+      const statsBar = document.getElementById('statsBar');
+      const toggleText = document.getElementById('statsToggleText');
+
+      if (statsBar.classList.contains('expanded')) {
+        statsBar.classList.remove('expanded');
+        toggleText.textContent = 'Show Stats';
+      } else {
+        statsBar.classList.add('expanded');
+        toggleText.textContent = 'Hide Stats';
+      }
+    }
+
+    // High Score Functions
+    async function showHighScores() {
+      hideAllScreens();
+      document.getElementById('highScoresScreen').classList.remove('hidden');
+      await renderHighScores();
+    }
+
+    async function renderHighScores() {
+      const container = document.getElementById('highScoresList');
+      container.innerHTML = '<p style="text-align: center; color: #888;">Loading high scores...</p>';
+
+      const themesWithScores = await highScoreManager.getThemesWithScores();
+
+      if (themesWithScores.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: #888;">No high scores yet! Play a game to set a record!</p>';
+        return;
+      }
+
+      let html = '';
+      for (const themeName of themesWithScores) {
+        const scores = await highScoreManager.getScoresForTheme(themeName);
+        html += `
+          <div style="margin-bottom: 30px;">
+            <h3 style="color: #4ade80; margin-bottom: 15px;">${themeName}</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="border-bottom: 2px solid #444;">
+                  <th style="text-align: left; padding: 8px;">Rank</th>
+                  <th style="text-align: left; padding: 8px;">Player</th>
+                  <th style="text-align: right; padding: 8px;">Score</th>
+                  <th style="text-align: right; padding: 8px;">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+
+        scores.forEach((score, index) => {
+          const rankEmoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
+          html += `
+            <tr style="border-bottom: 1px solid #333;">
+              <td style="padding: 8px;">${rankEmoji} ${index + 1}</td>
+              <td style="padding: 8px;">${score.playerName}</td>
+              <td style="padding: 8px; text-align: right; font-weight: bold; color: #ffd93d;">${highScoreManager.formatScore(score.score)}</td>
+              <td style="padding: 8px; text-align: right; font-size: 0.9rem; color: #888;">${highScoreManager.formatDate(score.date)}</td>
+            </tr>
+          `;
+        });
+
+        html += `
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+    }
+
+    async function clearHighScores() {
+      if (confirm('Are you sure you want to clear ALL high scores? This cannot be undone!')) {
+        await highScoreManager.clearAllScores();
+        await renderHighScores();
+      }
+    }
+
+  </script>
+</body>
+</html>
+
+
+
+

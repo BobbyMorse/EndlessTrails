@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Endless Trails - Analytics Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #e2e8f0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #4ade80;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+    }
+
+    .subtitle {
+      color: #94a3b8;
+      font-size: 1.2rem;
+    }
+
+    .refresh-btn {
+      background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+      color: #1e293b;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 15px;
+      font-weight: bold;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .refresh-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(74, 222, 128, 0.3);
+    }
+
+    .refresh-btn:active {
+      transform: translateY(0);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 25px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #4ade80;
+      line-height: 1;
+    }
+
+    .stat-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      color: #4ade80;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(74, 222, 128, 0.3);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    th {
+      background: rgba(74, 222, 128, 0.1);
+      color: #4ade80;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    tr:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .theme-bar {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .theme-name {
+      min-width: 200px;
+      font-weight: 500;
+    }
+
+    .bar-container {
+      flex: 1;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4ade80 0%, #22c55e 100%);
+      border-radius: 15px;
+      transition: width 1s ease-out;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2rem;
+      color: #94a3b8;
+    }
+
+    .error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .timestamp {
+      text-align: center;
+      color: #64748b;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+
+    .score-highlight {
+      color: #ffd93d;
+      font-weight: bold;
+    }
+
+    .win-rate {
+      color: #4ade80;
+      font-weight: bold;
+    }
+
+    .loss-rate {
+      color: #f87171;
+      font-weight: bold;
+    }
+
+    .chart-container {
+      margin-top: 20px;
+    }
+
+    .recent-sessions {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .recent-sessions::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .recent-sessions::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+
+    .recent-sessions::-webkit-scrollbar-thumb {
+      background: rgba(74, 222, 128, 0.3);
+      border-radius: 4px;
+    }
+
+    .recent-sessions::-webkit-scrollbar-thumb:hover {
+      background: rgba(74, 222, 128, 0.5);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .stat-card, .section {
+      animation: fadeIn 0.5s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Endless Trails Analytics</h1>
+      <div class="subtitle">Real-time game statistics and player insights</div>
+      <button class="refresh-btn" onclick="loadDashboard()">Refresh Data</button>
+    </header>
+
+    <div id="dashboard-content">
+      <div class="loading">Loading analytics data...</div>
+    </div>
+
+    <div class="timestamp" id="last-updated"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Initialize Supabase
+    const SUPABASE_URL = 'https://pusahwnnzjmfpxzadlng.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB1c2Fod25uemptZnB4emFkbG5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUwNzg0ODAsImV4cCI6MjA1MDY1NDQ4MH0.oy7LRcICbC70kFWlXJ9Wii9B1D_WOeAIBNX0FaKjZI0';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function loadDashboard() {
+      const container = document.getElementById('dashboard-content');
+      container.innerHTML = '<div class="loading">Loading analytics data...</div>';
+
+      try {
+        // Fetch all analytics data
+        const analytics = await getAnalytics();
+        const topScores = await getTopScores();
+        const recentSessions = await getRecentSessions();
+        const themeStats = await getThemeStats();
+
+        // Render dashboard
+        container.innerHTML = `
+          <!-- Overview Stats -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon">🎮</div>
+              <div class="stat-label">Total Games</div>
+              <div class="stat-value">${analytics.totalGames.toLocaleString()}</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">✅</div>
+              <div class="stat-label">Completed Games</div>
+              <div class="stat-value">${analytics.completedGames.toLocaleString()}</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">👥</div>
+              <div class="stat-label">Unique Players</div>
+              <div class="stat-value">${analytics.uniquePlayers.toLocaleString()}</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">📊</div>
+              <div class="stat-label">Completion Rate</div>
+              <div class="stat-value">${analytics.completionRate}%</div>
+            </div>
+          </div>
+
+          <!-- Games by Theme -->
+          <div class="section">
+            <h2 class="section-title">Games Played by Theme</h2>
+            <div class="chart-container">
+              ${renderThemeChart(analytics.gamesByTheme)}
+            </div>
+          </div>
+
+          <!-- Theme Statistics -->
+          <div class="section">
+            <h2 class="section-title">Theme Performance</h2>
+            ${renderThemeStatsTable(themeStats)}
+          </div>
+
+          <!-- Top Scores -->
+          <div class="section">
+            <h2 class="section-title">Top 20 High Scores (All Themes)</h2>
+            ${renderTopScoresTable(topScores)}
+          </div>
+
+          <!-- Recent Sessions -->
+          <div class="section">
+            <h2 class="section-title">Recent Game Sessions (Last 50)</h2>
+            <div class="recent-sessions">
+              ${renderRecentSessionsTable(recentSessions)}
+            </div>
+          </div>
+        `;
+
+        // Update timestamp
+        document.getElementById('last-updated').textContent =
+          `Last updated: ${new Date().toLocaleString()}`;
+
+      } catch (error) {
+        console.error('Dashboard error:', error);
+        container.innerHTML = `
+          <div class="error">
+            <strong>Error loading dashboard:</strong><br>
+            ${error.message}<br><br>
+            Please check that the Supabase database is set up correctly.
+          </div>
+        `;
+      }
+    }
+
+    async function getAnalytics() {
+      // Total games
+      const { count: totalGames } = await supabase
+        .from('game_sessions')
+        .select('*', { count: 'exact', head: true });
+
+      // Completed games
+      const { count: completedGames } = await supabase
+        .from('game_sessions')
+        .select('*', { count: 'exact', head: true })
+        .not('completed_at', 'is', null);
+
+      // Unique players by fingerprint
+      const { data: fingerprints } = await supabase
+        .from('game_sessions')
+        .select('player_fingerprint')
+        .not('player_fingerprint', 'is', null);
+
+      const uniquePlayers = new Set(fingerprints.map(p => p.player_fingerprint)).size;
+
+      // Games by theme
+      const { data: byTheme } = await supabase
+        .from('game_sessions')
+        .select('theme_name')
+        .not('completed_at', 'is', null);
+
+      const gamesByTheme = {};
+      byTheme.forEach(g => {
+        gamesByTheme[g.theme_name] = (gamesByTheme[g.theme_name] || 0) + 1;
+      });
+
+      return {
+        totalGames: totalGames || 0,
+        completedGames: completedGames || 0,
+        uniquePlayers: uniquePlayers,
+        completionRate: totalGames > 0 ? ((completedGames / totalGames) * 100).toFixed(1) : '0.0',
+        gamesByTheme: gamesByTheme
+      };
+    }
+
+    async function getTopScores() {
+      const { data, error } = await supabase
+        .from('high_scores')
+        .select('*')
+        .order('score', { ascending: false })
+        .limit(20);
+
+      if (error) throw error;
+      return data || [];
+    }
+
+    async function getRecentSessions() {
+      const { data, error } = await supabase
+        .from('game_sessions')
+        .select('*')
+        .order('started_at', { ascending: false })
+        .limit(50);
+
+      if (error) throw error;
+      return data || [];
+    }
+
+    async function getThemeStats() {
+      const { data, error } = await supabase
+        .from('game_sessions')
+        .select('*')
+        .not('completed_at', 'is', null);
+
+      if (error) throw error;
+
+      // Group by theme
+      const stats = {};
+      data.forEach(session => {
+        if (!stats[session.theme_name]) {
+          stats[session.theme_name] = {
+            total: 0,
+            wins: 0,
+            losses: 0,
+            avgScore: 0,
+            scores: []
+          };
+        }
+        stats[session.theme_name].total++;
+        if (session.outcome === 'win') stats[session.theme_name].wins++;
+        if (session.outcome === 'loss') stats[session.theme_name].losses++;
+        if (session.final_score) stats[session.theme_name].scores.push(session.final_score);
+      });
+
+      // Calculate averages
+      Object.keys(stats).forEach(theme => {
+        const scores = stats[theme].scores;
+        stats[theme].avgScore = scores.length > 0
+          ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)
+          : 0;
+        stats[theme].winRate = stats[theme].total > 0
+          ? ((stats[theme].wins / stats[theme].total) * 100).toFixed(1)
+          : '0.0';
+      });
+
+      return stats;
+    }
+
+    function renderThemeChart(gamesByTheme) {
+      if (Object.keys(gamesByTheme).length === 0) {
+        return '<p style="color: #94a3b8;">No data available yet</p>';
+      }
+
+      const maxGames = Math.max(...Object.values(gamesByTheme));
+      let html = '';
+
+      Object.entries(gamesByTheme)
+        .sort((a, b) => b[1] - a[1])
+        .forEach(([theme, count]) => {
+          const percentage = (count / maxGames) * 100;
+          html += `
+            <div class="theme-bar">
+              <div class="theme-name">${theme}</div>
+              <div class="bar-container">
+                <div class="bar-fill" style="width: ${percentage}%">
+                  ${count} games
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+      return html;
+    }
+
+    function renderThemeStatsTable(themeStats) {
+      if (Object.keys(themeStats).length === 0) {
+        return '<p style="color: #94a3b8;">No data available yet</p>';
+      }
+
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th>Theme</th>
+              <th>Total Games</th>
+              <th>Wins</th>
+              <th>Losses</th>
+              <th>Win Rate</th>
+              <th>Avg Score</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      Object.entries(themeStats)
+        .sort((a, b) => b[1].total - a[1].total)
+        .forEach(([theme, stats]) => {
+          html += `
+            <tr>
+              <td>${theme}</td>
+              <td>${stats.total}</td>
+              <td class="win-rate">${stats.wins}</td>
+              <td class="loss-rate">${stats.losses}</td>
+              <td class="win-rate">${stats.winRate}%</td>
+              <td class="score-highlight">${stats.avgScore.toLocaleString()}</td>
+            </tr>
+          `;
+        });
+
+      html += '</tbody></table>';
+      return html;
+    }
+
+    function renderTopScoresTable(scores) {
+      if (scores.length === 0) {
+        return '<p style="color: #94a3b8;">No high scores yet</p>';
+      }
+
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Theme</th>
+              <th>Score</th>
+              <th>Distance</th>
+              <th>Days</th>
+              <th>Profession</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      scores.forEach((score, index) => {
+        const rank = index + 1;
+        const emoji = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
+        const date = new Date(score.created_at).toLocaleDateString();
+
+        html += `
+          <tr>
+            <td>${emoji} ${rank}</td>
+            <td>${score.player_name}</td>
+            <td>${score.theme_name}</td>
+            <td class="score-highlight">${score.score.toLocaleString()}</td>
+            <td>${score.distance || 0} mi</td>
+            <td>${score.days || 0}</td>
+            <td>${score.profession || 'Unknown'}</td>
+            <td>${date}</td>
+          </tr>
+        `;
+      });
+
+      html += '</tbody></table>';
+      return html;
+    }
+
+    function renderRecentSessionsTable(sessions) {
+      if (sessions.length === 0) {
+        return '<p style="color: #94a3b8;">No sessions yet</p>';
+      }
+
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Theme</th>
+              <th>Started</th>
+              <th>Duration</th>
+              <th>Outcome</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      sessions.forEach(session => {
+        const startDate = new Date(session.started_at);
+        const startTime = startDate.toLocaleString();
+
+        let duration = 'In Progress';
+        if (session.completed_at) {
+          const endDate = new Date(session.completed_at);
+          const minutes = Math.round((endDate - startDate) / 60000);
+          duration = minutes < 60 ? `${minutes}m` : `${Math.floor(minutes / 60)}h ${minutes % 60}m`;
+        }
+
+        const outcomeClass = session.outcome === 'win' ? 'win-rate' :
+                           session.outcome === 'loss' ? 'loss-rate' : '';
+        const outcome = session.outcome || 'Abandoned';
+        const score = session.final_score ? session.final_score.toLocaleString() : '-';
+
+        html += `
+          <tr>
+            <td>${session.player_name || 'Anonymous'}</td>
+            <td>${session.theme_name}</td>
+            <td>${startTime}</td>
+            <td>${duration}</td>
+            <td class="${outcomeClass}">${outcome}</td>
+            <td class="score-highlight">${score}</td>
+          </tr>
+        `;
+      });
+
+      html += '</tbody></table>';
+      return html;
+    }
+
+    // Load dashboard on page load
+    window.addEventListener('DOMContentLoaded', loadDashboard);
+
+    // Auto-refresh every 30 seconds
+    setInterval(loadDashboard, 30000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Trail Game Theme Schema",
+  "description": "Complete schema for creating custom themes for the Trail Game Engine",
+  "type": "object",
+  "required": ["name", "version", "metadata", "resources", "professions", "journey", "locations", "events"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Display name of the theme"
+    },
+    "version": {
+      "type": "string",
+      "description": "Theme version (semver)"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "author": { "type": "string" },
+        "description": { "type": "string" },
+        "era": { "type": "string" },
+        "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "description": "Configurable resource types",
+      "properties": {
+        "fuel": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "icon": { "type": "string" },
+            "startValue": { "type": "number" },
+            "max": { "type": "number" }
+          }
+        },
+        "food": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "icon": { "type": "string" },
+            "startValue": { "type": "number" },
+            "max": { "type": "number" }
+          }
+        },
+        "morale": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "icon": { "type": "string" },
+            "startValue": { "type": "number" },
+            "max": { "type": "number" }
+          }
+        },
+        "currency": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "icon": { "type": "string" },
+            "prefix": { "type": "string" },
+            "startValue": { "type": "number" }
+          }
+        },
+        "specialItem": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "icon": { "type": "string" },
+            "startValue": { "type": "number" },
+            "max": { "type": "number" }
+          }
+        }
+      }
+    },
+    "professions": {
+      "type": "array",
+      "description": "Player role/class options",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "displayName": { "type": "string" },
+          "icon": { "type": "string" },
+          "description": { "type": "string" },
+          "startingCurrency": { "type": "number" },
+          "modifiers": {
+            "type": "object",
+            "properties": {
+              "moraleDrainByPhase": {
+                "type": "object",
+                "properties": {
+                  "early": { "type": "number" },
+                  "middle": { "type": "number" },
+                  "late": { "type": "number" }
+                }
+              },
+              "doubtThreshold": { "type": "number" },
+              "antagonistTargetChance": { "type": "number" },
+              "forageBonus": { "type": "number" },
+              "forageMoraleChange": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+    "journey": {
+      "type": "object",
+      "properties": {
+        "startLocation": { "type": "string" },
+        "endLocation": { "type": "string" },
+        "totalDistance": { "type": "number" },
+        "vehicle": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "icon": { "type": "string" }
+          }
+        },
+        "phases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "startMile": { "type": "number" },
+              "endMile": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+    "locations": {
+      "type": "array",
+      "description": "Journey waypoints",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "distance": { "type": "number" },
+          "isShop": { "type": "boolean" },
+          "isTown": { "type": "boolean" },
+          "hasLandmark": { "type": "boolean" },
+          "landmarkData": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "art": { "type": "string" },
+              "description": { "type": "string" },
+              "moraleBoost": { "type": "number" }
+            }
+          },
+          "specialType": {
+            "type": "string",
+            "enum": ["checkpoint", "minigame", "mountain", "danger"]
+          }
+        }
+      }
+    },
+    "events": {
+      "type": "object",
+      "description": "Random events by journey phase",
+      "properties": {
+        "early": { "$ref": "#/definitions/eventArray" },
+        "middle": { "$ref": "#/definitions/eventArray" },
+        "late": { "$ref": "#/definitions/eventArray" },
+        "doubts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "moraleDrain": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+    "miniGames": {
+      "type": "object",
+      "properties": {
+        "foraging": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "description": { "type": "string" },
+            "goodItems": { "type": "array", "items": { "type": "string" } },
+            "badItems": { "type": "array", "items": { "type": "string" } },
+            "regionalItems": {
+              "type": "object",
+              "properties": {
+                "early": { "type": "array", "items": { "type": "string" } },
+                "middle": { "type": "array", "items": { "type": "string" } },
+                "late": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          }
+        },
+        "rapids": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "description": { "type": "string" },
+            "playerIcon": { "type": "string" },
+            "goodItems": { "type": "array" },
+            "badItems": { "type": "array" }
+          }
+        },
+        "repair": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "description": { "type": "string" },
+            "parts": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "statusLabels": {
+          "type": "object",
+          "properties": {
+            "normal": { "type": "string" },
+            "doubting": { "type": "string" },
+            "abandoned": { "type": "string" }
+          }
+        },
+        "colorScheme": {
+          "type": "object",
+          "properties": {
+            "primary": { "type": "string" },
+            "secondary": { "type": "string" },
+            "accent": { "type": "string" },
+            "danger": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "eventArray": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "text": { "type": "string" },
+          "isChoice": { "type": "boolean" },
+          "weight": { "type": "number" },
+          "effects": {
+            "type": "object",
+            "properties": {
+              "fuel": { "type": "number" },
+              "food": { "type": "number" },
+              "morale": { "type": "number" },
+              "currency": { "type": "number" },
+              "specialItem": { "type": "number" },
+              "distance": { "type": "number" },
+              "days": { "type": "number" }
+            }
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": { "type": "string" },
+                "effects": { "$ref": "#/definitions/effects" },
+                "message": { "type": "string" },
+                "risk": { "type": "number" },
+                "failMessage": { "type": "string" },
+                "failEffects": { "$ref": "#/definitions/effects" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "effects": {
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    }
+  }
+}

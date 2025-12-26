@@ -1,0 +1,4230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="refresh" content="0; url=theme-engine/index.html">
+  <script>
+    window.location.replace('theme-engine/index.html');
+  </script><meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The NorCal Trail</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+    body {
+      font-family: 'VT323', monospace;
+      background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+      color: #f0e68c;
+      min-height: 100vh;
+      padding: 2rem;
+      overflow-y: auto;
+      font-size: 1.3rem;
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(0, 0, 0, 0.7);
+      border: 4px solid #8b7355;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 0 40px rgba(139, 115, 85, 0.3);
+    }
+
+    h1 {
+      font-size: 4rem;
+      text-align: center;
+      color: #ff6b6b;
+      text-shadow: 3px 3px 0 #000;
+      margin-bottom: 1rem;
+      letter-spacing: 3px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: #ffd93d;
+    }
+
+    .screen {
+      background: #1a1a1a;
+      border: 3px solid #8b7355;
+      padding: 2rem;
+      min-height: 400px;
+      position: relative;
+    }
+
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: rgba(139, 115, 85, 0.2);
+      border: 2px solid #8b7355;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #ffd93d;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-value {
+      font-size: 1.6rem;
+      color: #ff6b6b;
+      font-weight: bold;
+    }
+
+    .stat-value.good { color: #4ade80; }
+    .stat-value.warning { color: #fbbf24; }
+    .stat-value.danger { color: #ef4444; }
+
+    .location-bar {
+      background: rgba(255, 107, 107, 0.2);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border: 2px solid #ff6b6b;
+      text-align: center;
+    }
+
+    .location-bar .current {
+      font-size: 2rem;
+      color: #ff6b6b;
+    }
+
+    .location-bar .detail {
+      font-size: 1.1rem;
+      color: #ffd93d;
+      margin-top: 0.5rem;
+    }
+
+    .message-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid #8b7355;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      min-height: 100px;
+    }
+
+    .event-box {
+      background: rgba(255, 107, 107, 0.1);
+      border: 2px solid #ff6b6b;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    button {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+      color: white;
+      border: 3px solid #000;
+      padding: 1rem 2rem;
+      font-family: 'VT323', monospace;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 4px 4px 0 #000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #ee5a6f 0%, #ff6b6b 100%);
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 #000;
+    }
+
+    button:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    button.secondary {
+      background: linear-gradient(135deg, #ffd93d 0%, #f9ca24 100%);
+      color: #1a1a1a;
+    }
+
+    button.secondary:hover {
+      background: linear-gradient(135deg, #f9ca24 0%, #ffd93d 100%);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .party-member {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid #8b7355;
+      padding: 1rem;
+      margin-bottom: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .party-member.sick {
+      border-color: #fbbf24;
+      background: rgba(251, 191, 36, 0.1);
+    }
+
+    .party-member.dead {
+      opacity: 0.4;
+      text-decoration: line-through;
+      border-color: #666;
+    }
+
+    .health-bar {
+      width: 200px;
+      height: 20px;
+      background: #333;
+      border: 2px solid #8b7355;
+      position: relative;
+    }
+
+    .health-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4ade80, #22c55e);
+      transition: width 0.3s;
+    }
+
+    .health-fill.medium {
+      background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    }
+
+    .health-fill.low {
+      background: linear-gradient(90deg, #ef4444, #dc2626);
+    }
+
+    .shop-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 2px solid #8b7355;
+      margin-bottom: 0.8rem;
+      align-items: center;
+    }
+
+    .shop-item button {
+      padding: 0.5rem 1.5rem;
+      font-size: 1.2rem;
+    }
+
+    input[type="number"] {
+      background: #333;
+      border: 2px solid #8b7355;
+      color: #f0e68c;
+      padding: 0.5rem;
+      font-family: 'VT323', monospace;
+      font-size: 1.3rem;
+      width: 80px;
+      text-align: center;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 30px;
+      background: #333;
+      border: 2px solid #8b7355;
+      margin: 1rem 0;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      transition: width 0.5s;
+    }
+
+    .progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 1.2rem;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    .ascii-art {
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.2;
+      color: #ffd93d;
+      margin: 1rem 0;
+      white-space: pre;
+    }
+
+    .landmark-screen {
+      background: linear-gradient(180deg, #1a1a1a 0%, #2c1810 100%);
+      border: 4px solid #ffd93d;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(255, 217, 61, 0.3);
+    }
+
+    .landmark-art {
+      font-size: 0.85rem;
+      line-height: 1.1;
+      color: #4ade80;
+      white-space: pre;
+      margin: 1.5rem 0;
+      text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+    }
+
+    .landmark-title {
+      color: #ff6b6b;
+      font-size: 2.5rem;
+      text-shadow: 3px 3px 0 #000;
+      margin-bottom: 1rem;
+      animation: rainbow 3s infinite;
+    }
+
+    .foraging-game {
+      background: rgba(76, 175, 80, 0.1);
+      border: 2px solid #4caf50;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .forage-items {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .forage-item {
+      font-size: 3rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid #8b7355;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .forage-item:hover {
+      background: rgba(76, 175, 80, 0.3);
+      transform: scale(1.1);
+    }
+
+    .forage-item.clicked {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .timer {
+      font-size: 2rem;
+      color: #ff6b6b;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes psychedelic {
+      0% { filter: hue-rotate(0deg) saturate(1); }
+      25% { filter: hue-rotate(90deg) saturate(1.5); }
+      50% { filter: hue-rotate(180deg) saturate(2); }
+      75% { filter: hue-rotate(270deg) saturate(1.5); }
+      100% { filter: hue-rotate(360deg) saturate(1); }
+    }
+
+    @keyframes rainbow {
+      0% { color: #ff6b6b; }
+      16% { color: #ffd93d; }
+      33% { color: #4ade80; }
+      50% { color: #667eea; }
+      66% { color: #764ba2; }
+      83% { color: #f093fb; }
+      100% { color: #ff6b6b; }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.2); }
+      to { transform: rotate(360deg) scale(1); }
+    }
+
+    /* Collapsible Stats Controls */
+    .stats-toggle {
+      display: none;
+      background: #1a1a1a;
+      border: 2px solid #8b7355;
+      padding: 0.5rem;
+      cursor: pointer;
+      text-align: center;
+      color: #ffd93d;
+      font-size: 1.2rem;
+      user-select: none;
+    }
+
+    .stats-toggle:active {
+      background: #2a2a2a;
+    }
+
+    .party-toggle {
+      display: none;
+      background: rgba(255, 107, 107, 0.2);
+      border: 2px solid #ff6b6b;
+      padding: 0.5rem;
+      cursor: pointer;
+      text-align: center;
+      color: #ff6b6b;
+      font-size: 1.2rem;
+      user-select: none;
+      margin-bottom: 0.5rem;
+    }
+
+    .party-toggle:active {
+      background: rgba(255, 107, 107, 0.4);
+    }
+
+    .stats-bar.collapsed {
+      display: none;
+    }
+
+    #partyStatus.collapsed #partyMembers {
+      display: none;
+    }
+
+    /* Mobile Responsive Styles */
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 0.5rem;
+        font-size: 1.1rem;
+      }
+
+      .container {
+        padding: 0.5rem;
+        border-width: 2px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .screen {
+        padding: 0.5rem;
+        min-height: 300px;
+      }
+
+      /* Show toggle buttons on mobile */
+      .stats-toggle {
+        display: block;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        margin-bottom: 0.5rem;
+      }
+
+      .party-toggle {
+        display: block;
+      }
+
+      /* Condensed stats bar for mobile - single row */
+      .stats-bar {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 0.3rem;
+        padding: 0.4rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .stat {
+        padding: 0.2rem;
+      }
+
+      .stat-label {
+        font-size: 0.7rem;
+        margin-bottom: 0.1rem;
+      }
+
+      .stat-value {
+        font-size: 1rem;
+      }
+
+      /* Start collapsed on mobile */
+      .stats-bar {
+        display: none;
+      }
+
+      .stats-bar.expanded {
+        display: grid;
+      }
+
+      #partyStatus h3 {
+        display: none;
+      }
+
+      #partyStatus.collapsed #partyMembers {
+        display: none;
+      }
+
+      #partyStatus.expanded #partyMembers {
+        display: block;
+      }
+
+      .location-bar {
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+      }
+
+      .location-bar .current {
+        font-size: 1.3rem;
+      }
+
+      .location-bar .detail {
+        font-size: 0.85rem;
+      }
+
+      .progress-bar {
+        height: 25px;
+        margin: 0.8rem 0;
+      }
+
+      .progress-text {
+        font-size: 0.9rem;
+        font-weight: bold;
+      }
+
+      .message-box, .event-box {
+        padding: 1rem;
+        min-height: 80px;
+      }
+
+      button {
+        padding: 1.2rem 1.5rem;
+        font-size: 1.3rem;
+        /* Larger tap targets for mobile */
+        min-height: 50px;
+        touch-action: manipulation;
+      }
+
+      .button-group {
+        gap: 0.8rem;
+      }
+
+      .shop-item {
+        flex-direction: column;
+        gap: 0.8rem;
+        align-items: stretch;
+      }
+
+      .shop-item button {
+        width: 100%;
+        padding: 1rem;
+      }
+
+      .health-bar {
+        width: 100%;
+        max-width: 200px;
+      }
+
+      .party-member {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+      }
+
+      input[type="number"] {
+        width: 100%;
+        font-size: 1.2rem;
+        padding: 0.8rem;
+      }
+
+      /* Foraging game adjustments */
+      #berryDisplay {
+        font-size: 3rem !important;
+      }
+
+      .forage-items {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+        margin: 1rem 0;
+      }
+
+      .forage-item {
+        font-size: 2.5rem;
+        padding: 0.8rem;
+      }
+
+      /* Repair game adjustments */
+      #busRepairContainer {
+        min-height: 250px !important;
+      }
+
+      .bus-part {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 2rem !important;
+      }
+
+      /* Travel animation adjustments */
+      #travelBus {
+        font-size: 6rem !important;
+      }
+
+      .timer {
+        font-size: 1.5rem !important;
+      }
+
+      /* Cosmic River Rapids mobile adjustments */
+      #riverGame {
+        height: 280px !important;
+        max-width: 100% !important;
+      }
+
+      #playerTube {
+        bottom: 15px !important;
+        font-size: 2.5rem !important;
+      }
+
+      .river-obstacle {
+        font-size: 2rem !important;
+      }
+
+      #tubingMessage {
+        font-size: 1.2rem !important;
+      }
+
+      #tubingStats {
+        font-size: 1.1rem !important;
+      }
+
+      #tubingScreen > div {
+        padding: 1.5rem !important;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+
+      body {
+        font-size: 1rem;
+      }
+
+      .stats-bar {
+        grid-template-columns: 1fr;
+      }
+
+      button {
+        font-size: 1.2rem;
+        padding: 1rem;
+      }
+
+      .location-bar .current {
+        font-size: 1.3rem;
+      }
+
+      #travelBus {
+        font-size: 5rem !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌻 THE NORCAL TRAIL 🚐</h1>
+    <div class="subtitle">A Groovy Journey to California</div>
+
+    <!-- Intro Screen -->
+    <div id="introScreen" class="screen">
+      <div class="ascii-art">
+    _______________
+   /               \\
+  /  ☮  PEACE ☮   \\
+ |  ___        ___|
+ |_/|||\\____/||||\_|
+   (o o)    (o o)
+      VW BUS
+      </div>
+
+      <div class="message-box">
+        <p>It's 1970, man. You and your groovy friends are gonna trek from Boston to San Francisco for the ultimate music festival.</p>
+        <br>
+        <p>Manage your VW Bus, keep the vibes high, avoid the fuzz, forage for food, and make it to California in one piece.</p>
+        <br>
+        <p>Will you make it to the Golden State, or will your trip be a total bummer?</p>
+      </div>
+
+      <div class="button-group">
+        <button onclick="showPartySetup()">Start Your Journey ✌️</button>
+        <button class="secondary" onclick="showInstructions()">How to Play 📜</button>
+      </div>
+    </div>
+
+    <!-- Instructions Screen -->
+    <div id="instructionsScreen" class="screen hidden">
+      <div class="message-box">
+        <h2 style="color: #ff6b6b; font-size: 2rem; margin-bottom: 1rem;">How to Play</h2>
+        <p>✦ Travel 3,100 miles from New York to San Francisco</p>
+        <p>✦ Manage: Gas, Food, Vibes, Cash, and Weather</p>
+        <p>✦ Choose your PACE (affects speed, fuel, health)</p>
+        <p>✦ Choose your RATIONS (affects food usage and health)</p>
+        <p>✦ FORAGE for food (dumpster diving, fishing, berry picking)</p>
+        <p>✦ TRADE with other travelers on the road</p>
+        <p>✦ Cross TOLL BOOTHS and avoid the FUZZ</p>
+        <p>✦ Visit GENERAL STORES to buy supplies</p>
+        <p>✦ REST to restore health and fix your bus</p>
+        <p>✦ Random events: breakdowns, cops, festivals, hitchers</p>
+        <br>
+        <p style="color: #4ade80;">Keep on truckin'! ✌️</p>
+      </div>
+
+      <button onclick="showIntro()">Back</button>
+    </div>
+
+    <!-- Party Setup Screen -->
+    <div id="partySetupScreen" class="screen hidden">
+      <div class="message-box">
+        <h2 style="color: #ff6b6b; font-size: 2rem; margin-bottom: 1rem;">Choose Your Path</h2>
+        <p>What's your vibe, man?</p>
+      </div>
+
+      <div class="message-box">
+        <h3 style="color: #ffd93d; margin-bottom: 1rem;">Your Background:</h3>
+        <div class="button-group">
+          <button class="secondary" onclick="setProfession('dealer')">🌿 Freelance Herbalist - $700 start<br><span style="font-size: 0.9rem;">Slowest vibe drain! But cops target you more! Higher fines!</span></button>
+          <button class="secondary" onclick="setProfession('dropout')">🎓 College Dropout - $450 start<br><span style="font-size: 0.9rem;">Moderate vibe drain. Doubts creep in early. Emotional spiral!</span></button>
+          <button class="secondary" onclick="setProfession('artist')">🎨 Starving Artist - $250 start<br><span style="font-size: 0.9rem;">Fastest vibe drain! Less food, less pay. Find beauty in struggle!</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Name Party Screen -->
+    <div id="namePartyScreen" class="screen hidden">
+      <div class="message-box">
+        <h2 style="color: #ff6b6b; font-size: 2rem; margin-bottom: 1rem;">Name Your Party</h2>
+        <p>Enter the names of your 4 hippie friends:</p>
+      </div>
+
+      <div style="margin: 2rem 0;">
+        <div style="margin-bottom: 1rem;">
+          <label>Friend 1: </label>
+          <input type="text" id="name1" value="Sunshine" maxlength="15" style="width: 200px;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label>Friend 2: </label>
+          <input type="text" id="name2" value="Moonbeam" maxlength="15" style="width: 200px;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label>Friend 3: </label>
+          <input type="text" id="name3" value="Stardust" maxlength="15" style="width: 200px;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label>Friend 4: </label>
+          <input type="text" id="name4" value="River" maxlength="15" style="width: 200px;">
+        </div>
+      </div>
+
+      <div class="message-box">
+        <h3 style="color: #ffd93d; margin-bottom: 1rem;">Starting Month</h3>
+        <p>Choose when to leave:</p>
+        <div class="button-group">
+          <button class="secondary" onclick="setMonth('March')">March - Cold but early start</button>
+          <button class="secondary" onclick="setMonth('May')">May - Nice weather, good timing</button>
+          <button class="secondary" onclick="setMonth('July')">July - Hot, late start</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Game Screen -->
+    <div id="gameScreen" class="screen hidden">
+      <div class="stats-toggle" onclick="toggleStats()">
+        📊 <span id="statsToggleText">Show Stats</span> (⛽<span id="quickGas">100</span> 🍞<span id="quickFood">100</span> ✌️<span id="quickVibes">100</span> 💰$<span id="quickCash">500</span>)
+      </div>
+
+      <div class="stats-bar" id="statsBar">
+        <div class="stat">
+          <div class="stat-label">Date</div>
+          <div class="stat-value good" id="dateValue">Mar 1</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">⛽ Gas</div>
+          <div class="stat-value" id="gasValue">100</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">🍞 Food</div>
+          <div class="stat-value" id="foodValue">100</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">✌️ Vibes</div>
+          <div class="stat-value" id="vibesValue">100</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">💰 Cash</div>
+          <div class="stat-value" id="cashValue">$500</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">🌿 Herbs</div>
+          <div class="stat-value" id="herbsValue">50</div>
+        </div>
+      </div>
+
+      <div class="location-bar">
+        <div class="current" id="currentLocation">New York City</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+          <div class="progress-text" id="progressText">0 / 3100 miles</div>
+        </div>
+        <div class="detail">
+          <span id="weatherInfo">☀️ Clear skies</span> •
+          <span id="paceInfo">Pace: Steady</span> •
+          <span id="rationInfo">Rations: Normal</span>
+        </div>
+      </div>
+
+      <div id="eventContainer"></div>
+
+      <div id="partyStatus" class="collapsed" style="margin-bottom: 1.5rem;">
+        <div class="party-toggle" onclick="toggleParty()">
+          👥 <span id="partyToggleText">Show Party</span> <span id="partySummary"></span>
+        </div>
+        <h3 style="color: #ffd93d; margin-bottom: 1rem;">Your Party:</h3>
+        <div id="partyMembers"></div>
+      </div>
+
+      <div id="actionButtons" class="button-group"></div>
+    </div>
+
+    <!-- Forage Screen -->
+    <div id="forageScreen" class="screen hidden">
+      <div class="foraging-game">
+        <h2 style="color: #4caf50; font-size: 2.5rem; margin-bottom: 1rem;">🌿 FORAGING TIME 🌿</h2>
+        <p id="forageInstructions">Click on the food items before time runs out!</p>
+        <div class="timer" id="forageTimer">Time: 30s</div>
+        <div id="forageCounter" style="font-size: 1.8rem; margin-bottom: 1rem;">Food Collected: 0 lbs</div>
+
+        <div class="forage-items" id="forageItems"></div>
+
+        <button onclick="endForaging()" style="margin-top: 1rem;">Stop Foraging</button>
+      </div>
+    </div>
+
+    <!-- Tubing Screen -->
+    <div id="tubingScreen" class="screen hidden">
+      <div style="text-align: center; background: linear-gradient(180deg, #667eea 0%, #764ba2 50%, #f093fb 100%); padding: 3rem; border-radius: 20px; animation: psychedelic 3s infinite;">
+        <h2 style="color: white; font-size: 3rem; margin-bottom: 1rem; text-shadow: 3px 3px 10px #000; animation: rainbow 2s infinite;">🌊 COSMIC RIVER TUBING 🌊</h2>
+        <p id="tubingMessage" style="font-size: 1.8rem; color: white; text-shadow: 2px 2px 5px #000; margin-bottom: 1rem;">Use ← → arrows to dodge bummers & catch groovy vibes!</p>
+
+        <div id="tubingStats" style="display: flex; justify-content: space-around; margin-bottom: 1rem; color: white; font-size: 1.5rem; text-shadow: 2px 2px 5px #000;">
+          <div>⏱️ <span id="tubingTime">30</span>s</div>
+          <div>✨ <span id="tubingVibes">0</span></div>
+          <div>💥 <span id="tubingHits">0</span>/3</div>
+        </div>
+
+        <!-- River game area -->
+        <div id="riverGame" style="position: relative; width: 100%; max-width: 500px; height: 350px; margin: 0 auto; background: linear-gradient(180deg, rgba(100,150,255,0.4) 0%, rgba(150,200,255,0.6) 100%); border: 4px solid #f093fb; border-radius: 15px; overflow: hidden; box-shadow: 0 0 30px rgba(240, 147, 251, 0.6); animation: rainbow-bg 3s linear infinite;">
+          <!-- Player tube -->
+          <div id="playerTube" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 4rem; transition: left 0.08s ease-out; z-index: 100; animation: spin 2s linear infinite;">
+            🛟
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem; color: white; font-size: 1.2rem; text-shadow: 2px 2px 5px #000;">
+          <p>🌈 Rainbow vibes +5 | 🌿 Herbs +3 | 💩 Bummers = BAD TRIP!</p>
+          <p style="font-size: 0.9rem; margin-top: 0.5rem;">📱 Mobile: Tap left/right sides to move!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Traveling Animation Screen -->
+    <div id="travelingScreen" class="screen hidden">
+      <div style="text-align: center; padding: 2rem;">
+        <!-- Region items above the bus -->
+        <div id="regionItems" style="font-size: 3rem; margin-bottom: 1rem; display: flex; justify-content: center; gap: 2rem;">
+          <span id="regionItem1">🌳</span>
+          <span id="regionItem2">🏫</span>
+          <span id="regionItem3">☔</span>
+        </div>
+        <h2 style="font-size: 3rem; margin-bottom: 2rem;">
+          <span id="travelBus" style="display: inline-block; animation: bounce 0.5s infinite;">🚐</span>
+        </h2>
+        <div id="travelMessage" style="font-size: 1.5rem; margin-bottom: 1rem; color: #ffd93d;">Cruising down the highway...</div>
+        <div id="travelProgress" style="font-size: 1.2rem;">Distance: 0 miles</div>
+
+        <style>
+          @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+          }
+          @keyframes slideRight {
+            from { transform: translateX(-100px); }
+            to { transform: translateX(120vw); }
+          }
+        </style>
+      </div>
+    </div>
+
+    <!-- Repair Mini-game Screen -->
+    <div id="repairScreen" class="screen hidden">
+      <div style="text-align: center; background: rgba(239, 68, 68, 0.1); padding: 2rem; border: 2px solid #ef4444;">
+        <h2 style="color: #ef4444; font-size: 2.5rem; margin-bottom: 1rem;">🔧 BUS REPAIR 🔧</h2>
+        <p id="repairInstructions" style="font-size: 1.4rem; margin-bottom: 1rem;">Click the flashing parts before time runs out!</p>
+        <div class="timer" id="repairTimer" style="font-size: 2rem; color: #ff6b6b; margin-bottom: 1rem;">Time: 20s</div>
+        <div id="repairCounter" style="font-size: 1.8rem; margin-bottom: 1.5rem;">Parts Fixed: 0 / 5</div>
+
+        <div id="repairParts" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 600px; margin: 0 auto;">
+          <!-- Parts will be dynamically generated -->
+        </div>
+
+        <button onclick="endRepair(false)" style="margin-top: 2rem;">Give Up</button>
+      </div>
+    </div>
+
+    <!-- Shop Screen -->
+    <div id="shopScreen" class="screen hidden">
+      <div class="message-box">
+        <h2 style="color: #ff6b6b; font-size: 2rem; margin-bottom: 1rem;">🏪 General Store</h2>
+        <p id="shopLocation">Welcome to the store!</p>
+        <p style="color: #ffd93d;">Your Cash: $<span id="shopCash">500</span></p>
+      </div>
+
+      <div id="shopItems" style="margin: 2rem 0;">
+        <div class="shop-item">
+          <span>⛽ Gas (25 units) - $20</span>
+          <button onclick="buyItem('gas', 25, 20)">Buy</button>
+        </div>
+        <div class="shop-item">
+          <span>🍞 Food (25 lbs) - $15</span>
+          <button onclick="buyItem('food', 25, 15)">Buy</button>
+        </div>
+        <div class="shop-item">
+          <span>🌿 Medicinal Herbs (25 units) - $30</span>
+          <button onclick="buyItem('herbs', 25, 30)">Buy</button>
+        </div>
+        <div class="shop-item">
+          <span>🔧 Spare Parts (emergency repairs) - $40</span>
+          <button onclick="buyItem('parts', 1, 40)">Buy</button>
+        </div>
+        <div class="shop-item">
+          <span>🎸 Guitar (permanent vibe boost) - $50</span>
+          <button onclick="buyItem('guitar', 0, 50)">Buy</button>
+        </div>
+      </div>
+
+      <button onclick="leaveShop()">Leave Store</button>
+    </div>
+
+    <!-- Settings Screen -->
+    <div id="settingsScreen" class="screen hidden">
+      <div class="message-box">
+        <h2 style="color: #ff6b6b; font-size: 2rem; margin-bottom: 1rem;">⚙️ Change Settings</h2>
+
+        <h3 style="color: #ffd93d; margin: 1.5rem 0 1rem;">Travel Pace:</h3>
+        <div class="button-group">
+          <button class="secondary" onclick="setPace('mellow')">🐌 Mellow - Slow, saves gas, better vibes</button>
+          <button class="secondary" onclick="setPace('steady')">🚶 Steady - Normal pace (RECOMMENDED)</button>
+          <button class="secondary" onclick="setPace('rush')">🏃 Rush - Fast, uses more gas, worse vibes</button>
+        </div>
+
+        <h3 style="color: #ffd93d; margin: 1.5rem 0 1rem;">Food Rations:</h3>
+        <div class="button-group">
+          <button class="secondary" onclick="setRations('bare')">🍞 Bare Bones - Save food, bad vibes</button>
+          <button class="secondary" onclick="setRations('normal')">🍔 Normal - Balanced (RECOMMENDED)</button>
+          <button class="secondary" onclick="setRations('feast')">🍕 Feast - Lots of food, great vibes</button>
+        </div>
+      </div>
+
+      <button onclick="closeSettings()">Done</button>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameOverScreen" class="screen hidden">
+      <div class="ascii-art">
+    _______________
+   /               \\
+  /   R.I.P.      \\
+ |     TRIP       |
+ |_______________|
+      </div>
+
+      <div class="message-box">
+        <h2 style="color: #ef4444; font-size: 3rem; margin-bottom: 1rem;">GAME OVER</h2>
+        <p id="gameOverMessage"></p>
+        <br>
+        <p id="finalStats"></p>
+      </div>
+
+      <button onclick="location.reload()">Try Again ✌️</button>
+    </div>
+
+    <!-- Win Screen -->
+    <div id="winScreen" class="screen hidden">
+      <div class="ascii-art">
+  🌉 GOLDEN GATE 🌉
+    _______________
+   /               \\
+  /  YOU MADE IT! \\
+ |   ☮  ✌️  🌻  |
+      </div>
+
+      <div class="message-box">
+        <h2 style="color: #4ade80; font-size: 3rem; margin-bottom: 1rem;">FAR OUT! ✌️</h2>
+        <p>You made it to San Francisco! The music festival awaits!</p>
+        <br>
+        <p id="winStats"></p>
+        <br>
+        <p style="color: #ffd93d; font-size: 1.8rem;">Peace, love, and good vibes! 🌻</p>
+      </div>
+
+      <button onclick="location.reload()">Play Again</button>
+    </div>
+  </div>
+
+  <script>
+    // Game State
+    const gameState = {
+      party: [],
+      profession: '',
+      professionName: '',
+      scoreMultiplier: 1,
+      resources: {
+        gas: 100,
+        food: 100,
+        vibes: 100,
+        cash: 500,
+        herbs: 50
+      },
+      distance: 0,
+      totalDistance: 3100,
+      currentLocationIndex: 0,
+      month: 'March',
+      day: 1,
+      pace: 'steady',
+      rations: 'normal',
+      weather: 'clear',
+      alive: true,
+      currentEvent: null,
+      usedEvents: [], // Track which events have been used
+      forageCount: 0, // Track foraging attempts at current location
+      items: {
+        guitar: false,
+        parts: 0
+      }
+    };
+
+    const months = ['March', 'April', 'May', 'June', 'July', 'August', 'September'];
+    const monthDays = [31, 30, 31, 30, 31, 31, 30];
+
+    // Role-specific modifiers
+    const roleModifiers = {
+      dealer: {
+        vibeDrainByPhase: { east: 6, middle: 9, west: 12 },
+        doubtThreshold: 45,
+        copTargetChance: 0.7, // 70% more likely to be targeted by cops
+        fineMultiplier: 1.5,
+        forageBonus: 0, // Balanced
+        foragVibeChange: 0
+      },
+      dropout: {
+        vibeDrainByPhase: { east: 7, middle: 10, west: 14 },
+        doubtThreshold: 55, // Doubts trigger earlier
+        copTargetChance: 0,
+        fineMultiplier: 1.0,
+        forageBonus: 0.2, // 20% more food
+        foragVibeChange: -5 // But loses vibes from scrounging
+      },
+      artist: {
+        vibeDrainByPhase: { east: 8, middle: 12, west: 16 },
+        doubtThreshold: 50,
+        copTargetChance: 0,
+        fineMultiplier: 0.8, // Cops feel bad for them
+        forageBonus: -0.2, // 20% less food
+        foragVibeChange: 10, // But gains vibes from "finding beauty"
+        jobPayoutMultiplier: 0.7 // Makes less money from odd jobs
+      }
+    };
+
+    // Journey phase system
+    function getJourneyPhase() {
+      if (gameState.distance < 1000) return 'east';
+      if (gameState.distance < 2200) return 'middle';
+      return 'west';
+    }
+
+    const locations = [
+      { name: 'Boston', distance: 0, isShop: true, isTown: true, hasLandmark: true },
+      { name: 'Woodstock Outskirts', distance: 150, isShop: false, isTown: false, hasLandmark: true },
+      { name: 'New York City', distance: 250, isShop: true, isTown: true, hasLandmark: true },
+      { name: 'Pittsburgh', distance: 500, isShop: true, isTown: true, hasLandmark: true },
+      { name: 'Harmony Hollow Commune', distance: 500, isShop: false, isTown: false, hasLandmark: true },
+      { name: 'Columbus', distance: 650, isShop: true, isTown: true },
+      { name: 'Rainbow Ridge Rest Stop', distance: 750, isShop: true, isTown: false },
+      { name: 'Indianapolis Checkpoint', distance: 850, isShop: false, isTown: false, isCheckpoint: true, hasLandmark: true },
+      { name: 'Bloomington Free Town', distance: 1000, isShop: false, isTown: false, hasLandmark: true },
+      { name: 'Highway 70 Gas Stop', distance: 1050, isShop: true, isTown: false },
+      { name: 'St. Louis', distance: 1200, isShop: true, isTown: true, hasLandmark: true },
+      { name: 'Ozark Mountain Retreat', distance: 1350, isShop: false, isTown: false, hasLandmark: true },
+      { name: 'Kansas City', distance: 1550, isShop: true, isTown: true, hasLandmark: true },
+      { name: 'Prairie Wind Collective', distance: 1700, isShop: false, isTown: false, hasLandmark: true },
+      { name: 'Roadside Gas & Grub', distance: 1850, isShop: true, isTown: false },
+      { name: 'Denver', distance: 2050, isShop: true, isTown: true, hasLandmark: true },
+      { name: 'Rocky Mountain Pass', distance: 2200, isShop: true, isTown: false, isMountain: true },
+      { name: 'Crystal Creek Campground', distance: 2350, isShop: false, isTown: false, hasLandmark: true },
+      { name: 'Salt Lake City', distance: 2500, isShop: true, isTown: true, hasLandmark: true },
+      { name: 'Desert Oasis Junction', distance: 2650, isShop: true, isTown: false },
+      { name: 'Cosmic River Rapids', distance: 2750, isShop: false, isTown: false, isTubing: true },
+      { name: 'Reno', distance: 2900, isShop: true, isTown: true, hasLandmark: true },
+      { name: 'Sierra Summit', distance: 2950, isShop: false, isTown: false, hasLandmark: true },
+      { name: 'San Francisco', distance: 3100, isShop: false, isTown: true }
+    ];
+
+    const landmarkArt = {
+      'Boston': {
+        title: '🎓 BOSTON COMMON 🎓',
+        art: `
+              🌳    🌳    🌳
+           BOSTON COMMON
+              THE STARTING
+                 POINT
+         🚐  ________________  ☮️
+            |  VW BUS READY |
+            |   LET'S GO!   |
+            |________________|
+                  ||  ||
+    `,
+        description: 'Your journey begins in Boston. The bus is packed, the vibes are high. Time to hit the road, man!'
+      },
+      'New York City': {
+        title: '☮ GREENWICH VILLAGE ☮',
+        art: `
+                    🎨
+                 ___|||___
+                |  CAFE  |
+                | WHA?   |
+         🎸    |_________|    🎵
+              /|         |\\
+    ♪  ☮    / |  FOLK   | \\    ☮  ♫
+          /   | MUSIC   |   \\
+    🌻   |    |  CLUB   |    |   🌺
+         |    |_________|    |
+    ===========================
+         BLEECKER STREET
+    `,
+        description: 'The heart of the counterculture! Bob Dylan played here, Jack Kerouac wrote here. The revolution starts NOW!'
+      },
+      'Pittsburgh': {
+        title: '✊ ANTI-WAR RALLY ✊',
+        art: `
+         NO MORE WAR!
+         ___________
+        |  ☮ PEACE |
+        | NOT WAR! |
+        |__________|
+         //      \\\\
+        //        \\\\
+    👥 👥 👥 👥 👥 👥
+    MAKE LOVE NOT WAR
+         ☮  ✌️  ☮
+    `,
+        description: 'A massive peace demonstration fills the streets! People of all kinds are spreading the message: peace, not war! ✌️'
+      },
+      'Indianapolis Checkpoint': {
+        title: '🚨 THE MAN\'S CHECKPOINT 🚨',
+        art: `
+              ___________
+             |  STOP!   |
+             |__________|
+                 ||
+    ⚠️          ||          ⚠️
+        ________________
+       |  ___    ___   |
+       | |👮|  |👮|  |
+       | |   |  |   |  |
+       |_|___|__|___|__|
+         CHECKPOINT
+    `,
+        description: 'State troopers are checking all vehicles. Keep cool, don\'t let them harsh your mellow...'
+      },
+      'St. Louis': {
+        title: '🌈 THE GATEWAY ARCH 🌈',
+        art: `
+              ✨
+            ⭐ ☮ ⭐
+          /         \\
+         /           \\
+        /     THE     \\
+       /    GATEWAY    \\
+      /       TO        \\
+     /      THE WEST     \\
+    /    ___________      \\
+   /    |           |      \\
+  ☮    |  GROOVY!  |       ✌️
+       |___________|
+    `,
+        description: 'Far out! This giant metal rainbow points the way west. California dreamin\' is almost real!'
+      },
+      'Denver': {
+        title: '🏔️ MILE HIGH MUSIC FESTIVAL 🏔️',
+        art: `
+         ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪
+        🎸____________🎤
+       |  ___    ___   |
+       | |🎵|  |🎶|  |
+       | |   |  |   |  |
+    🌻 |_|___|__|___|__| 🌸
+      /  STAGE   STAGE  \\
+     /  🎸  🥁  🎹  🎺  \\
+    /_____________________\\
+      👥👥👥👥👥👥👥
+       PEACE ☮ LOVE
+    `,
+        description: 'Psychedelic rock fills the mountain air! Free concert in the park, everyone\'s groovin\'!'
+      },
+      'Kansas City': {
+        title: '🌻 THE GRASSROOTS GATHERING 🌻',
+        art: `
+       ☮  FREE LOVE  ☮
+      _______________
+     |   COMMUNE   |
+     |   WELCOME   |
+     |______________|
+      🌻  🌸  🌺  🌼
+     /              \\
+    /  SHARE FOOD  \\
+   /   SHARE LOVE   \\
+  🚐  ⛺  🔥  ⛺  🚐
+    PEACE & FREEDOM
+    `,
+        description: 'A sprawling commune in the heartland! Folks sharing gardens, making music, living FREE! This is what the revolution looks like, man!'
+      },
+      'Salt Lake City': {
+        title: '🏕️ DESERT COMMUNE 🏕️',
+        art: `
+        ☀️  🌄  ☀️
+      🏕️  COMMUNE  🏕️
+         _______
+        /🌻🌸🌺\\
+       /  PEACE  \\
+      /   & LOVE  \\
+     /______________\\
+      ⛺  ⛺  ⛺  ⛺
+    🌵    🚐    🌵
+       LIVE FREE!
+    `,
+        description: 'A desert commune welcomes travelers! Share food, share stories, share the dream of a better world. Far out!'
+      },
+      'Reno': {
+        title: '🎰 THE ELECTRIC DESERT 🎰',
+        art: `
+         ✨  RENO  ✨
+      ___________________
+     |🌟 🌟 🌟 🌟 🌟 |
+     | BIGGEST LITTLE  |
+     |  CITY IN THE   |
+     |     WORLD!     |
+     |________________|
+    🎪  🎲  🎰  🃏  🎪
+         🚐  🏜️  🌵
+    `,
+        description: 'Desert oasis of neon lights! Almost to California - you can smell the Pacific Ocean!'
+      },
+      'Woodstock Outskirts': {
+        title: '🎸 WOODSTOCK MEMORIES 🎸',
+        art: `
+      ♫  ♪  ♫  ♪  ♫
+       WOODSTOCK
+      "3 DAYS OF
+     PEACE & MUSIC"
+    🎸  🎤  🥁  🎺
+         ☮️  ✌️
+    The vibes linger...
+    `,
+        description: 'Someone in the back claims they can still smell the porta-potties. Another guy swears he left his sandals here last year. You stop to look for them but find nothing.'
+      },
+      'Harmony Hollow Commune': {
+        title: '🌻 HARMONY HOLLOW 🌻',
+        art: `
+      🌻  🌸  🌻
+       HARMONY
+       HOLLOW
+      __________
+     /  SHARE  \\
+    /  TOGETHER \\
+    \\___________/
+    👥  🎸  🥘  👥
+      ALL WELCOME
+    `,
+        description: 'A small commune nestled in the hills. Folks share everything - food, music, dreams. They invite you to stay forever. Maybe someday...'
+      },
+      'Bloomington Free Town': {
+        title: '🏘️ FREE TOWN 🏘️',
+        art: `
+     BLOOMINGTON
+      FREE TOWN
+    ✊  NO RULES  ✊
+       JUST LOVE
+    🏠  🌳  🏠  🌳
+      ☮️  ✌️  ☮️
+    REVOLUTION NOW!
+    `,
+        description: 'An experimental free town run by students and dropouts. No hierarchy, just consensus. They\'re building a new world, one day at a time.'
+      },
+      'Ozark Mountain Retreat': {
+        title: '🏔️ OZARK HIDEAWAY 🏔️',
+        art: `
+        🏔️  ⛰️
+     OZARK MOUNTAIN
+       RETREAT
+      ___________
+     /  🌲🌲🌲  \\
+    /   NATURE   \\
+    \\  & PEACE  /
+     \\_________/
+       🦌  🐿️
+    `,
+        description: 'Hidden mountain retreat where folks escape the rat race. Simple living, high thinking. The forest whispers ancient wisdom.'
+      },
+      'Prairie Wind Collective': {
+        title: '🌾 PRAIRIE WIND 🌾',
+        art: `
+    🌾  🌻  🌾  🌻
+     PRAIRIE WIND
+      COLLECTIVE
+     ___________
+    |  ORGANIC  |
+    | FARM LIFE |
+    |___________|
+    🐔  🌽  🥕  🐮
+      GROW FREE!
+    `,
+        description: 'Organic farming collective on the endless prairie. They grow their own food, make their own rules. Living proof that another way is possible.'
+      },
+      'Crystal Creek Campground': {
+        title: '🏕️ CRYSTAL CREEK 🏕️',
+        art: `
+       💎  🌊  💎
+    CRYSTAL CREEK
+     CAMPGROUND
+    _______________
+       🏕️  🔥  🏕️
+      🌲      🌲
+        ~~~~
+      🐟  💧  🐟
+    PURE MOUNTAIN WATER
+    `,
+        description: 'Pristine mountain campground by a crystal-clear creek. Fellow travelers share stories around the fire. You feel connected to everything.'
+      },
+      'Sierra Summit': {
+        title: '⛰️ SIERRA SUMMIT ⛰️',
+        art: `
+        ⛰️
+       /  \\
+      / SF \\
+     /  50  \\
+    / MILES  \\
+    \\_______/
+      🚐  🌲
+    SO CLOSE!
+    `,
+        description: 'The final mountain pass! You can see the golden California valleys below. San Francisco awaits! Almost there, far out!'
+      }
+    };
+
+    const randomEvents = [
+      {
+        text: "You see a hitchhiker on the roadside. They flag you down. Do you pick them up?",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "💰 Pick them up for cash", effects: { cash: 25, vibes: -5 }, message: "'Ass, Grass, or Gas - Nobody Rides for Free!' They hand you $25. Good deal, but kinda greedy, man." },
+          { text: "🌿 Pick them up for herbs", effects: { vibes: 30, food: 5 }, message: "'Ass, Grass, or Gas!' They contribute to the herb collection! The vibes are EXCELLENT! ✌️" },
+          { text: "⛽ Pick them up for gas", effects: { gas: 15, vibes: 5 }, message: "'Ass, Grass, or Gas!' They pour 15 units of gas from their can into your tank. Far out!" },
+          { text: "🆓 Give them a free ride", effects: { vibes: 20 }, message: "You give them a free ride. Spread the love, man! They share cool stories and good vibes." },
+          { text: "👋 Drive past them", effects: { vibes: -10 }, message: "You drive past. They flip you off. Bad karma, dude." }
+        ]
+      },
+      {
+        text: "💥 BREAKDOWN! Your VW bus sputters and dies on the side of the road! What do you do?",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "🔧 Try to fix it yourself (Mini-game)", effects: {}, message: "You pop the hood and get to work...",
+            special: 'repairGame' },
+          { text: "💰 Pay a mechanic ($80, 1 day)", effects: { cash: -80, vibes: -10, days: 1 },
+            message: "You find a local mechanic. It's expensive and takes all day, but it's fixed." },
+          { text: "🔧 Use spare parts", effects: { parts: -1, vibes: 5, days: 0.5 },
+            message: "You use your spare parts and fix it quickly! Smart thinking!",
+            condition: () => gameState.items.parts > 0,
+            failMessage: "You don't have any spare parts!" }
+        ]
+      },
+      {
+        text: "🎪 You stumble upon a small music festival in a field! Live bands, dancing, the whole scene! Sunshine's eyes light up: 'Can we STAY?!'",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "🎸 Jam with the bands!", effects: { vibes: 40, days: 1, food: 5 }, message: "You break out the guitar and JAM for hours! People share food! This is EVERYTHING! ✨🎸", condition: () => gameState.items.guitar },
+          { text: "💃 Dance all day!", effects: { vibes: 35, food: -10, days: 1 }, message: "You dance until your feet hurt! Worth every second! This is LIVING! 🌈" },
+          { text: "🌿 Chill and enjoy", effects: { vibes: 30, food: -5, herbs: -10 }, message: "You relax with some herbs, listen to the music, and soak it all in. Perfect vibes! ☮️" },
+          { text: "🚐 'We gotta keep moving'", effects: { vibes: -15 }, message: "Everyone's bummed. 'We NEVER get to have fun!' Oof. Morale hit." }
+        ]
+      },
+      {
+        text: "🚨 The fuzz pulls you over. 'Your taillight's out, hippie.'",
+        isChoice: true,
+        weight: 2,
+        copEvent: true,
+        choices: [
+          { text: "💰 Just pay the ticket ($30)", effects: { cash: -30, vibes: -10 }, message: "You hand over the cash. The cop smirks and drives off." },
+          { text: "🌻 'But officer, we're all one...'", effects: { vibes: -20 },
+            message: "He's not interested in your philosophy. He writes you TWO tickets out of spite.",
+            risk: 0.3,
+            failEffects: { cash: -60, vibes: -25 },
+            failMessage: "He's not interested in your philosophy. He writes you TWO tickets out of spite." },
+          { text: "🏃 Floor it!", effects: { gas: -20, vibes: -30 },
+            message: "You peel out. Your VW bus goes 0-60 in... never. He doesn't even bother chasing you. But now you're paranoid for 200 miles.",
+            risk: 0.7,
+            failEffects: { cash: -100, vibes: -40, days: 2 },
+            failMessage: "He catches you immediately. Your bus tops out at 40mph. Now you're getting arrested. This takes DAYS to sort out." }
+        ]
+      },
+      {
+        text: "🍽️ Classic roadside diner! Chrome and neon! The waitress calls you 'hon.' Moonbeam is CHARMED.",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "🍳 Get the full breakfast ($15)", effects: { cash: -15, food: 30, vibes: 20 }, message: "Eggs, bacon, pancakes, toast! Moonbeam: 'This is HEAVEN!' Best $15 you've spent! 🥞" },
+          { text: "☕ Just coffee and pie ($5)", effects: { cash: -5, food: 10, vibes: 10 }, message: "The pie is AMAZING. The coffee could strip paint. Balanced experience! ☕🥧" },
+          { text: "🎵 Play for tips", effects: { vibes: 25, cash: 20, food: 15 }, message: "You play guitar! Tips AND free food! The waitress loves you! 'Y'all come back now!' 🎸", condition: () => gameState.items.guitar },
+          { text: "🚐 Too expensive, keep going", effects: { vibes: -10, food: -5 }, message: "Everyone's disappointed. The smell of bacon haunts you for miles." }
+        ]
+      },
+      {
+        text: "🌅 Sunset over the plains. Sky goes orange, then pink, then purple. River whispers: 'Far out...' Nobody moves for 20 minutes.",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "📸 'Everyone get in frame!'", effects: { vibes: 40 }, message: "You set up the camera on the roof. Timer goes off. PERFECT sunset photo with everyone! This is going on the wall! 📷✨" },
+          { text: "🌿 Herbs and silence", effects: { herbs: -10, vibes: 45 }, message: "You share the herbs in total silence. The colors! The VIBES! This is why you're out here! 🌄💫" },
+          { text: "🧘 Just be present", effects: { vibes: 35 }, message: "No photos. No words. Just experiencing it. When it's over, everyone exhales. Perfect moment. ☮️" },
+          { text: "🚗 'We should keep driving'", effects: { vibes: -20 }, message: "Everyone gives you the LOOK. 'SERIOUSLY?!' You stop. Too late, sun's already set. Blew it." }
+        ]
+      },
+      {
+        text: "💥 FLAT TIRE. Middle of nowhere. No shade. Stardust kicks the tire: 'Of COURSE.'",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "🔧 Change it yourself", effects: { vibes: -10, days: 0.5 }, message: "Hot, sweaty, miserable work. But you get it done! Everyone's grumpy but impressed. 💪" },
+          { text: "🌿 Take a break first", effects: { herbs: -15, vibes: 10, days: 0.5 }, message: "You take 20 minutes to chill with the herbs first. Makes the job WAY less annoying! Work smarter, not harder! 😎" },
+          { text: "💰 Flag down help ($20)", effects: { cash: -20, vibes: 0, days: 0.3 }, message: "A trucker stops and helps! You slip him $20. Fixed faster but costs cash." },
+          { text: "🔧 Use spare parts", effects: { parts: -1, vibes: 5, days: 0.2 }, message: "You've got a spare! Quick swap! Back on the road! Smart planning! 🛞", condition: () => gameState.items.parts > 0 }
+        ]
+      },
+      { text: "Some swell folks share home cooking! Far out!", effects: { food: 25, vibes: 15 } },
+      { text: "You find a Beatles album in a trash bin! Still plays! The bee's knees!", effects: { vibes: 30 } },
+      { text: "Camp under the stars. Outta sight.", effects: { vibes: 25 } },
+      { text: "The bus overheats! Gotta let it cool down. Drag city.", effects: { vibes: -10, days: 0.5 } },
+      { text: "You meet traveling musicians who jam with you! Real keen cats!", effects: { vibes: 35 } },
+      { text: "Someone paints a peace sign on your bus! Groovy!", effects: { vibes: 20 } },
+      { text: "Radio plays 'Sittin' On The Dock of the Bay'. Everyone sings along! Solid!", effects: { vibes: 25 } },
+      { text: "You discover a secret swimming hole. Skinny dipping time! It's the cat's pajamas!", effects: { vibes: 40 }, weight: 2 },
+      { text: "A commune invites you to stay the night! Free food and some real hip folks.", effects: { food: 30, vibes: 20, days: 1 } },
+      { text: "Someone gifts you a tie-dye shirt! You look like the real deal now!", effects: { vibes: 20 } },
+      { text: "You find wild berries growing by the roadside! Neato!", effects: { food: 15, vibes: 10 } },
+      { text: "🎪 You pass a carnival. The Ferris wheel looks rad!", effects: { vibes: 15 } },
+      { text: "🐮 Cows blocking the road. You wait 20 minutes. One moos at you.", effects: { vibes: 5 } },
+      { text: "🚗 Some squares in a station wagon give you dirty looks.", effects: { vibes: -5 } },
+      { text: "⛽ You find a gas station with cheaper prices! Score!", effects: { vibes: 10 } },
+      { text: "🎵 Radio plays a Hendrix solo. Everyone air guitars for 10 minutes.", effects: { vibes: 20 } },
+      { text: "🌮 Roadside taco stand. Best tacos you've ever had, man.", effects: { food: 15, vibes: 15, cash: -5 } },
+      { text: "💩 Someone ate bad gas station food. The bus smells TERRIBLE for 100 miles.", effects: { vibes: -15 } },
+      { text: "🦅 A hawk lands on your hood. It stares at you. Then flies away. Wild.", effects: { vibes: 10 } },
+      { text: "🏠 You drive past identical suburban houses. Gives everyone the creeps.", effects: { vibes: -10 } },
+      { text: "🎨 Someone paints 'LOVE' on the side of the bus. It's crooked but nice.", effects: { vibes: 15 } },
+      { text: "🌵 Desert heat is brutal. You're all sweating buckets.", effects: { vibes: -10, food: -5 } },
+      { text: "❄️ Unexpected cold snap. Nobody packed warm clothes.", effects: { vibes: -15 } },
+      { text: "🎪 You see a billboard: 'See the World's Largest Ball of Yarn!' Nobody cares.", effects: { vibes: 0 } },
+      { text: "🐿️ A squirrel runs across the road. You swerve. Everyone screams. You're fine.", effects: { vibes: -5 } },
+      { text: "⛰️ The view from this mountain is outta sight! Far out!", effects: { vibes: 25 } },
+      { text: "🚧 Construction zone. Detour adds an hour. Total drag.", effects: { gas: -5, vibes: -10 } },
+      { text: "🌈 RAINBOW! Everyone loses their minds. It's beautiful, man.", effects: { vibes: 30 } },
+      { text: "🦨 You ran over a skunk. The smell won't leave. Everyone's gagging.", effects: { vibes: -25 }, weight: 2 },
+      { text: "🎸 You pass a music store. Someone wants to buy new strings ($15).", effects: { cash: -15, vibes: 10 } },
+      { text: "📻 Radio picks up a station playing only polka. Nobody knows how to change it.", effects: { vibes: -10 } },
+      {
+        text: "A fellow traveler wants to trade supplies. What do you offer?",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "Trade 20 food for 20 gas", effects: { food: -20, gas: 20 }, message: "Trade complete! Groovy." },
+          { text: "Trade 20 gas for 20 food", effects: { gas: -20, food: 20 }, message: "Trade complete! Right on." },
+          { text: "Trade $30 for 25 food", effects: { cash: -30, food: 25 }, message: "You got some grub!" },
+          { text: "No thanks", effects: {}, message: "You wave and continue on." }
+        ]
+      },
+      { text: "Rainstorm soaks your sleeping bags. Everyone's morale takes a hit.", effects: { vibes: -20 } },
+      { text: "You find $50 in an old jacket! Far out!", effects: { cash: 50, vibes: 10 } },
+      {
+        text: "🌊 You reach a flooded river crossing! The bridge is out. What do you do?",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "🚐 Floor it and drive through", effects: { gas: -5, vibes: 10 },
+            message: "You gun it! Water splashes everywhere but you make it across! YEAHHH!",
+            risk: 0.4, failMessage: "The engine floods! You spend 2 days and $60 fixing it.", failEffects: { cash: -60, days: 2, vibes: -20 } },
+          { text: "🔧 Caulk the bus and float across", effects: { vibes: 5, days: 1 },
+            message: "You seal up the bus and float across carefully. Groovy engineering!",
+            risk: 0.2, failMessage: "The caulking fails! Bus gets soaked. -$40 in damages.", failEffects: { cash: -40, vibes: -15 } },
+          { text: "⏰ Wait for water to recede", effects: { days: 3, food: -15, vibes: -10 }, message: "You wait 3 days. Boring but safe." },
+          { text: "🗺️ Find another route (+50 miles)", effects: { distance: -50, gas: -15, days: 1 }, message: "You detour around. Takes longer but you're safe." }
+        ]
+      },
+      {
+        text: "⛰️ Steep mountain pass ahead! Your bus is struggling. What's the plan?",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "🏃 Lighten the load - dump supplies", effects: { food: -25, gas: 10, vibes: -10 }, message: "You toss out food to lighten up. The bus climbs easier!" },
+          { text: "🐌 Take it slow and steady", effects: { gas: -20, days: 1, vibes: -5 }, message: "Slow and steady wins the race. You make it over!" },
+          { text: "💨 Gun it up the mountain!", effects: { gas: -30, vibes: 15 },
+            message: "YEAH! You floor it and roar up the mountain! What a rush!",
+            risk: 0.5, failMessage: "The engine overheats! Breakdown costs you $70 and 2 days.", failEffects: { cash: -70, days: 2, vibes: -25 } },
+          { text: "🔧 Use spare parts to tune engine", effects: { parts: -1, gas: -10 }, message: "Smart thinking! Tuned engine handles the climb perfectly.",
+            condition: () => gameState.items.parts > 0, failMessage: "You don't have any spare parts!" }
+        ]
+      },
+      {
+        text: "🗺️ Someone lost the map. You've been driving in circles for 2 hours. Nobody wants to admit they have no idea where you are.",
+        isChoice: true,
+        weight: 2,
+        vibeTriggered: true,
+        choices: [
+          { text: "🚶 Stop and ask for directions", effects: { vibes: 5, days: 0.5 },
+            message: "Some cat at a gas station gets you sorted. Only cost you half a day." },
+          { text: "🧭 'I know where we're going'", effects: { vibes: -20, gas: -20 },
+            message: "You definitely don't. You waste gas driving the wrong way. Real drag.",
+            risk: 0.4, failMessage: "You definitely don't. You waste gas driving the wrong way. Real drag.", failEffects: { vibes: -20, gas: -20 } },
+          { text: "💰 Buy a new map ($5)", effects: { cash: -5, vibes: 10 }, message: "Problem solved. Why didn't you do this an hour ago?" },
+          { text: "🎲 Pick a random direction", effects: { vibes: -10, gas: -15 }, message: "Bold strategy. Doesn't work. You're now even more lost." }
+        ]
+      },
+      {
+        text: "🚽 Someone used the last of the toilet paper at the gas station and didn't tell anyone. Next person found out the hard way.",
+        isChoice: true,
+        weight: 3,
+        vibeTriggered: true,
+        choices: [
+          { text: "🤷 'Who cares, man'", effects: { vibes: -10 }, message: "The victim cares. A LOT. They won't let this go." },
+          { text: "💰 Buy more TP", effects: { cash: -3, vibes: 5 }, message: "You stock up. Problem solved. Still awkward though." },
+          { text: "😂 Laugh about it", effects: { vibes: -15 }, message: "The victim does NOT think this is funny. Major bummer." },
+          { text: "📰 'Use newspaper'", effects: { vibes: 0 }, message: "Depression-era advice. Nobody's impressed but it works." }
+        ]
+      },
+      {
+        text: "🍔 Someone suggests stopping at McDonald's. Half the bus thinks this is a total sellout move.",
+        isChoice: true,
+        weight: 3,
+        vibeTriggered: true,
+        choices: [
+          { text: "🍔 Stop at McDonald's", effects: { food: 30, cash: -15, vibes: -10 }, message: "The anti-corporate crowd sulks in the parking lot while everyone else destroys some Big Macs." },
+          { text: "🌻 'We only eat REAL food'", effects: { vibes: 10, food: -10 }, message: "You drive past. The pro-burger faction is not pleased. They complain for 50 miles." },
+          { text: "🎲 Flip a coin", effects: { vibes: -5 }, message: "Democracy fails. Now EVERYONE's mad at the coin." },
+          { text: "🍟 'Just get fries'", effects: { cash: -5, vibes: 5, food: 5 }, message: "Compromise works. Fries are fries, man." }
+        ]
+      },
+      {
+        text: "🌙 Someone ate the last of the peanut butter. Nobody will confess. Tensions are high.",
+        isChoice: true,
+        weight: 2,
+        vibeTriggered: true,
+        choices: [
+          { text: "🔍 Interrogate everyone", effects: { vibes: -15, days: 1 }, message: "You spend hours playing detective. Still no confession. Everyone's annoyed at you now." },
+          { text: "💰 Just buy more peanut butter", effects: { cash: -5, vibes: 5 }, message: "Crisis averted. It's just peanut butter." },
+          { text: "🤷 Let it go", effects: { vibes: -5 }, message: "The mystery remains unsolved. Someone keeps making passive aggressive comments about 'food thieves' for the next 100 miles." },
+          { text: "😈 Blame someone random", effects: { vibes: -10 }, message: "You pick someone and accuse them loudly. They're offended but too confused to argue effectively." }
+        ]
+      },
+      {
+        text: "🎶 Someone keeps playing 'In-A-Gadda-Da-Vida' on repeat. It's been 4 hours.",
+        isChoice: true,
+        weight: 3,
+        vibeTriggered: true,
+        choices: [
+          { text: "🔇 Hide the tape", effects: { vibes: -20 }, message: "They notice immediately. 'WHO TOOK MY TAPE?!' Now everyone's searching the bus. This was a bad idea." },
+          { text: "🎵 Put on different music", effects: { vibes: 10 }, message: "You casually switch to The Doors. They don't even notice. Crisis averted." },
+          { text: "😤 'PLAY SOMETHING ELSE!'", effects: { vibes: -15, days: 0.5 }, message: "Big argument. Now nobody's talking. You pull over to cool off. Awkward." },
+          { text: "🎸 Join in with guitar", effects: { vibes: 25 }, message: "If you can't beat 'em, jam with 'em. The 17-minute drum solo actually slaps when you're all playing along.",
+            condition: () => gameState.items.guitar }
+        ]
+      },
+      {
+        text: "💎 A long-haired dude at a rest stop is selling 'healing crystals' for $30. He claims they'll 'align your chakras and restore cosmic balance, man.'",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "💰 Buy the crystals ($30)", effects: { cash: -30, vibes: 15 },
+            message: "You buy a handful of beautiful crystals. The energy is IMMEDIATE! Everyone feels the cosmic vibrations! They look groovy on the dashboard too! ✨💎" },
+          { text: "🔮 'I'll trade you herbs for crystals'", effects: { herbs: -15, vibes: 20 },
+            message: "He's INTO it! You trade some grass for 'genuine Atlantean healing stones.' Fair trade! The crystal energy is REAL! 🌟" },
+          { text: "🤔 Ask him about the energy", effects: { vibes: 15 }, message: "'The crystals channel universal frequencies, man!' He goes into a 20-minute lecture on energy fields and chakra alignment. You're LEARNING! Mind = blown! 🧠✨" },
+          { text: "🚐 'We're good'", effects: { vibes: 0 }, message: "You politely decline. He nods knowingly. 'The crystals will find you when you're ready, brother.' Deep." }
+        ]
+      },
+      {
+        text: "📺 Someone saw a TV in a store window. Now they won't stop talking about missing their favorite shows.",
+        isChoice: true,
+        weight: 2,
+        vibeTriggered: true,
+        choices: [
+          { text: "📺 'Go home then'", effects: { vibes: -20 }, message: "They sulk for hours. 'I was just SAYING...' Bad vibes all around." },
+          { text: "🎭 'TV rots your brain, man'", effects: { vibes: -10 }, message: "They mutter something about you being 'preachy.' Not wrong." },
+          { text: "🤷 'We'll catch reruns'", effects: { vibes: 5 }, message: "Weak answer but it works. They let it go... for now." },
+          { text: "💰 Stop at a bar to watch TV ($10)", effects: { cash: -10, vibes: 15, days: 0.5 }, message: "You find a dive bar. They watch 'Laugh-In' and shut up about it. Worth it." }
+        ]
+      },
+      {
+        text: "☎️ Someone used a payphone to call home. Now they're weirdly quiet. Not good.",
+        isChoice: true,
+        vibeTriggered: true,
+        choices: [
+          { text: "🗣️ 'What'd they say?'", effects: { vibes: -15 }, message: "'They want me to come back.' Long silence. This might be a problem." },
+          { text: "🎸 Distract with music", effects: { vibes: 10 }, message: "You play guitar. They snap out of it... temporarily.", condition: () => gameState.items.guitar },
+          { text: "😶 Give them space", effects: { vibes: -5 }, message: "They brood in the back of the bus. You can feel them reconsidering everything." },
+          { text: "🍔 'Let's get burgers'", effects: { cash: -10, vibes: 15, food: 10 }, message: "Food fixes most problems. They perk up a bit." }
+        ]
+      },
+      {
+        text: "💼 Someone spots a 'HELP WANTED' sign. '$3/hour, benefits, start immediately.' They're staring at it.",
+        isChoice: true,
+        vibeTriggered: true,
+        choices: [
+          { text: "💰 'That's actually decent pay...'", effects: { vibes: -25 }, message: "Everyone starts doing math on napkins. Now THREE people are talking about getting jobs. You've created a problem." },
+          { text: "🌻 'Money isn't everything'", effects: { vibes: -15 }, message: "'Easy for YOU to say!' Oof. That landed badly." },
+          { text: "🚐 'We're almost there, man'", effects: { vibes: 10 }, message: "They sigh and get back in the bus. Crisis delayed, not solved." },
+          { text: "🎲 'Flip for it'", effects: { vibes: -10 }, message: "You flip a coin. They ignore the result and get in the bus anyway. Weird energy." }
+        ]
+      },
+      {
+        text: "🧼 Someone complains they haven't had a real shower in a week. It's getting tense.",
+        isChoice: true,
+        vibeTriggered: true,
+        choices: [
+          { text: "🏨 Get a motel room ($25)", effects: { cash: -25, vibes: 20, days: 1 }, message: "Hot showers for everyone! Morale restored. You all smell like humans again." },
+          { text: "🌊 'Find a river'", effects: { vibes: 5, days: 0.5 }, message: "You stop at a creek. It's freezing but it works. Kinda." },
+          { text: "😤 'We're all dirty'", effects: { vibes: -20 }, message: "'Yeah and I HATE IT!' They're not wrong. Everyone's cranky now." },
+          { text: "🧴 'Use this perfume'", effects: { vibes: -10 }, message: "You offer patchouli oil. 'That makes it WORSE!' Yikes." }
+        ]
+      },
+      {
+        text: "🎓 Sunshine saw a college campus. 'Maybe I should go back to school. Get my degree. Be... responsible.'",
+        isChoice: true,
+        vibeTriggered: true,
+        choices: [
+          { text: "📚 'Education is groovy!'", effects: { vibes: -30 }, message: "Wrong answer. Now Moonbeam ALSO wants to go to college. This is spiraling." },
+          { text: "🎸 'The REAL education is out here'", effects: { vibes: 15 }, message: "Sunshine nods slowly. 'Yeah... yeah man. You're right.' Crisis averted... for now." },
+          { text: "💰 'College costs bread we don't have'", effects: { vibes: 10 }, message: "Practical argument. Sunshine laughs. 'True. I'm totally broke.' They stay." },
+          { text: "🚐 Just keep driving", effects: { vibes: -15 }, message: "You ignore them. They stare out the window for the next 50 miles. Awkward." }
+        ]
+      },
+      {
+        text: "⚔️ River sees an Army recruitment poster. 'Free food, steady pay, see the world...' They're seriously considering it.",
+        isChoice: true,
+        vibeTriggered: true,
+        choices: [
+          { text: "☮️ 'We're against the war, remember?'", effects: { vibes: 20 }, message: "River blinks. 'Oh yeah. Right. What was I thinking?' Close call." },
+          { text: "😤 'You'd join the MAN?!'", effects: { vibes: -20 }, message: "'Don't lecture me!' River is PISSED. Maybe dial it back." },
+          { text: "🗺️ 'We're already seeing the world'", effects: { vibes: 15 }, message: "River looks around the bus. 'In a busted VW? ...Actually yeah this is better.' They smile." },
+          { text: "🤷 'Do what you want'", effects: { vibes: -25 }, message: "River looks hurt. 'Wow. Okay.' They're quiet for hours." }
+        ]
+      },
+      {
+        text: "💼 Stardust spots a 'NOW HIRING - MANAGER TRAINEE' sign. 'I could wear a tie. Have a desk. Benefits...'",
+        isChoice: true,
+        vibeTriggered: true,
+        choices: [
+          { text: "🌻 'You'd be a SQUARE!'", effects: { vibes: 10 }, message: "Stardust laughs. 'You're right. I'd be miserable in a week.' Threat neutralized." },
+          { text: "💰 'How much does it pay?'", effects: { vibes: -30 }, message: "Now EVERYONE is calculating if they should get jobs. You've doomed the whole trip." },
+          { text: "🎨 'But you're an artist, man'", effects: { vibes: 20 }, message: "'You're right. I am.' Stardust tears up the application. Far out." },
+          { text: "⏰ 'Let's think about it later'", effects: { vibes: -10 }, message: "Weak. Stardust pockets the application. This isn't over." }
+        ]
+      },
+      {
+        text: "💔 Moonbeam gets a postcard from an ex. 'They want me back. They got a house. A CAR. Stability...'",
+        isChoice: true,
+        vibeTriggered: true,
+        choices: [
+          { text: "😤 'They're trying to control you!'", effects: { vibes: 15 }, message: "Moonbeam rips up the postcard. 'You're right. I'm FREE now!' Hell yeah." },
+          { text: "💑 'Do you love them?'", effects: { vibes: -20 }, message: "'I... I don't know anymore.' Moonbeam cries. This got heavy." },
+          { text: "🏠 'Stability is overrated'", effects: { vibes: 10 }, message: "'Is it though?' Moonbeam asks. 'Yeah,' you say. '...Probably.' They stay." },
+          { text: "📮 'Write them back'", effects: { vibes: -25, days: 1 }, message: "Moonbeam spends all day writing a letter. The mood is WEIRD now." }
+        ]
+      },
+      {
+        text: "📺 River won't stop talking about missing the moon landing on TV. 'History happened and we MISSED IT.'",
+        isChoice: true,
+        vibeTriggered: true,
+        choices: [
+          { text: "🌙 'We'll watch the reruns'", effects: { vibes: 5 }, message: "'It's not the SAME.' River sulks but stays." },
+          { text: "🚀 'We're on our own journey'", effects: { vibes: 15 }, message: "River pauses. 'That's actually pretty deep, man.' Crisis averted." },
+          { text: "📰 'Just read the newspaper'", effects: { vibes: -15 }, message: "'READ?! I wanted to WATCH!' River is not consoled." },
+          { text: "🤷 Ignore them", effects: { vibes: -20 }, message: "River won't shut up about it for 100 miles. Should've engaged." }
+        ]
+      },
+      {
+        text: "🍕 Sunshine: 'I miss pizza. REAL pizza. Not berries and granola. I want to go to Chicago just for deep dish.'",
+        isChoice: true,
+        vibeTriggered: true,
+        choices: [
+          { text: "🍕 'We'll get pizza in SF'", effects: { vibes: 10 }, message: "Sunshine perks up. 'They have pizza in SF?' 'Probably,' you lie. It works." },
+          { text: "💰 Stop for pizza ($20)", effects: { cash: -20, vibes: 25, food: 20, days: 0.5 }, message: "Best pizza of your life. Everyone's happy. Worth it." },
+          { text: "🥕 'Berries are healthier'", effects: { vibes: -25 }, message: "'I DON'T CARE!' Sunshine is HEATED. Bad call." },
+          { text: "😤 'Stop whining'", effects: { vibes: -30 }, message: "Sunshine doesn't talk to you for two days. Harsh." }
+        ]
+      },
+      {
+        text: "📻 Stardust hears their favorite band broke up on the radio. Full existential crisis mode.",
+        isChoice: true,
+        vibeTriggered: true,
+        choices: [
+          { text: "🎸 'Music never dies, man'", effects: { vibes: 20 }, message: "Stardust wipes tears. 'You're right. The SOUND lives on.' They're okay." },
+          { text: "😢 Let them grieve", effects: { vibes: 0, days: 0.5 }, message: "You pull over. Stardust cries for an hour. Then they're fine. Cathartic." },
+          { text: "📻 'Other bands exist'", effects: { vibes: -15 }, message: "'You don't GET IT!' Yeah you clearly don't." },
+          { text: "🎵 Play different music", effects: { vibes: -20 }, message: "They throw the tape out the window. 'IF I CAN'T HAVE THEM, NO ONE CAN!' Yikes." }
+        ]
+      },
+      {
+        text: "💼 Moonbeam's parents sent a telegram: 'Your cousin got promoted. Making $8000/year. When are YOU getting serious?'",
+        isChoice: true,
+        vibeTriggered: true,
+        choices: [
+          { text: "🚮 Rip up the telegram", effects: { vibes: 15 }, message: "'Screw them!' Moonbeam yells. Liberation feels good." },
+          { text: "📝 Help write a response", effects: { vibes: -10, days: 1 }, message: "You spend forever crafting the perfect 'I'm fine' letter. Exhausting." },
+          { text: "💰 '$8000 is square money'", effects: { vibes: 10 }, message: "'Yeah. Sellout money.' Moonbeam feels better." },
+          { text: "😔 'Maybe they have a point'", effects: { vibes: -30 }, message: "TERRIBLE response. Now Moonbeam is spiraling. Why did you say that?!" }
+        ]
+      },
+      {
+        text: "🕉️ River met some guy named 'Brother Cosmos' who says he can teach them to 'transcend the physical plane' at his compound in Nevada.",
+        isChoice: true,
+        vibeTriggered: true,
+        choices: [
+          { text: "🚫 'That's a CULT, man'", effects: { vibes: 20 }, message: "River blinks. 'Wait... you think?' 'YEAH.' 'Oh. Good catch.' Disaster avoided." },
+          { text: "🤔 'Sounds interesting...'", effects: { vibes: -35 }, message: "Now River AND Stardust want to join Brother Cosmos. You've created a nightmare." },
+          { text: "📚 'Read about cults first'", effects: { vibes: 10, days: 1 }, message: "You spend a day at a library. River reads horrifying stories. 'Never mind!' Smart move." },
+          { text: "🤷 'Your choice'", effects: { vibes: -30 }, message: "River hands you a pamphlet. 'Come with me!' This is getting out of hand." }
+        ]
+      },
+      {
+        text: "🔥 Your bus catches fire while camping! What do you do?",
+        isChoice: true,
+        choices: [
+          { text: "💧 Use water from supplies", effects: { food: -20, vibes: -15, cash: -30 }, message: "You put it out but lost food and have $30 in damages." },
+          { text: "🧯 Let it burn, save what you can", effects: { gas: -30, vibes: -25, cash: -50 }, message: "Major damage! Lost gas and $50 in repairs. That's heavy, man." },
+          { text: "🔧 Use spare parts to fix quickly", effects: { parts: -1, vibes: -10, cash: -20 }, message: "Quick thinking! You patch it up with parts. Only $20 in damages.",
+            condition: () => gameState.items.parts > 0 }
+        ]
+      },
+      {
+        text: "🎪 You stumble upon a massive Be-In happening in a park! Thousands of hippies, live music, free food! What do you do?",
+        isChoice: true,
+        choices: [
+          { text: "🎸 Join the jam session", effects: { vibes: 35, days: 1, food: 10 },
+            message: "You play guitar for hours! Someone shares food. The vibes are IMMACULATE! ☮️",
+            risk: 0.2, failMessage: "The fuzz raids the Be-In! Everyone scatters. Lost a day.", failEffects: { days: 1, vibes: -15 } },
+          { text: "🌿 Partake in the festivities", effects: { vibes: 40, food: 15, days: 2 },
+            message: "You fully immerse in the experience. Mind = BLOWN. This is what it's all about, man!",
+            risk: 0.3, failMessage: "You get TOO into it. Wake up 3 days later. Where did the time go?", failEffects: { days: 3, gas: -10, vibes: -5 } },
+          { text: "⏰ Stay for a bit, then leave", effects: { vibes: 20, food: 8, days: 0.5 }, message: "You soak in the good vibes, grab some free grub, and hit the road refreshed!" },
+          { text: "🚐 Keep driving", effects: { vibes: -10 }, message: "You drive past. Everyone waves. You feel like you missed something special..." }
+        ]
+      },
+      {
+        text: "🎪 A traveling circus passes by! They invite you to hang out. What do you do?",
+        isChoice: true,
+        choices: [
+          { text: "🎭 Join the circus for a day!", effects: { days: 1, vibes: 40, food: 15 }, message: "You juggle, dance, and laugh with the circus folk! They share food and good vibes! Far out!" },
+          { text: "🎨 Paint their wagon for cash", effects: { cash: 60, vibes: 20, days: 1 }, message: "You paint psychedelic art all over their wagon! They love it and pay you $60!" },
+          { text: "📸 Just take photos and move on", effects: { vibes: 10 }, message: "You snap some groovy photos and wave goodbye. Cool cats!" },
+          { text: "🚐 Keep driving", effects: {}, message: "You wave and continue down the road. Maybe next time!" }
+        ]
+      },
+      {
+        text: "🚧 Toll booth ahead! The man wants $40 to pass. What do you do?",
+        isChoice: true,
+        choices: [
+          { text: "💰 Pay the toll ($40)", effects: { cash: -40, vibes: -5 }, message: "You pay up. Supporting the system is a drag, man." },
+          { text: "🎸 Offer to play music instead", effects: { vibes: 15 },
+            message: "They love your music! Free passage!",
+            risk: 0.4, failMessage: "They don't dig it. Pay $40 anyway or get fined $60!", failEffects: { cash: -60, vibes: -15 } },
+          { text: "💨 Run the toll booth!", effects: { vibes: 20 },
+            message: "You floor it! They can't catch you! FREEDOM!",
+            risk: 0.6, failMessage: "Cops chase you down! $80 fine and bad vibes.", failEffects: { cash: -80, vibes: -30 } },
+          { text: "🗺️ Take backroads to avoid it", effects: { gas: -20, days: 1 }, message: "You navigate around using backroads. Stick it to the man!" }
+        ]
+      },
+      {
+        text: "🥪 WHO ATE THE LAST SANDWICH? Someone definitely ate it. Nobody admits it. The vibes are TENSE.",
+        isChoice: true,
+        choices: [
+          { text: "🔍 Interrogate everyone", effects: { vibes: -15 },
+            message: "You grill everyone. Still no confession. Now everyone's mad at YOU. Bad karma, man.",
+            risk: 0.25, failMessage: "The questioning gets heated. Someone starts doubting the whole trip!", failEffects: { vibes: -20 } },
+          { text: "😤 Blame the hitchhiker from 3 days ago", effects: { vibes: 5 }, message: "Everyone agrees it was probably them. Crisis averted! (It definitely wasn't them)" },
+          { text: "🧘 Let it go, spread peace", effects: { vibes: -5 }, message: "You take the high road. The tension lingers but you keep the peace." },
+          { text: "🤷 Confess (even if it wasn't you)", effects: { vibes: 15 }, message: "You take the fall. Everyone respects your sacrifice. You're a real one. ✌️" }
+        ]
+      },
+      {
+        text: "🚐 The bus smells... WEIRD. Really weird. Nobody knows why. Everyone knows it's bad.",
+        isChoice: true,
+        choices: [
+          { text: "🪟 Roll all the windows down", effects: { vibes: -5, days: 1 }, message: "You air it out for a full day. The smell fades... mostly. Everyone's windswept and cranky." },
+          { text: "🌲 Blame it on the food", effects: { food: -10, vibes: -5 }, message: "You throw out suspicious-looking food. Smell persists. You wasted good grub." },
+          { text: "😤 Just ignore it", effects: { vibes: -3 }, message: "You pretend it's fine. The smell becomes... part of the journey. Kinda." },
+          { text: "🧼 Pull over and deep clean", effects: { days: 1, vibes: 10 }, message: "You find the source: old cheese under the seat. Full clean! Everyone feels refreshed! ✨" }
+        ]
+      },
+      {
+        text: "🎸 Someone will NOT stop playing the same guitar riff. Over. And. Over. And. Over.",
+        isChoice: true,
+        choices: [
+          { text: "✌️ Let them cook, it's their vibe", effects: { vibes: 10 }, message: "You let the music flow, man! Everyone's jamming to it... for now. (We'll see how long this lasts)" },
+          { text: "🔇 Politely ask them to stop", effects: { vibes: -15 }, message: "They stop... but now they're SULKING. The silence is somehow worse." },
+          { text: "🚌 Pull over for a 'music break'", effects: { days: 0.5, vibes: 5 }, message: "Everyone jams together outside! The riff actually sounds good with harmony. ☮️" },
+          { text: "🎵 Join in and make it a jam", effects: { vibes: 25 }, message: "You turn it into a full band session! GROOVY! The vibes are IMMACULATE! 🎶" }
+        ]
+      },
+      {
+        text: "🗺️ A guy with a huge beard and wild eyes says, 'I know a shortcut.' Do you trust him?",
+        isChoice: true,
+        choices: [
+          { text: "🧭 Trust the beard", effects: { distance: 50, vibes: 10 },
+            message: "He wasn't lying! You save 50 miles! Far out!",
+            risk: 0.5, failMessage: "DETOUR! You're lost for a day and use extra gas.", failEffects: { days: 1, gas: -20, vibes: -10 } },
+          { text: "🚐 Stick to the main road", effects: {}, message: "You play it safe. The bearded guy shrugs and wanders off into the wilderness." },
+          { text: "🤔 Argue about directions for 20 minutes", effects: { vibes: -10 }, message: "Nobody agrees. You end up going your original route anyway. What a waste of time." }
+        ]
+      },
+      {
+        text: "🎪 You make friends with FIVE groovy people at a rest stop. They ALL want to come to California with you!",
+        isChoice: true,
+        choices: [
+          { text: "🚐 Invite them all!", effects: { vibes: 10, food: -15 }, message: "The bus is PACKED! It's a party on wheels! Food runs out fast though... 🌻" },
+          { text: "✌️ Invite 2 of them", effects: { vibes: 5, food: -8 }, message: "A nice compromise! The vibe stays chill and manageable." },
+          { text: "👋 Politely decline", effects: { vibes: -5 }, message: "You say no. They look disappointed. You feel like a square... but practical." },
+          { text: "🎵 Invite them if they bring supplies", effects: { vibes: 15, food: 20, gas: 15 }, message: "They bring food and gas! SCORE! The more the merrier! ☮️" }
+        ]
+      },
+      {
+        text: "🌅 Perfect morning. The sun rises golden over the horizon. Coffee tastes good. The radio plays all your favorite songs. Nobody complains. This is why you're on this journey.",
+        effects: { vibes: 15 },
+        rareEvent: true
+      },
+      {
+        text: "💭 Everyone's sitting in silence. Someone says, 'Why are we even doing this?' The question hangs heavy in the air.",
+        isChoice: true,
+        choices: [
+          { text: "🌻 'For freedom, man. For the music!'", effects: { vibes: 20 },
+            message: "Your passion reignites the fire! Everyone remembers the dream! ✊",
+            risk: 0.3, failMessage: "They're not convinced. 'Sounds like hippie nonsense.' Awkward silence.", failEffects: { vibes: -15 } },
+          { text: "🤷 'I don't know. Does it matter?'", effects: { vibes: -10 }, message: "Existential dread sets in. Great job, philosopher." },
+          { text: "🎸 Don't answer, just play music", effects: { vibes: 15 }, message: "The music says what words can't. Everyone gets it. ☮️" },
+          { text: "🚐 'To prove we can make it.'", effects: { vibes: 10 }, message: "Simple. Honest. The doubt fades. You keep driving." }
+        ]
+      },
+      {
+        text: "🍕 Someone suggests stopping at a diner that looks... questionable. The sign is half-burnt. A cat lives in the parking lot. But you're HUNGRY.",
+        isChoice: true,
+        choices: [
+          { text: "🍔 Risk it! We need food!", effects: { cash: -15, food: 25 },
+            message: "The food is... actually AMAZING? Best meal of the trip! The cat was a good sign!",
+            risk: 0.4, failMessage: "Food poisoning strikes! Everyone's sick for a day.", failEffects: { days: 1, vibes: -20, food: -10 } },
+          { text: "🌮 Just order something simple", effects: { cash: -10, food: 10, vibes: 5 }, message: "Grilled cheese and fries. Safe choice. Decent vibes." },
+          { text: "🚐 Keep driving, we'll find better", effects: { vibes: -10, food: -5 }, message: "You don't find anywhere better for 100 miles. Rookie mistake." }
+        ]
+      }
+    ];
+
+    // REGION-SPECIFIC EVENTS - East Coast (0-1000 miles)
+    const eastRegionEvents = [
+      {
+        id: 'sunshine_college_doubt',
+        text: "🎓 Sunshine stares at a State College billboard: 'Fall Registration Open!' They haven't said anything for 20 miles. Finally: 'I could still make it. Fall semester. Get my degree. Be... normal.'",
+        isChoice: true,
+        weight: 3,
+        condition: () => gameState.party[0] && gameState.party[0].doubting && !gameState.usedEvents.includes('sunshine_college_doubt'),
+        choices: [
+          { text: "🌿 'College will always be there'", effects: { herbs: -10, vibes: 25 }, message: "You share some herbs and talk it through. 'This trip? This moment? Once in a lifetime. School isn't going anywhere.' Sunshine nods slowly. 'Yeah... yeah you're right.' ☮️" },
+          { text: "📚 'What would you even study?'", effects: { vibes: 20 }, message: "'Business... I guess?' 'BUSINESS?! You?!' Everyone laughs. Sunshine laughs too. 'Okay, yeah, that's insane.' Crisis averted." },
+          { text: "🎸 'The real education is HERE'", effects: { vibes: 15 }, message: "'You're learning about LIFE, man. Freedom. The open road. Can't get that in a classroom.' Sunshine smiles. 'True.'" },
+          { text: "😰 'Maybe you should go back'", effects: { vibes: -35 }, message: "Sunshine's face drops. 'Really?' Now they're SERIOUSLY reconsidering. Everyone's uncomfortable. Why did you say that?!" }
+        ]
+      },
+      {
+        id: 'river_army_doubt',
+        text: "⚔️ Rest stop. River sees an Army recruitment poster: 'Be All You Can Be - $288/month, Travel the World, Serve Your Country.' They stare at it for a LONG time.",
+        isChoice: true,
+        weight: 3,
+        condition: () => gameState.party[1] && gameState.party[1].doubting && !gameState.usedEvents.includes('river_army_doubt'),
+        choices: [
+          { text: "☮️ 'We're ANTI-WAR, remember?'", effects: { vibes: 25 }, message: "River blinks like waking up. 'Oh man. Yeah. What was I thinking? The ARMY?!' Everyone laughs nervously. Close call." },
+          { text: "🌿 'You'd hate the haircut'", effects: { herbs: -10, vibes: 30 }, message: "You break out the herbs and joke: 'First thing they do? Shave that beautiful hair.' River touches their long hair. 'Never mind. Forget that.' Crisis over! 😂" },
+          { text: "🗺️ 'We're already traveling'", effects: { vibes: 20 }, message: "'In a busted VW?' 'In FREEDOM,' you correct. River grins. 'Yeah. Better this way.'" },
+          { text: "💰 'The money IS good...'", effects: { vibes: -40 }, message: "TERRIBLE response! Now River is SERIOUSLY considering it! 'Yeah... steady pay... food...' Everyone's panicking. You may have just lost River." }
+        ]
+      },
+      {
+        id: 'stardust_job_doubt',
+        text: "💼 Gas station. Stardust picks up a flyer: 'MANAGER TRAINEE - $3.50/hr, Benefits, Advancement Opportunities.' They fold it carefully and put it in their pocket.",
+        isChoice: true,
+        weight: 3,
+        condition: () => gameState.party[2] && gameState.party[2].doubting && !gameState.usedEvents.includes('stardust_job_doubt'),
+        choices: [
+          { text: "🎨 'You're an ARTIST, man'", effects: { vibes: 25 }, message: "'Artists don't have managers. Artists don't have TIME CARDS.' Stardust pulls out the flyer, looks at it, then tears it up. 'You're right. What was I thinking?' ✨" },
+          { text: "🌿 'That's a CAGE, not a job'", effects: { herbs: -10, vibes: 20 }, message: "You break out the herbs and paint the picture: 'Fluorescent lights. Polyester tie. Calling someone BOSS. That's DEATH.' Stardust shivers. 'Ugh. Yeah. No thanks.'" },
+          { text: "💰 'How much is freedom worth?'", effects: { vibes: 15 }, message: "'More than $3.50 an hour,' Stardust says quietly. They leave the flyer on the counter. Good." },
+          { text: "😰 'Benefits ARE important...'", effects: { vibes: -35 }, message: "Stardust's eyes light up. 'Right?! DENTAL! VACATION DAYS!' Now they're spiraling into corporate fantasy. Everyone's losing faith. Bad move." }
+        ]
+      },
+      {
+        id: 'moonbeam_brad_doubt',
+        text: "📮 Mail stop. Moonbeam gets a letter from their parents: 'Your cousin Brad got PROMOTED. $8000/year now. House. Car. Wedding next spring. When are YOU getting serious about life?'",
+        isChoice: true,
+        weight: 3,
+        condition: () => gameState.party[3] && gameState.party[3].doubting && !gameState.usedEvents.includes('moonbeam_brad_doubt'),
+        choices: [
+          { text: "🔥 'Rip it up. Forget Brad.'", effects: { vibes: 30 }, message: "Moonbeam tears the letter in half. 'YEAH! Forget Brad and his HOUSE!' Everyone cheers! Liberation feels GOOD! 🔥✨" },
+          { text: "🌿 'Brad's living THEIR dream'", effects: { herbs: -10, vibes: 25 }, message: "'We're living OURS. Different dreams, man.' Moonbeam nods. 'Brad would hate this trip. I'd hate his life. We're good.' ☮️" },
+          { text: "💭 'Success means different things'", effects: { vibes: 15 }, message: "'Brad's got a house. We've got... this.' Moonbeam looks at the sunset. 'Yeah. I'll take this.'" },
+          { text: "😔 'Brad IS doing well...'", effects: { vibes: -40 }, message: "Moonbeam gets REAL quiet. '$8000... that's... a lot.' They read the letter again. And again. The whole vibe crashes. Comparison is poison." }
+        ]
+      },
+      {
+        text: "☔ Cold rain hammers the bus. Wipers barely work. Everyone's shivering.",
+        isChoice: true,
+        weight: 3,
+        choices: [
+          { text: "🌿 Use herbs to warm the vibes", effects: { herbs: -10, vibes: 25 }, message: "Can't control the weather but you CAN control the atmosphere! Bus gets REAL cozy. Far out! ☮️" },
+          { text: "🔥 Pull over and make a fire", effects: { days: 0.5, vibes: 15, food: -5 }, message: "You huddle around the fire, make some food. Lose half a day but worth it for the vibes." },
+          { text: "🥶 Just tough it out", effects: { vibes: -15, food: -5 }, message: "Everyone's miserable and shivering for hours. Bad call, man." }
+        ]
+      },
+      {
+        text: "📞 Rest stop. Someone spots a payphone. 'I should call my mom... just to let her know I'm okay...'",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "📞 'Yeah, call her'", effects: { cash: -2, vibes: 10 }, message: "Mom cries. She's relieved you're alive. Your friend feels better. Good vibes." },
+          { text: "🌿 'Herbs first, THEN call'", effects: { herbs: -5, vibes: 20, cash: -2 }, message: "They use some herbs first, THEN call their mom. It goes GREAT. She tells them to 'follow your bliss.' Cosmic! ✨" },
+          { text: "🚐 'She'll just guilt trip you'", effects: { vibes: -10 }, message: "They brood for 50 miles. Maybe should've let them call." }
+        ]
+      },
+      {
+        text: "🎓 You drive through a college town. Students with backpacks everywhere. Sunshine gets REAL quiet.",
+        isChoice: true,
+        weight: 3,
+        choices: [
+          { text: "🏫 'Miss it?'", effects: { vibes: -10 }, message: "Sunshine: 'A little.' Stares out the window. Heavy vibes." },
+          { text: "🌿 'Those cats are TRAPPED. We're FREE!'", effects: { herbs: -10, vibes: 30 }, message: "You share the herbs and Moonbeam yells 'LIBERATION!' out the window at a guy in a tie. He flips you off. You all crack up! 😂" },
+          { text: "📚 Stop at campus bookstore", effects: { cash: -10, vibes: 15 }, message: "You browse philosophy books. River buys 'Be Here Now.' Groovy literature! 📖" },
+          { text: "🚐 Just keep driving", effects: { vibes: -5 }, message: "Silence. The weight of the path not taken. Heavy." }
+        ]
+      },
+      {
+        text: "🏈 Friday night. Small town. EVERYONE is at the football game. Main street is EMPTY except for your psychedelic bus.",
+        isChoice: true,
+        weight: 3,
+        choices: [
+          { text: "🏈 Go to the game (why not?)", effects: { cash: -5, vibes: 20, food: 10 }, message: "You show up in full hippie regalia. Crowd is confused. Hotdogs are FIRE though! River cheers for the wrong team. You get booed. Worth it! 🎉" },
+          { text: "🌿 Chill in the parking lot", effects: { herbs: -10, vibes: 25 }, message: "You have the whole parking lot to yourselves. Stardust does donuts in the bus. TERRIBLE idea but the vibes are IMMACULATE! 🚐💨" },
+          { text: "⛽ Hit the gas station while it's empty", effects: { vibes: 10, food: 15 }, message: "Nobody in line! Moonbeam raids the snacks. Attendant doesn't care, he's listening to the game on the radio. Score!" },
+          { text: "🚐 Keep driving", effects: { vibes: 5 }, message: "Ghost town vibes. Kinda eerie but kinda cool." }
+        ]
+      },
+      {
+        text: "🥶 Moonbeam's hands are TOO COLD to roll. Everyone's jonesing. This is a CRISIS.",
+        isChoice: true,
+        weight: 3,
+        choices: [
+          { text: "🔥 Pull over, warm hands by engine", effects: { days: 0.5, herbs: -10, vibes: 30 }, message: "Moonbeam huddles by the warm engine, finally rolls one up. Worth the wait! Cloud nine! ☁️✨" },
+          { text: "💰 Buy a lighter at gas station", effects: { cash: -3, herbs: -5, vibes: 15 }, message: "Problem solved with capitalism! Moonbeam lights up immediately. Better!" },
+          { text: "😤 Moonbeam does it anyway with shaky hands", effects: { herbs: -15, vibes: 10 }, message: "It's a MESS. Half the herbs end up on the floor. But hey, they tried! 🌿" }
+        ]
+      },
+      {
+        text: "🍂 Fall leaves EVERYWHERE. Reminds everyone of home. Stardust gets real quiet.",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "🌿 'Home is wherever we park it'", effects: { herbs: -10, vibes: 25 }, message: "You share the herbs and wax poetic about 'home being a state of mind, man.' Stardust nods. Actually works! Vibes restored! ☮️" },
+          { text: "🍁 Stop and play in the leaves", effects: { vibes: 30, days: 0.5 }, message: "You're adults acting like kids. Leaf fight! Jumping in piles! River laughs so hard they cry. It's DUMB and PERFECT! 🍂✨" },
+          { text: "🚐 Just drive", effects: { vibes: -10 }, message: "The homesickness lingers. Bummer." }
+        ]
+      },
+      {
+        text: "🌧️ Freezing rain. Bus heater is BROKEN. Everyone's absolutely freezing.",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "🌿 Use herbs for warmth", effects: { herbs: -10, vibes: 10 }, message: "It's like a hippie sauna! The bus gets REAL cozy. ☮️" },
+          { text: "🏨 Get a motel ($20)", effects: { cash: -20, vibes: 15, days: 1 }, message: "Warm beds! Hot showers! You lose a day but nobody gets hypothermia. Worth it." },
+          { text: "🥶 Huddle under blankets", effects: { vibes: -15, food: -5 }, message: "Miserable. Wet. Cold. Someone says 'I hate this' every 10 minutes. Not groovy." }
+        ]
+      },
+      { text: "👨‍👩‍👧 WHOA - someone's parents' car passes you going the other way! They don't see you. Everyone DUCKS.", effects: { vibes: -5, herbs: -10 }, message: "Close call! You use herbs to calm down. Hearts racing! That was TOO close! 😰", weight: 2 },
+      {
+        text: "☕ Diner waitress looks at your hair and says 'Let me guess... California?' She's not mean, just... observant.",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "🌻 'The vibes called us, man'", effects: { vibes: 10 }, message: "'Sure, honey.' She tops off your coffee. She's seen weirder." },
+          { text: "☕ Ask her to join", effects: { vibes: 15 }, message: "'I got a mortgage, sweetie.' But she smiles. You tip her extra." },
+          { text: "🌿 Offer her herbs as a tip", effects: { herbs: -5, vibes: -10, cash: 10 }, message: "She FREAKS OUT. 'I don't want your DRUGS!' Kicks you out. No tip recovered. Oops." }
+        ]
+      }
+    ];
+
+    // REGION-SPECIFIC EVENTS - Middle America (1000-2200 miles)
+    const middleRegionEvents = [
+      {
+        text: "🌽 Cornfields forever. Sunshine hasn't blinked in 20 minutes. 'The corn... it's WATCHING us, man.'",
+        isChoice: true,
+        weight: 3,
+        choices: [
+          { text: "🌿 'It's just corn, here...'", effects: { herbs: -15, vibes: 20 }, message: "You share some herbs and relax about it. 'Okay yeah it's definitely just corn.' Crisis averted! The paranoia fades. 🌽😅" },
+          { text: "👁️ 'I see it too!'", effects: { vibes: -25 }, message: "Now EVERYONE'S freaking out. Mass corn paranoia! The next 50 miles are TENSE. Why did you do that?!" },
+          { text: "🎵 Sing to break the tension", effects: { vibes: 10 }, message: "'🎵 Corn, corn, beautiful corn! 🎵' Moonbeam joins in. It's dumb but it helps a little." },
+          { text: "☕ 'You need coffee'", effects: { cash: -10, vibes: 15 }, message: "Next gas station you load everyone up on coffee. Helps. Caffeine > corn paranoia. ☕" }
+        ]
+      },
+      {
+        text: "🍔 Truck stop diner. Fluorescent lights. A waitress stares at your hair. Truckers stare at your bus.",
+        isChoice: true,
+        weight: 3,
+        choices: [
+          { text: "🥞 Eat here anyway", effects: { cash: -15, food: 25, vibes: -10 }, message: "Food's actually good. Vibes are TERRIBLE. Everyone stares the whole time." },
+          { text: "☕ Just get coffee to go", effects: { cash: -5, vibes: -5 }, message: "The coffee tastes like betrayal but at least you're not lingering." },
+          { text: "🚐 Nope, keep driving", effects: { food: -10, vibes: 5 }, message: "Hunger sucks but at least you kept your dignity." },
+          { text: "🎵 Play some guitar in the parking lot", effects: { vibes: 15 }, message: "Two truckers actually dig it! One gives you $5! Surprise vibes! 🎸", condition: () => gameState.items.guitar }
+        ]
+      },
+      {
+        text: "📻 Radio only picks up AM static and sermons. For 200 miles. Stardust is about to LOSE IT.",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "🎵 'Let's make our OWN music!'", effects: { vibes: 25 }, message: "Someone beatboxes. Someone else hums. River does weird mouth trumpet sounds. It's TERRIBLE but it works! 🎶", condition: () => !gameState.items.guitar },
+          { text: "🎸 Jam session!", effects: { vibes: 35 }, message: "You break out the guitar! Impromptu singalong! Who needs the radio?! This is what it's about! ✨🎸", condition: () => gameState.items.guitar },
+          { text: "🌿 Embrace the sermon", effects: { herbs: -10, vibes: 20 }, message: "The preacher gets wild with the right mindset. You make a game of it. 'AMEN!' everyone shouts. 😂" },
+          { text: "😤 Suffer in silence", effects: { vibes: -20 }, message: "The static grinds on. Someone mumbles about the afterlife. This is torture." }
+        ]
+      },
+      {
+        text: "🛣️ Perfectly straight road. Zero turns for 3 hours. River's eyes are glazed over. 'Are we even moving?'",
+        isChoice: true,
+        weight: 3,
+        choices: [
+          { text: "🎯 'I Spy' game", effects: { vibes: 20 }, message: "'I spy something... flat.' 'The road?' 'Yep.' This goes on for an hour but at least you're engaged! 👀" },
+          { text: "🌿 'Let's get WEIRD with it'", effects: { herbs: -15, vibes: 30 }, message: "You break out the herbs and start making up stories about the telephone poles. 'That one's Gerald. He's got DRAMA.' It's absurd but time flies! 🤪" },
+          { text: "🚗 Drive FAST", effects: { gas: -20, vibes: 15 }, message: "Moonbeam floors it! 80mph of straight nothingness! At least it's over faster! 💨" },
+          { text: "😴 Let the highway hypnosis win", effects: { vibes: -15, days: 0.3 }, message: "Everyone zones out. You lose track of time. When you snap out of it you've lost 7 hours. Where did you GO?" }
+        ]
+      },
+      {
+        text: "🐄 A farmer watches you pass. Just... watches. Doesn't wave. Doesn't move. Just watches.",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "👋 Wave at him", effects: { vibes: -5 }, message: "He doesn't wave back. Unsettling." },
+          { text: "✌️ Flash peace sign", effects: { vibes: -10 }, message: "His face doesn't change. You feel judged." },
+          { text: "🚐 Drive faster", effects: { gas: -5, vibes: 0 }, message: "You leave him behind but the memory lingers." },
+          { text: "😂 Someone moos at him", effects: { vibes: 20 }, message: "Perfect response. Tension broken. Needed that! 🐮" }
+        ]
+      },
+      {
+        text: "🏚️ Abandoned gas station. Faded 'JESUS SAVES' sign. Rusty pumps. A tire swing creaks in the wind.",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "📸 'This is ART, man'", effects: { vibes: 20 }, message: "Stardust takes a bunch of photos. 'Decay is beautiful!' Actually... kinda profound? Everyone digs it. 📷" },
+          { text: "👻 'This place is HAUNTED'", effects: { vibes: 5 }, message: "You scare each other with ghost stories. River screams. Everyone laughs. Fun creepy! 👻" },
+          { text: "🌿 Use herbs and philosophize", effects: { herbs: -10, vibes: 15 }, message: "'Nothing lasts forever, man.' You get deep about impermanence. Heavy but good. 🍃" },
+          { text: "🚐 Get out of here", effects: { vibes: -10 }, message: "Too creepy. Everyone's unsettled for miles." }
+        ]
+      },
+      {
+        text: "⛽ Truck stop bathroom. River looks in the mirror: 'I don't even recognize myself anymore. Long hair, no job, living in a van... Who AM I?'",
+        isChoice: true,
+        weight: 3,
+        choices: [
+          { text: "🌿 'You're FREE, that's who'", effects: { herbs: -10, vibes: 25 }, message: "You share some herbs and talk about identity being a construct. 'You're whoever you CHOOSE to be, man.' River smiles. 'Yeah... YEAH!' Crisis averted! ✨" },
+          { text: "✌️ 'You're becoming REAL'", effects: { vibes: 20 }, message: "'The old you was the fake one - suit, tie, boss, alarm clock. THIS is real.' River nods slowly. Truth." },
+          { text: "🪞 'Look closer'", effects: { vibes: 15 }, message: "'You're someone brave enough to leave it all behind.' River tears up. Good tears. 💙" },
+          { text: "😰 'Maybe you should go back'", effects: { vibes: -35 }, message: "River's face DROPS. 'What?' Now they're REALLY spiraling. Why did you say that?!" }
+        ]
+      },
+      {
+        text: "🎰 Gas station has a slot machine just... sitting there. Between the beef jerky and motor oil. The Midwest is WILD.",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "🎰 Try your luck ($5)", effects: { cash: -5, vibes: 10 }, message: "You lose $5 instantly. But it was worth it. Moonbeam's grinning. Worth it! 🎲", risk: 0.1, failEffects: { cash: 20, vibes: 30 }, failMessage: "JACKPOT! $25! The machine spits out quarters! Everyone's freaking out! The attendant looks confused! 💰🎉" },
+          { text: "🌿 'Gambling is a trap, man'", effects: { vibes: 5 }, message: "You give a whole speech about capitalism and chance. Everyone's like 'okay dad.' 😅" },
+          { text: "📸 Just take a photo", effects: { vibes: 15 }, message: "This is TOO absurd. Stardust gets a photo of Sunshine posing with the slot machine. America! 🇺🇸" }
+        ]
+      },
+      {
+        text: "🌽 The corn hallucinations are getting serious. Someone insists they saw a clown in the cornfield.",
+        isChoice: true,
+        weight: 3,
+        choices: [
+          { text: "🤡 'Stop the bus! I saw it too!'", effects: { vibes: -20, days: 0.5 }, message: "Mass hysteria. You pull over. There's nothing there. Everyone's freaked out for hours." },
+          { text: "😴 'You need sleep, man'", effects: { vibes: -10 }, message: "They insist it was real. They're not sleeping tonight." },
+          { text: "🚐 'It's just corn, dude'", effects: { vibes: -5 }, message: "Logical, but the unease remains." },
+          { text: "🎪 'The corn clown is our friend!'", effects: { vibes: 15 }, message: "You turn it into a bit. 'ALL HAIL CORN CLOWN!' Laughter breaks the tension! 🌽" }
+        ]
+      }
+    ];
+
+    // REGION-SPECIFIC EVENTS - West (2200-3100 miles)
+    const westRegionEvents = [
+      { text: "🌵 Desert heat is NO JOKE. The bus is an oven. Everyone's delirious.", effects: { vibes: -20, food: -10 }, weight: 3 },
+      {
+        text: "🧘 A dude in a loincloth flags you down. 'I've been fasting in the desert for 40 days. Can I bum a ride?'",
+        isChoice: true,
+        weight: 3,
+        choices: [
+          { text: "🚐 Give him a ride", effects: { vibes: -15, food: -10 }, message: "He smells TERRIBLE and won't stop talking about his visions. He eats ALL your snacks. Regret." },
+          { text: "💰 'Pay for gas?'", effects: { vibes: 10 }, message: "'Material attachments!' He walks off, offended. Weird flex but okay." },
+          { text: "🥤 Give him water and leave", effects: { food: -5, vibes: 10 }, message: "Good karma. He blesses you. You feel... lighter? Weird but nice." },
+          { text: "🚐 Just drive past", effects: { vibes: -5 }, message: "He yells something about 'false prophets.' Whatever, man." }
+        ]
+      },
+      { text: "⛰️ Mountain air hits different. Everyone feels ALIVE. This is what you came for!", effects: { vibes: 30 }, weight: 2 },
+      {
+        text: "💎 Rest stop full of crystal sellers, tarot readers, and a guy selling 'sacred cactus juice.' West Coast energy MAXED.",
+        isChoice: true,
+        weight: 3,
+        choices: [
+          { text: "🔮 Get a tarot reading ($10)", effects: { cash: -10, vibes: 15 }, message: "'You will find what you seek in the west.' Yeah, no kidding. But she's nice about it." },
+          { text: "🌵 Buy the cactus juice ($20)", effects: { cash: -20, vibes: -10 }, message: "It's just cactus juice. You paid $20 for cactus juice. You've been had.", risk: 0.3, failMessage: "WHOA. That was NOT just cactus juice. 8-hour drum circle ensues. Vibes?", failEffects: { vibes: 40, days: 1 } },
+          { text: "💎 Buy ALL the crystals ($50)", effects: { cash: -50, vibes: 5 }, message: "Your bus now looks like a geode exploded inside it. Shiny though!" },
+          { text: "🚐 'This is too much'", effects: { vibes: 5 }, message: "You nope out. Even for you guys, this is a LOT." }
+        ]
+      },
+      {
+        text: "🏜️ Roadside stand: 'ALIEN JERKY - $15'. The guy running it has a tinfoil hat. Sunshine asks: 'Is it jerky FOR aliens or FROM aliens?' He just winks.",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "💰 Buy it ($15)", effects: { cash: -15, food: 20, vibes: 20 }, message: "It tastes... normal? Suspiciously normal. But the experience was WILD. Moonbeam keeps the wrapper as a souvenir! 👽" },
+          { text: "🌿 'Trade you herbs for jerky'", effects: { herbs: -20, food: 25, vibes: 25 }, message: "'DEAL!' He's THRILLED. You get a huge bag of jerky AND he throws in alien stickers! Best trade ever! 🛸" },
+          { text: "👽 Ask about the aliens", effects: { vibes: 15, days: 0.5 }, message: "He talks for TWO HOURS about Area 51, the greys, cattle mutilations. You're late but it was FASCINATING. 🛸" },
+          { text: "🚐 'That's too weird'", effects: { vibes: -5 }, message: "You drive off. Everyone agrees that was probably smart. But also... you're curious now." }
+        ]
+      },
+      { text: "☀️ Sun is setting over the desert. Sky is PINK and ORANGE. Dead silent. Cosmic.", effects: { vibes: 35 }, weight: 2 },
+      {
+        text: "🧙 Old guy at a campsite offers to 'teach you the ancient ways' for $100. He's wearing a Grateful Dead shirt under his robe.",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "💰 Pay for the wisdom ($100)", effects: { cash: -100, vibes: 10 }, message: "He teaches you breathing exercises and sells you incense. You've been FINESSED but honestly? Kinda needed it." },
+          { text: "🎸 'Teach us a song instead'", effects: { vibes: 25 }, message: "He plays a SICK harmonica solo! You jam for hours! No money exchanged, just vibes! 🎵" },
+          { text: "🤔 'What ancient ways?'", effects: { vibes: 5 }, message: "'The ways of BEING, man.' He won't elaborate. Okay then." },
+          { text: "🚐 'We're good, thanks'", effects: { vibes: 0 }, message: "He shrugs and goes back to his fire. The hustle continues." }
+        ]
+      },
+      {
+        text: "🦎 There's a lizard on the dashboard. He's been there for an hour. Just chilling. Stardust says: 'I think he's part of the crew now.'",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "🦎 'Welcome aboard, Larry!'", effects: { vibes: 25 }, message: "Larry the Lizard becomes the unofficial mascot. Everyone waves at him. He does push-ups. This rules. 🦎✨" },
+          { text: "🌿 Share some herbs nearby", effects: { herbs: -5, vibes: 20 }, message: "You use some herbs near him (not AT him). He seems chill about it. Vibes established. 😎" },
+          { text: "📸 Photoshoot time!", effects: { vibes: 30 }, message: "Twenty minutes of posing Larry in different spots. Sunglasses photo is ICONIC. Perfect vibes! 📷🦎" },
+          { text: "🚐 Shoo him away", effects: { vibes: -10 }, message: "You open the window and he scurries off. Everyone's bummed. 'We could've had a LIZARD FRIEND!'" }
+        ]
+      },
+      { text: "⛰️ Mountain switchbacks. Bus barely makes it. Clutch is SCREAMING. But the view... WORTH IT.", effects: { vibes: 20, gas: -15 }, weight: 2 },
+      { text: "🌅 You camp on a cliff. Stars are INSANE. Someone cries. Good tears. This is IT, man.", effects: { vibes: 40, days: 1 }, weight: 2 },
+      {
+        text: "🏜️ Desert wind SCREAMS. Sand everywhere - in your teeth, your eyes, the food. River spits: 'Nature is BRUTAL, man!'",
+        isChoice: true,
+        weight: 2,
+        choices: [
+          { text: "🏕️ Pull over and wait it out", effects: { vibes: -5, days: 0.5 }, message: "You hunker down in the bus for hours. When it passes, you're covered in sand but alive. Desert: 1, You: 0." },
+          { text: "🌿 'This is METAL!'", effects: { herbs: -10, vibes: 15 }, message: "You use some herbs and embrace the chaos! 'We're in the ELEMENTS, baby!' Everyone laughs through sandy teeth! Moonbeam HOWLS at the wind! 🌪️" },
+          { text: "🚐 FLOOR IT", effects: { gas: -20, vibes: 10 }, message: "Moonbeam guns it through the sandstorm! Terrifying but EXHILARATING! You make it through! Adrenaline high! 💨" },
+          { text: "😤 Complain the whole time", effects: { vibes: -25 }, message: "Everyone's miserable. Complaining makes it worse. The sand tastes like regret." }
+        ]
+      },
+      {
+        text: "🗺️ Moonbeam squints at the map, then the odometer. 'Over 3000 miles. We should be THERE by now. Where the hell is San Francisco?!' Everyone's getting antsy.",
+        isChoice: true,
+        weight: 4,
+        condition: () => gameState.distance > 3000 && gameState.distance < 3100,
+        choices: [
+          { text: "🗺️ Check the map together", effects: { vibes: 5 }, message: "'Must be close! Keep going!' The map isn't super helpful but you're committed now. Almost there... right?" },
+          { text: "🌿 'The journey is the destination'", effects: { herbs: -10, vibes: 20 }, message: "You share some herbs and philosophize. 'We're already where we need to be, man.' Moonbeam groans but smiles. 'Fine. But we BETTER be close.'" },
+          { text: "🎸 'We'll get there when we get there'", effects: { vibes: 10 }, message: "Zen approach. 'Stressing won't make it closer.' Moonbeam exhales. 'Yeah... yeah you're right.'" },
+          { text: "😤 'I KNOW, this is ridiculous!'", effects: { vibes: -20 }, message: "Everyone starts complaining. 'Over 3000 miles of THIS?!' Morale tanks. The bus gets REAL quiet." }
+        ]
+      }
+    ];
+
+    const doubts = [
+      { name: "Missing School", vibeDrain: 2 },
+      { name: "Homesick", vibeDrain: 2 },
+      { name: "Second Thoughts", vibeDrain: 3 },
+      { name: "Missing Family", vibeDrain: 2 },
+      { name: "Questioning the Trip", vibeDrain: 3 },
+      { name: "Feeling Square", vibeDrain: 1 }
+    ];
+
+    // Initialize
+    function showIntro() {
+      hideAllScreens();
+      document.getElementById('introScreen').classList.remove('hidden');
+    }
+
+    function showInstructions() {
+      hideAllScreens();
+      document.getElementById('instructionsScreen').classList.remove('hidden');
+    }
+
+    function showPartySetup() {
+      hideAllScreens();
+      document.getElementById('partySetupScreen').classList.remove('hidden');
+    }
+
+    function hideAllScreens() {
+      document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+
+      // Clean up any dynamically created elements from traveling screen
+      const travelScreen = document.getElementById('travelingScreen');
+      if (travelScreen) {
+        const dynamicElements = travelScreen.querySelectorAll('div[style*="position: absolute"]');
+        dynamicElements.forEach(el => el.remove());
+      }
+    }
+
+    function setProfession(profession) {
+      const professions = {
+        dealer: { name: 'Freelance Herbalist', cash: 700, multiplier: 1 },
+        dropout: { name: 'College Dropout', cash: 450, multiplier: 2 },
+        artist: { name: 'Starving Artist', cash: 250, multiplier: 3 }
+      };
+
+      const chosen = professions[profession];
+      gameState.profession = profession;
+      gameState.professionName = chosen.name;
+      gameState.scoreMultiplier = chosen.multiplier;
+      gameState.resources.cash = chosen.cash;
+
+      // Show name party screen
+      hideAllScreens();
+      document.getElementById('namePartyScreen').classList.remove('hidden');
+    }
+
+    function setMonth(month) {
+      gameState.month = month;
+      startGame();
+    }
+
+    function startGame() {
+      gameState.party = [
+        { name: document.getElementById('name1').value || 'Sunshine', doubting: false, abandoned: false, doubt: null },
+        { name: document.getElementById('name2').value || 'Moonbeam', doubting: false, abandoned: false, doubt: null },
+        { name: document.getElementById('name3').value || 'Stardust', doubting: false, abandoned: false, doubt: null },
+        { name: document.getElementById('name4').value || 'River', doubting: false, abandoned: false, doubt: null }
+      ];
+
+      hideAllScreens();
+      document.getElementById('gameScreen').classList.remove('hidden');
+      updateWeather();
+      updateUI();
+      showMainMenu();
+    }
+
+    function toggleStats() {
+      const statsBar = document.getElementById('statsBar');
+      const toggleText = document.getElementById('statsToggleText');
+
+      if (statsBar.classList.contains('expanded')) {
+        statsBar.classList.remove('expanded');
+        toggleText.textContent = 'Show Stats';
+      } else {
+        statsBar.classList.add('expanded');
+        toggleText.textContent = 'Hide Stats';
+      }
+    }
+
+    function toggleParty() {
+      const partyStatus = document.getElementById('partyStatus');
+      const toggleText = document.getElementById('partyToggleText');
+
+      if (partyStatus.classList.contains('collapsed')) {
+        partyStatus.classList.remove('collapsed');
+        partyStatus.classList.add('expanded');
+        toggleText.textContent = 'Hide Party';
+      } else {
+        partyStatus.classList.add('collapsed');
+        partyStatus.classList.remove('expanded');
+        toggleText.textContent = 'Show Party';
+      }
+    }
+
+    function updateUI() {
+      // Date - show full month name
+      const monthIndex = months.indexOf(gameState.month);
+      document.getElementById('dateValue').textContent = `${gameState.month} ${gameState.day}`;
+
+      // Resources
+      document.getElementById('gasValue').textContent = Math.max(0, Math.floor(gameState.resources.gas));
+      document.getElementById('foodValue').textContent = Math.max(0, Math.floor(gameState.resources.food));
+      document.getElementById('vibesValue').textContent = Math.max(0, Math.floor(gameState.resources.vibes));
+      document.getElementById('cashValue').textContent = '$' + Math.max(0, Math.floor(gameState.resources.cash));
+      document.getElementById('herbsValue').textContent = Math.max(0, Math.floor(gameState.resources.herbs));
+
+      // Update quick stats in toggle button
+      document.getElementById('quickGas').textContent = Math.max(0, Math.floor(gameState.resources.gas));
+      document.getElementById('quickFood').textContent = Math.max(0, Math.floor(gameState.resources.food));
+      document.getElementById('quickVibes').textContent = Math.max(0, Math.floor(gameState.resources.vibes));
+      document.getElementById('quickCash').textContent = Math.max(0, Math.floor(gameState.resources.cash));
+
+      updateStatColor('gasValue', gameState.resources.gas);
+      updateStatColor('foodValue', gameState.resources.food);
+      updateStatColor('vibesValue', gameState.resources.vibes);
+      updateStatColor('herbsValue', gameState.resources.herbs);
+
+      // Location - show current location if at it, or "heading to" next location if traveling
+      const currentLoc = locations[gameState.currentLocationIndex];
+      const nextLoc = locations[gameState.currentLocationIndex + 1];
+
+      // If we're at the exact distance of current location, show it
+      if (gameState.distance === currentLoc.distance) {
+        document.getElementById('currentLocation').textContent = currentLoc.name;
+      }
+      // If we're past the current location but haven't reached next, show "heading to next"
+      else if (nextLoc && gameState.distance < nextLoc.distance) {
+        document.getElementById('currentLocation').textContent = `Heading to ${nextLoc.name}`;
+      }
+      // Otherwise just show current location
+      else {
+        document.getElementById('currentLocation').textContent = currentLoc.name;
+      }
+
+      const progress = (gameState.distance / gameState.totalDistance) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
+      document.getElementById('progressText').textContent = `${Math.floor(gameState.distance)} / ${gameState.totalDistance} miles`;
+
+      // Details
+      const weatherIcons = { clear: '☀️', rain: '🌧️', storm: '⛈️', snow: '❄️', hot: '🥵' };
+      document.getElementById('weatherInfo').textContent = `${weatherIcons[gameState.weather]} ${gameState.weather}`;
+      document.getElementById('paceInfo').textContent = `Pace: ${gameState.pace}`;
+      document.getElementById('rationInfo').textContent = `Rations: ${gameState.rations}`;
+
+      updatePartyStatus();
+    }
+
+    function updateStatColor(id, value) {
+      const el = document.getElementById(id);
+      el.classList.remove('good', 'warning', 'danger');
+      if (value > 50) el.classList.add('good');
+      else if (value > 20) el.classList.add('warning');
+      else el.classList.add('danger');
+    }
+
+    function updatePartyStatus() {
+      const container = document.getElementById('partyMembers');
+      container.innerHTML = '';
+
+      // Count statuses for summary
+      let groovy = 0, doubting = 0, abandoned = 0;
+
+      gameState.party.forEach(member => {
+        const div = document.createElement('div');
+        div.className = 'party-member';
+        if (member.doubting) div.classList.add('sick');
+        if (member.abandoned) div.classList.add('dead');
+
+        let status = member.abandoned ? '👔 SOLD OUT' : member.doubting ? `💭 ${member.doubt}` : '✌️ Groovy';
+
+        // Count for summary
+        if (member.abandoned) abandoned++;
+        else if (member.doubting) doubting++;
+        else groovy++;
+
+        div.innerHTML = `<span>${member.name} - ${status}</span>`;
+
+        container.appendChild(div);
+      });
+
+      // Update party summary in toggle button
+      const summaryParts = [];
+      if (groovy > 0) summaryParts.push(`✌️${groovy}`);
+      if (doubting > 0) summaryParts.push(`💭${doubting}`);
+      if (abandoned > 0) summaryParts.push(`👔${abandoned}`);
+      document.getElementById('partySummary').textContent = `(${summaryParts.join(' ')})`;
+    }
+
+    function showMainMenu(clearEvent = false) {
+      const container = document.getElementById('actionButtons');
+      const eventContainer = document.getElementById('eventContainer');
+
+      // Only clear event if explicitly requested
+      if (clearEvent) {
+        eventContainer.innerHTML = '';
+      }
+
+      const currentLoc = locations[gameState.currentLocationIndex];
+
+      let buttons = '<button onclick="travel()">Continue Down the Road 🚐</button>';
+
+      if (currentLoc.isShop) {
+        buttons += '<button class="secondary" onclick="openShop()">Visit General Store 🏪</button>';
+      }
+
+      // Gas station always available at towns
+      if (currentLoc.isTown || currentLoc.isShop) {
+        buttons += '<button class="secondary" onclick="openGasStation()">Find Gas Station ⛽</button>';
+      }
+
+      buttons += '<button class="secondary" onclick="goForaging()">Forage for Food 🌿</button>';
+      buttons += '<button class="secondary" onclick="rest()">Rest and Recover 🏕️</button>';
+
+      // Money-making options at towns
+      if (currentLoc.isTown || currentLoc.isShop) {
+        buttons += '<button class="secondary" onclick="makeMoney()">Make Money 💰</button>';
+      }
+
+      buttons += '<button class="secondary" onclick="openSettings()">Change Pace & Rations ⚙️</button>';
+      buttons += '<button class="secondary" onclick="checkStatus()">Check Status 📋</button>';
+
+      if (currentLoc.isCheckpoint) {
+        buttons = '<button onclick="handleCheckpoint()">Approach Checkpoint 🚨</button>';
+      }
+
+      if (currentLoc.isTubing) {
+        buttons = '<button onclick="startTubing()">🌊 Ride the Cosmic River Rapids! 🌊</button><button class="secondary" onclick="skipTubing()">Skip (Lose Vibes)</button>';
+      }
+
+      container.innerHTML = buttons;
+    }
+
+    // Main travel function - called when player clicks "Continue Down the Road"
+    function travel() {
+      // Clear any previous event messages when starting travel
+      document.getElementById('eventContainer').innerHTML = '';
+
+      if (gameState.resources.gas <= 0) {
+        gameOver("Ran out of gas in the middle of nowhere. Bummer.");
+        return;
+      }
+
+      // Show traveling animation!
+      showTravelAnimation();
+    }
+
+    // Traveling Animation
+    let travelIntervals = [];
+    function showTravelAnimation() {
+      hideAllScreens();
+      document.getElementById('travelingScreen').classList.remove('hidden');
+
+      // Clear any existing intervals from previous travels
+      travelIntervals.forEach(id => clearInterval(id));
+      travelIntervals = [];
+
+      // Update distance display
+      document.getElementById('travelProgress').textContent = `Distance: ${gameState.distance} / ${gameState.totalDistance} miles`;
+
+      // Set region-specific items above the bus based on distance
+      const regionItemSets = {
+        east: [
+          ['🌳', '🏫', '☔'],
+          ['🍂', '📞', '🌧️'],
+          ['🏈', '👨‍👩‍👧', '🥶'],
+          ['🎓', '☔', '🍁']
+        ],
+        middle: [
+          ['🌽', '🐄', '🚚'],
+          ['🌾', '🏚️', '🛣️'],
+          ['🍔', '☕', '⛽'],
+          ['🌽', '🌽', '🌽']
+        ],
+        west: [
+          ['🌵', '🏜️', '☀️'],
+          ['⛰️', '🦎', '🌅'],
+          ['💎', '🔮', '🧘'],
+          ['🏔️', '🌄', '🦅']
+        ]
+      };
+
+      let currentRegionItems;
+      if (gameState.distance < 600) {
+        currentRegionItems = regionItemSets.east;
+      } else if (gameState.distance < 2300) {
+        currentRegionItems = regionItemSets.middle;
+      } else {
+        currentRegionItems = regionItemSets.west;
+      }
+
+      // Pick a random set from the current region
+      const selectedSet = currentRegionItems[Math.floor(Math.random() * currentRegionItems.length)];
+      document.getElementById('regionItem1').textContent = selectedSet[0];
+      document.getElementById('regionItem2').textContent = selectedSet[1];
+      document.getElementById('regionItem3').textContent = selectedSet[2];
+
+      const messages = [
+        "Cruising down the highway... ✌️",
+        "Wind in your hair, far out! 🌬️",
+        "The road stretches on forever... 🛣️",
+        "Freedom feels GOOD, man! 🌻",
+        "Just you, the bus, and the open road... 🚐"
+      ];
+
+      let messageIndex = 0;
+
+      // Update message every 2 seconds
+      const messageInterval = setInterval(() => {
+        document.getElementById('travelMessage').textContent = messages[messageIndex];
+        messageIndex = (messageIndex + 1) % messages.length;
+      }, 2000);
+      travelIntervals.push(messageInterval);
+
+      // End animation after 4 seconds
+      setTimeout(() => {
+        travelIntervals.forEach(id => clearInterval(id));
+        travelIntervals = [];
+        hideAllScreens();
+        document.getElementById('gameScreen').classList.remove('hidden');
+        continueTraveling();
+      }, 4000);
+    }
+
+    function continueTraveling() {
+
+      // Pace affects distance and consumption
+      const paceSettings = {
+        mellow: { distance: 30, gas: 8, healthChange: 2 },
+        steady: { distance: 50, gas: 12, healthChange: 0 },
+        rush: { distance: 70, gas: 18, healthChange: -3 }
+      };
+
+      const pace = paceSettings[gameState.pace];
+      gameState.distance += pace.distance;
+
+      // Consume resources
+      gameState.resources.gas -= pace.gas;
+
+      // Ration affects food consumption and health
+      const rationSettings = {
+        bare: { food: 4, healthChange: -2 },
+        normal: { food: 8, healthChange: 0 },
+        feast: { food: 15, healthChange: 2 }
+      };
+
+      const ration = rationSettings[gameState.rations];
+      gameState.resources.food -= ration.food;
+
+      // VIBES DRAIN DURING TRAVEL - the road gets tiring!
+      // Get role-specific base drain based on journey phase
+      const phase = getJourneyPhase();
+      const roleStats = roleModifiers[gameState.profession];
+      let vibeDrain = roleStats.vibeDrainByPhase[phase];
+
+      // Pace affects vibes
+      if (gameState.pace === 'rush') {
+        vibeDrain += 3; // Rushing is stressful
+      } else if (gameState.pace === 'mellow') {
+        vibeDrain -= 2; // Mellow keeps vibes higher
+      }
+
+      // Rations affect vibes
+      if (gameState.rations === 'bare') {
+        vibeDrain += 3; // Hungry people = bad vibes
+      } else if (gameState.rations === 'feast') {
+        vibeDrain -= 2; // Good food = better vibes
+      }
+
+      gameState.resources.vibes -= vibeDrain;
+
+      // Weather effects
+      if (gameState.weather === 'storm' || gameState.weather === 'snow') {
+        gameState.resources.vibes -= 8; // Bad weather is a real drag
+      } else if (gameState.weather === 'rain') {
+        gameState.resources.vibes -= 3; // Rain is meh
+      }
+      if (gameState.weather === 'hot') {
+        gameState.resources.food -= 3;
+        gameState.resources.vibes -= 2; // Heat is draining
+      }
+
+      // Advance time
+      advanceTime(3);
+
+      // Guitar provides passive vibe boost during travel
+      if (gameState.items.guitar) {
+        gameState.resources.vibes = Math.min(100, gameState.resources.vibes + 3);
+      }
+
+      // Update party morale based on VIBES
+      gameState.party.forEach(member => {
+        if (!member.abandoned) {
+          // Doubting members drain vibes
+          if (member.doubting && member.doubt) {
+            const doubt = doubts.find(d => d.name === member.doubt);
+            if (doubt) {
+              gameState.resources.vibes = Math.max(0, gameState.resources.vibes - doubt.vibeDrain);
+            }
+          }
+
+          // Role-specific doubt thresholds
+          const doubtThreshold = roleStats.doubtThreshold;
+
+          // LOW VIBES = ABANDONMENT CHANCE (only if already doubting)
+          if (gameState.resources.vibes < 15 && member.doubting && Math.random() > 0.6) {
+            // Very low vibes + already doubting = HIGH chance to abandon (40%)
+            member.abandoned = true;
+            const reasons = [
+              'got a job at a bank',
+              'went back to school',
+              'decided to join the army',
+              'sold out to the establishment',
+              'chickened out and went home',
+              'took a corporate job'
+            ];
+            const reason = reasons[Math.floor(Math.random() * reasons.length)];
+            showEvent(`The vibes are too low! ${member.name} ${reason}. They've abandoned the trip! 👔💼`, true);
+          } else if (gameState.resources.vibes < doubtThreshold && !member.doubting) {
+            // Role-based doubt triggering - GUARANTEED when below threshold!
+            member.doubting = true;
+            member.doubt = doubts[Math.floor(Math.random() * doubts.length)].name;
+            showEvent(`The bad vibes are getting to ${member.name}... They're starting to doubt the trip. 💭`, true);
+          } else if (gameState.resources.vibes > 60) {
+            // Good vibes cure doubts!
+            member.doubting = false;
+            member.doubt = null;
+          }
+        }
+      });
+
+      // Check if reached next location
+      const nextLoc = locations[gameState.currentLocationIndex + 1];
+      if (nextLoc && gameState.distance >= nextLoc.distance) {
+        gameState.currentLocationIndex++;
+        gameState.forageCount = 0; // Reset foraging counter at new location
+
+        if (nextLoc.name === 'San Francisco') {
+          winGame();
+          return;
+        }
+
+        // Show arrival message and stop here
+        checkFailConditions();
+        updateUI();
+        showLocationArrival(nextLoc);
+        return; // Don't continue traveling, let player decide when to leave
+      } else {
+        // ALWAYS trigger an event when traveling!
+        triggerRandomEvent();
+        // If event was triggered, don't auto-show menu - let the event handler do it
+        return;
+      }
+
+      checkFailConditions();
+      updateUI();
+
+      if (gameState.alive) {
+        setTimeout(showMainMenu, 100);
+      }
+    }
+
+    function advanceTime(days) {
+      gameState.day += days;
+
+      // Keep checking and advancing months until day is valid
+      let monthIndex = months.indexOf(gameState.month);
+      while (gameState.day > monthDays[monthIndex]) {
+        gameState.day -= monthDays[monthIndex];
+        if (monthIndex < months.length - 1) {
+          monthIndex++;
+          gameState.month = months[monthIndex];
+        } else {
+          break; // Don't go past September
+        }
+      }
+
+      // Round day to whole number to avoid decimal display
+      gameState.day = Math.floor(gameState.day);
+
+      // Random weather change
+      if (Math.random() > 0.7) {
+        updateWeather();
+      }
+    }
+
+    function updateWeather() {
+      const monthIndex = months.indexOf(gameState.month);
+      let weathers;
+
+      // Season-appropriate weather
+      if (monthIndex <= 1) {
+        // March-April: Early Spring - cold, rainy, possible snow
+        weathers = ['clear', 'rain', 'rain', 'snow'];
+      } else if (monthIndex <= 3) {
+        // May-June: Late Spring - mild, some rain
+        weathers = ['clear', 'clear', 'rain'];
+      } else if (monthIndex <= 5) {
+        // July-August: Summer - hot, storms
+        weathers = ['clear', 'hot', 'hot', 'storm'];
+      } else {
+        // September: Early Fall - mild, clear
+        weathers = ['clear', 'clear', 'rain'];
+      }
+
+      gameState.weather = weathers[Math.floor(Math.random() * weathers.length)];
+    }
+
+    // Helper function to get a random party member name
+    function getRandomPartyMember() {
+      const stillHere = gameState.party.filter(m => !m.abandoned);
+      if (stillHere.length === 0) return 'Someone';
+      return stillHere[Math.floor(Math.random() * stillHere.length)].name;
+    }
+
+    // Replace "someone" or "Someone" with actual party member names
+    function personalizeEventText(text) {
+      const member = getRandomPartyMember();
+      return text.replace(/\bsomeone\b/gi, member);
+    }
+
+    // Weighted random selection - picks events based on their weight property
+    function weightedRandomPick(events) {
+      // Calculate total weight
+      const totalWeight = events.reduce((sum, event) => {
+        const weight = event.weight || 1; // Default weight is 1
+        return sum + weight;
+      }, 0);
+
+      // Pick a random number between 0 and total weight
+      let random = Math.random() * totalWeight;
+
+      // Find which event corresponds to this random number
+      for (let i = 0; i < events.length; i++) {
+        const weight = events[i].weight || 1;
+        random -= weight;
+        if (random <= 0) {
+          return events[i];
+        }
+      }
+
+      // Fallback (should never happen)
+      return events[events.length - 1];
+    }
+
+    function triggerRandomEvent() {
+      // Determine current region based on distance
+      let regionEvents = [];
+      if (gameState.distance < 600) {
+        regionEvents = eastRegionEvents;
+      } else if (gameState.distance < 2300) {
+        regionEvents = middleRegionEvents;
+      } else {
+        regionEvents = westRegionEvents;
+      }
+
+      // Combine global events with region-specific events
+      // Region events have 50% chance to be selected vs global events
+      let eventPool = randomEvents;
+      if (Math.random() < 0.5 && regionEvents.length > 0) {
+        eventPool = regionEvents;
+      }
+
+      // Filter out events that have already been used (track by event id or text to prevent repeats across pools)
+      let availableEvents = eventPool.filter((event) => {
+        const eventKey = event.id || event.text;
+        return !gameState.usedEvents.includes(eventKey);
+      });
+
+      // If all events in this pool have been used, still use the pool but allow repeats
+      if (availableEvents.length === 0) {
+        availableEvents = eventPool;
+      }
+
+      // BOOST choice events after mile 500 by temporarily increasing their weight
+      const mileThreshold = 500;
+      if (gameState.distance >= mileThreshold) {
+        availableEvents = availableEvents.map(event => {
+          if (event.isChoice) {
+            // Create a copy with boosted weight for choice events
+            return { ...event, weight: (event.weight || 1) * 2 };
+          }
+          return event;
+        });
+      }
+
+      // Role-specific event weighting for dealers (more cop events)
+      const roleStats = roleModifiers[gameState.profession];
+      let event;
+
+      // PRIORITY: Vibe-triggered events when vibes are low
+      if (gameState.resources.vibes < 50) {
+        const vibeEvents = availableEvents.filter(e => e.vibeTriggered);
+        if (vibeEvents.length > 0 && Math.random() < 0.7) { // 70% chance when vibes low
+          event = weightedRandomPick(vibeEvents);
+          // Don't return here - let it fall through to normal event handling
+        }
+      }
+
+      // If we didn't select a vibe event, select normal event
+      if (!event) {
+        if (gameState.profession === 'dealer' && Math.random() < roleStats.copTargetChance) {
+          // Dealers get cop events more often
+          const copEvents = availableEvents.filter(e => e.copEvent);
+          if (copEvents.length > 0) {
+            event = weightedRandomPick(copEvents);
+          } else {
+            // Fallback if no cop events available
+            event = weightedRandomPick(availableEvents);
+          }
+        } else {
+          // Check for rare events - only 15% chance
+          const rareEvents = availableEvents.filter(e => e.rareEvent);
+          if (rareEvents.length > 0 && Math.random() < 0.15) {
+            event = weightedRandomPick(rareEvents);
+          } else {
+            // Normal weighted event selection (exclude rare and vibe-triggered events from normal pool)
+            const normalEvents = availableEvents.filter(e => !e.rareEvent && !e.vibeTriggered);
+            event = weightedRandomPick(normalEvents);
+          }
+        }
+      }
+
+      // Mark this event as used by its id or text (ensures no repeats across all event pools)
+      const eventKey = event.id || event.text;
+      if (!gameState.usedEvents.includes(eventKey)) {
+        gameState.usedEvents.push(eventKey);
+      }
+
+      // Update UI first for both types of events
+      checkFailConditions();
+      updateUI();
+
+      if (event.isChoice) {
+        showChoiceEvent(event);
+        // Choice events handle their own button display, don't call showMainMenu
+      } else {
+        showEvent(personalizeEventText(event.text), false);
+        applyEventEffects(event);
+
+        // Special handling for rare events
+        if (event.rareEvent) {
+          // Clear one doubt if present
+          const doubtingMember = gameState.party.find(m => m.doubting && !m.abandoned);
+          if (doubtingMember) {
+            doubtingMember.doubting = false;
+            doubtingMember.doubt = null;
+            // Add to event message
+            const container = document.getElementById('eventContainer');
+            const currentMessage = container.innerHTML;
+            container.innerHTML = currentMessage.replace('</div>',
+              `<br><br><strong style="color: #4ade80;">✨ ${doubtingMember.name}'s doubts fade away. They're all in again! ✨</strong></div>`);
+          }
+        }
+
+        // Show menu after a delay so player can read the event
+        if (gameState.alive) {
+          setTimeout(showMainMenu, 2500);
+        }
+      }
+    }
+
+    function showChoiceEvent(event) {
+      const eventContainer = document.getElementById('eventContainer');
+      const buttonsContainer = document.getElementById('actionButtons');
+
+      // Clear any existing content first
+      eventContainer.innerHTML = '';
+      buttonsContainer.innerHTML = '';
+
+      // Show event text (personalized)
+      eventContainer.innerHTML = `<div class="event-box">${personalizeEventText(event.text)}</div>`;
+
+      // Create choice buttons - preserve original indices
+      let buttonsHtml = '';
+      event.choices.forEach((choice, index) => {
+        // Check if choice has a condition - skip if not met
+        if (choice.condition && !choice.condition()) {
+          return; // Skip this choice
+        }
+        // Use original index so makeChoice gets the right choice
+        buttonsHtml += `<button onclick="makeChoice(${index})">${choice.text}</button>\n`;
+      });
+
+      // Set buttons directly (actionButtons already has button-group styling in CSS)
+      buttonsContainer.innerHTML = buttonsHtml;
+
+      // Store current event for when player makes choice
+      gameState.currentEvent = event;
+    }
+
+    function makeChoice(choiceIndex) {
+      const event = gameState.currentEvent;
+      const choice = event.choices[choiceIndex];
+
+      // Check condition one more time
+      if (choice.condition && !choice.condition()) {
+        showEvent(choice.failMessage || "You can't do that!", true);
+        gameState.currentEvent = null;
+        setTimeout(showMainMenu, 2000);
+        return;
+      }
+
+      // Check for special mini-games
+      if (choice.special === 'repairGame') {
+        gameState.currentEvent = null;
+        startRepairGame();
+        return;
+      }
+
+      // Check if this choice has a risk of failure
+      if (choice.risk && Math.random() < choice.risk) {
+        // FAILED!
+        showEvent(choice.failMessage || "It didn't work out!", true);
+        applyEventEffects({ effects: choice.failEffects });
+      } else {
+        // SUCCESS!
+        showEvent(choice.message, false);
+        applyEventEffects(choice);
+      }
+
+      gameState.currentEvent = null;
+      checkFailConditions();
+      updateUI();
+
+      // Show menu after delay so player can read the result
+      if (gameState.alive) {
+        setTimeout(showMainMenu, 2500);
+      }
+    }
+
+    function applyEventEffects(event) {
+      if (!event.effects) return;
+
+      const roleStats = roleModifiers[gameState.profession];
+
+      Object.keys(event.effects).forEach(key => {
+        if (key === 'days') {
+          advanceTime(event.effects[key]);
+        } else if (key === 'parts') {
+          // Handle spare parts item
+          gameState.items.parts = Math.max(0, gameState.items.parts + event.effects[key]);
+        } else if (key === 'distance') {
+          // Handle distance changes (for detours)
+          gameState.distance = Math.max(0, gameState.distance + event.effects[key]);
+        } else if (key === 'cash' && event.effects[key] < 0 && event.copEvent) {
+          // Apply fine multiplier for cop events
+          const fine = Math.floor(event.effects[key] * roleStats.fineMultiplier);
+          gameState.resources.cash = Math.max(0, gameState.resources.cash + fine);
+        } else if (key === 'cash') {
+          // Cash has no upper limit
+          gameState.resources.cash = Math.max(0, gameState.resources.cash + event.effects[key]);
+        } else {
+          // Other resources (vibes, food, gas, herbs) capped at 100
+          gameState.resources[key] = Math.min(100, Math.max(0, gameState.resources[key] + event.effects[key]));
+        }
+      });
+    }
+
+    function showEvent(text, isBad) {
+      const container = document.getElementById('eventContainer');
+      container.innerHTML = `<div class="${isBad ? 'event-box' : 'message-box'}">${text}</div>`;
+    }
+
+    function showLocationArrival(location) {
+      // Check if this location has special landmark art
+      if (location.hasLandmark && landmarkArt[location.name]) {
+        const landmark = landmarkArt[location.name];
+
+        // Special vibe boosts for groovy locations!
+        let vibeBoostMessage = '';
+        if (location.name === 'Denver') {
+          // Mile High Music Festival - MAX VIBES!
+          gameState.resources.vibes = 100;
+          vibeBoostMessage = '<p style="font-size: 1.4rem; color: #ff6b6b; margin-top: 1rem;"><strong>✨ VIBES RESTORED TO 100! ✨</strong><br>The music festival was INCREDIBLE!</p>';
+        } else if (location.name === 'Salt Lake City' || location.name === 'Kansas City') {
+          // Communes - BIG vibe boost!
+          gameState.resources.vibes = 100;
+          vibeBoostMessage = '<p style="font-size: 1.4rem; color: #ff6b6b; margin-top: 1rem;"><strong>✨ VIBES RESTORED TO 100! ✨</strong><br>The commune vibes are IMMACULATE!</p>';
+        } else if (location.name === 'Reno') {
+          // Electric Desert - GOOD vibe boost
+          gameState.resources.vibes = Math.min(100, gameState.resources.vibes + 40);
+          vibeBoostMessage = '<p style="font-size: 1.4rem; color: #4ade80; margin-top: 1rem;"><strong>+40 VIBES!</strong><br>The desert energy is electric!</p>';
+        } else if (location.name === 'Sierra Summit') {
+          // SUMMIT CELEBRATION - You made it over the mountains!
+          gameState.resources.vibes = 100;
+          gameState.resources.food = Math.min(100, gameState.resources.food + 30);
+          vibeBoostMessage = '<p style="font-size: 1.6rem; color: #ffd93d; margin-top: 1rem; animation: pulse 1s infinite;"><strong>⛰️ SUMMIT CELEBRATION! ⛰️</strong></p>' +
+            '<p style="font-size: 1.2rem; color: #4ade80; margin-top: 0.5rem;">You made it over the SIERRA NEVADAS!</p>' +
+            '<p style="font-size: 1.1rem; color: #f093fb; margin-top: 0.5rem;">Everyone celebrates at the peak! Someone breaks out food they\'ve been saving. You howl at the valley below. You dance on the mountaintop. THIS IS FREEDOM!</p>' +
+            '<p style="font-size: 1.4rem; color: #ff6b6b; margin-top: 1rem;"><strong>✨ VIBES MAXED! +30 FOOD! ✨</strong></p>' +
+            '<p style="font-size: 1.1rem; color: #ffffff; margin-top: 0.5rem;">San Francisco is just 50 miles down the mountain. You can almost smell the ocean...</p>';
+        } else if (location.name === 'New York City' || location.name === 'Pittsburgh') {
+          // Starting locations - moderate boost
+          gameState.resources.vibes = Math.min(100, gameState.resources.vibes + 25);
+          vibeBoostMessage = '<p style="font-size: 1.4rem; color: #4ade80; margin-top: 1rem;"><strong>+25 VIBES!</strong><br>The counterculture energy is strong here!</p>';
+        }
+
+        // Dynamic description for Woodstock - reference a party member
+        let description = landmark.description;
+        if (location.name === 'Woodstock Outskirts') {
+          const stillHere = gameState.party.filter(m => !m.abandoned);
+          const randomMember = stillHere[Math.floor(Math.random() * stillHere.length)];
+          description = `Someone in the back claims they can still smell the porta-potties. ${randomMember.name} swears they left their sandals here last year. You stop to look for them but find nothing.`;
+        }
+
+        showEvent(
+          `<div class="landmark-screen">` +
+          `<h2 class="landmark-title">${landmark.title}</h2>` +
+          `<div class="landmark-art">${landmark.art}</div>` +
+          `<p style="font-size: 1.3rem; color: #ffd93d; margin-top: 1rem;">${description}</p>` +
+          vibeBoostMessage +
+          `<p style="font-size: 1.1rem; color: #4ade80; margin-top: 1.5rem;"><strong>You have stopped to rest and resupply.</strong></p>` +
+          `</div>`,
+          false
+        );
+
+        updateUI();
+      } else {
+        // Regular location arrival for places without landmark art
+        const landmarks = {
+          'Pittsburgh': 'The Steel City! Industrial vibes and friendly folks. Rivers everywhere, man.',
+          'Columbus': 'College town energy! Lots of young cats and cheap eats.',
+          'Rainbow Ridge Rest Stop': 'Roadside rest stop. Stretch your legs, man. Nothing fancy, just road and sky.',
+          'Kansas City': 'BBQ capital! Jazz music fills the air. Good vibes here.',
+          'Roadside Gas & Grub': 'Dusty gas station and diner. Coffee\'s bad but the pie is groovy. Keep moving.',
+          'Rocky Mountain Pass': '⛰️ DANGEROUS MOUNTAIN PASS ⛰️<br>Steep climbs ahead. Check your bus!',
+          'Desert Oasis Junction': 'Small junction in the desert. Water tastes like metal but it\'s wet. Almost there!',
+          'Salt Lake City': 'Desert oasis! Clean streets, friendly but square. Stock up here.',
+          'Cosmic River Rapids': '🌊 THE COSMIC RIVER AWAITS 🌊<br>A legendary tubing experience! The water sparkles with rainbow colors. Far out!'
+        };
+
+        const description = landmarks[location.name] || 'You\'ve arrived at a new location!';
+
+        showEvent(`<h3 style="color: #ff6b6b; font-size: 2rem; margin-bottom: 1rem;">📍 ${location.name}</h3>${description}<br><br><strong>You have stopped to rest and resupply.</strong>`, false);
+      }
+
+      // Don't clear the event when showing main menu - keep the location message visible
+      showMainMenu(false);
+    }
+
+    // Foraging mini-game
+    let forageTimeout;
+    let forageTimeLeft = 5;
+    let forageCollected = 0;
+
+    function goForaging() {
+      document.getElementById('eventContainer').innerHTML = ''; // Clear events when starting forage
+      hideAllScreens();
+      document.getElementById('forageScreen').classList.remove('hidden');
+
+      // Adjust timer based on weather
+      if (gameState.weather === 'hot') {
+        forageTimeLeft = 4; // Shorter time in heat
+      } else {
+        forageTimeLeft = 5;
+      }
+
+      forageCollected = 0;
+
+      startForaging();
+    }
+
+    function startForaging() {
+      // Determine current location type
+      const currentLoc = locations[gameState.currentLocationIndex];
+      const isUrban = currentLoc.isTown || false;
+
+      // Determine region based on distance
+      let region = 'east'; // 0-1000 miles
+      if (gameState.distance >= 1000 && gameState.distance < 2200) {
+        region = 'middle'; // 1000-2200 miles
+      } else if (gameState.distance >= 2200) {
+        region = 'west'; // 2200+ miles
+      }
+
+      // Region-specific and geographic items
+      let items = [];
+
+      if (isUrban) {
+        // Urban foraging - more trash risk!
+        if (region === 'east') {
+          items = ['🍎', '🥕', '🍞', '🗑️', '🗑️', '🥔', '🗑️', '🍇'];
+        } else if (region === 'middle') {
+          items = ['🌽', '🥕', '🍞', '🗑️', '🗑️', '🥔', '🗑️', '🍇'];
+        } else { // west
+          items = ['🍊', '🥑', '🍞', '🗑️', '🗑️', '🗑️', '🌰', '🍇'];
+        }
+      } else {
+        // Rural/nature foraging - less trash, region-specific foods
+        if (region === 'east') {
+          items = ['🍎', '🍓', '🥕', '🍄', '🌰', '🥦', '🐟', '🗑️'];
+        } else if (region === 'middle') {
+          items = ['🌽', '🥔', '🍄', '🌰', '🥕', '🐟', '🍇', '🗑️'];
+        } else { // west
+          items = ['🍊', '🥑', '🍋', '🌵', '🍄', '🐟', '🌰', '🗑️'];
+        }
+      }
+
+      // Weather affects item distribution
+      if (gameState.weather === 'rain' || gameState.weather === 'storm') {
+        // More trash in bad weather
+        items = items.slice(0, 4).concat(['🗑️', '🗑️', '🗑️', '🗑️']);
+      } else if (gameState.weather === 'hot') {
+        // More trash, less fresh food in heat
+        items = items.filter(i => !['🍓', '🍇', '🥦'].includes(i)).concat(['🗑️', '🗑️']);
+      }
+
+      const container = document.getElementById('forageItems');
+      container.innerHTML = '';
+
+      // Generate random items
+      for (let i = 0; i < 12; i++) {
+        const item = items[Math.floor(Math.random() * items.length)];
+        const div = document.createElement('div');
+        div.className = 'forage-item';
+        div.textContent = item;
+        div.style.touchAction = 'manipulation';
+        div.style.userSelect = 'none';
+
+        // Support both click and touch events
+        const handleInteraction = (e) => {
+          e.preventDefault();
+          collectItem(div, item);
+        };
+
+        div.onclick = handleInteraction;
+        div.ontouchstart = handleInteraction;
+
+        container.appendChild(div);
+      }
+
+      // Start timer
+      clearInterval(forageTimeout);
+      forageTimeout = setInterval(() => {
+        forageTimeLeft--;
+        document.getElementById('forageTimer').textContent = `Time: ${forageTimeLeft}s`;
+
+        if (forageTimeLeft <= 0) {
+          endForaging();
+        } else if (forageTimeLeft % 3 === 0) {
+          // Refresh items
+          startForaging();
+        }
+      }, 1000);
+    }
+
+    function collectItem(element, item) {
+      if (item === '🗑️') {
+        // INSTANT FAIL - Hit a trash bin!
+        clearInterval(forageTimeout);
+        element.classList.add('clicked');
+        showForageMessage("💀 FOOD POISONING! That wasn't food!");
+
+        // End foraging immediately with 0 food and take damage
+        setTimeout(() => {
+          gameState.resources.food = Math.max(0, gameState.resources.food - 10);
+          gameState.resources.vibes = Math.max(0, gameState.resources.vibes - 15);
+
+          hideAllScreens();
+          document.getElementById('gameScreen').classList.remove('hidden');
+
+          showEvent(
+            `<h3 style="color: #ff6b6b;">🗑️ TRASH BIN! 🤢</h3>` +
+            `<p>You grabbed a trash bin by mistake! Food poisoning hits HARD!</p>` +
+            `<p style="color: #ff6b6b;"><strong>-10 Food | -15 Vibes</strong></p>` +
+            `<p>Everyone's disappointed. 'Let's just buy food next time...'</p>`,
+            false
+          );
+
+          checkFailConditions();
+          updateUI();
+          showMainMenu();
+        }, 1500);
+        return;
+      } else {
+        const amount = Math.floor(Math.random() * 3) + 2;
+        forageCollected += amount;
+      }
+
+      element.classList.add('clicked');
+      document.getElementById('forageCounter').textContent = `Food Collected: ${forageCollected} lbs`;
+    }
+
+    function showForageMessage(msg) {
+      document.getElementById('forageInstructions').textContent = msg;
+      setTimeout(() => {
+        document.getElementById('forageInstructions').textContent = 'Click on the food items!';
+      }, 1500);
+    }
+
+    function endForaging() {
+      clearInterval(forageTimeout);
+
+      gameState.forageCount++; // Increment forage attempts
+      const roleStats = roleModifiers[gameState.profession];
+
+      // Apply role-specific modifiers
+      let finalFood = forageCollected;
+      finalFood = Math.floor(finalFood * (1 + roleStats.forageBonus));
+
+      // Diminishing returns
+      if (gameState.forageCount === 2) {
+        finalFood = Math.floor(finalFood * 0.6); // 40% reduction on 2nd forage
+      } else if (gameState.forageCount >= 3) {
+        finalFood = Math.floor(finalFood * 0.3); // 70% reduction on 3rd+ forage
+      }
+
+      // Risk of food poisoning
+      let sickMessage = '';
+      if (Math.random() < 0.15) {
+        // 15% chance of getting sick
+        gameState.resources.vibes -= 15;
+        gameState.resources.food -= 5;
+        finalFood = Math.floor(finalFood * 0.5);
+        sickMessage = '<br><br><strong style="color: #ef4444;">🤢 Someone got sick from bad food! -15 Vibes, -5 Food, reduced haul!</strong>';
+      }
+
+      gameState.resources.food = Math.min(100, gameState.resources.food + finalFood);
+
+      // Role-specific vibe changes
+      gameState.resources.vibes = Math.max(0, Math.min(100, gameState.resources.vibes + roleStats.foragVibeChange));
+
+      // Diminishing returns warning
+      let diminishingMessage = '';
+      if (gameState.forageCount === 2) {
+        diminishingMessage = '<br><br><em style="color: #fbbf24;">The area is getting picked over... (40% less food next time)</em>';
+        gameState.resources.vibes -= 5;
+      } else if (gameState.forageCount >= 3) {
+        diminishingMessage = '<br><br><em style="color: #ef4444;">This place is totally stripped, man! (70% less food, -10 vibes)</em>';
+        gameState.resources.vibes -= 10;
+      }
+
+      advanceTime(0.5);
+
+      hideAllScreens();
+      document.getElementById('gameScreen').classList.remove('hidden');
+
+      const currentLoc = locations[gameState.currentLocationIndex];
+
+      let vibeChangeText = '';
+      if (roleStats.foragVibeChange > 0) {
+        vibeChangeText = `<br><strong style="color: #4ade80;">+${roleStats.foragVibeChange} Vibes (finding beauty in simple things)</strong>`;
+      } else if (roleStats.foragVibeChange < 0) {
+        vibeChangeText = `<br><strong style="color: #ef4444;">${roleStats.foragVibeChange} Vibes (scrounging is a bummer)</strong>`;
+      }
+
+      showEvent(`You foraged ${finalFood} lbs of food! 🌿${vibeChangeText}${sickMessage}${diminishingMessage}<br><br>You're still at <strong>${currentLoc.name}</strong>.`, finalFood < 5);
+      updateUI();
+      setTimeout(showMainMenu, 2000);
+    }
+
+    // Tubing mini-game
+    let tubingProgress = 0;
+    let tubingInterval = null;
+    const tubingMessages = [
+      "🌀 The water swirls with rainbow colors!",
+      "✨ Sparkles dance across the waves!",
+      "🎨 Reality melts into beautiful patterns!",
+      "🌈 A double rainbow appears overhead!",
+      "🦋 Psychedelic butterflies flutter past!",
+      "💫 The stars align in cosmic harmony!",
+      "🌺 Flowers bloom in the spray!",
+      "🎵 You hear the music of the universe!",
+      "🔮 Time and space become one!",
+      "☮️ Peace and love wash over you!"
+    ];
+
+    // Tubing game state
+    let tubingGameState = {
+      playerPosition: 250, // Pixel position (0-500)
+      timeLeft: 30,
+      vibesCollected: 0,
+      hitsTaken: 0,
+      obstacles: [],
+      gameInterval: null,
+      spawnInterval: null,
+      keyHandler: null,
+      touchHandler: null
+    };
+
+    function startTubing() {
+      hideAllScreens();
+      document.getElementById('tubingScreen').classList.remove('hidden');
+
+      // Reset game state
+      tubingGameState = {
+        playerPosition: 250, // Center
+        timeLeft: 30,
+        vibesCollected: 0,
+        hitsTaken: 0,
+        obstacles: [],
+        gameInterval: null,
+        spawnInterval: null,
+        keyHandler: null,
+        touchHandler: null
+      };
+
+      // Update UI
+      document.getElementById('tubingTime').textContent = 30;
+      document.getElementById('tubingVibes').textContent = 0;
+      document.getElementById('tubingHits').textContent = 0;
+
+      // Position player
+      updatePlayerPosition();
+
+      // Setup keyboard controls
+      tubingGameState.keyHandler = (e) => {
+        if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+          tubingGameState.playerPosition = Math.max(50, tubingGameState.playerPosition - 40);
+          updatePlayerPosition();
+        } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+          tubingGameState.playerPosition = Math.min(450, tubingGameState.playerPosition + 40);
+          updatePlayerPosition();
+        }
+      };
+      document.addEventListener('keydown', tubingGameState.keyHandler);
+
+      // Setup mobile touch controls
+      const riverGame = document.getElementById('riverGame');
+      tubingGameState.touchHandler = (e) => {
+        e.preventDefault();
+        const rect = riverGame.getBoundingClientRect();
+        const clickX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        const relativeX = clickX - rect.left;
+
+        // Click left side = move left, right side = move right
+        if (relativeX < rect.width / 2) {
+          tubingGameState.playerPosition = Math.max(50, tubingGameState.playerPosition - 40);
+        } else {
+          tubingGameState.playerPosition = Math.min(450, tubingGameState.playerPosition + 40);
+        }
+        updatePlayerPosition();
+      };
+      riverGame.addEventListener('click', tubingGameState.touchHandler);
+      riverGame.addEventListener('touchstart', tubingGameState.touchHandler);
+
+      // Start game loop
+      tubingGameState.gameInterval = setInterval(updateTubingGame, 50); // 20 FPS
+      tubingGameState.spawnInterval = setInterval(spawnObstacle, 800); // Spawn every 0.8s
+    }
+
+    function updatePlayerPosition() {
+      const player = document.getElementById('playerTube');
+      player.style.left = tubingGameState.playerPosition + 'px';
+    }
+
+    function spawnObstacle() {
+      const riverGame = document.getElementById('riverGame');
+      // Random X position across the width (50-450px)
+      const xPosition = Math.floor(Math.random() * 400) + 50;
+
+      // Types: good vibes (🌈), herbs (🌿), bummers (💩, 🗑️, 🪨)
+      const types = [
+        { emoji: '🌈', type: 'good', points: 5 },
+        { emoji: '🌿', type: 'good', points: 3 },
+        { emoji: '✨', type: 'good', points: 5 },
+        { emoji: '💩', type: 'bad', points: 0 },
+        { emoji: '🗑️', type: 'bad', points: 0 },
+        { emoji: '🪨', type: 'bad', points: 0 }
+      ];
+
+      const obstacleType = types[Math.floor(Math.random() * types.length)];
+
+      const obstacle = document.createElement('div');
+      obstacle.textContent = obstacleType.emoji;
+      obstacle.style.position = 'absolute';
+      obstacle.style.fontSize = '3rem';
+      obstacle.style.top = '-50px';
+      obstacle.style.left = xPosition + 'px';
+      obstacle.style.transform = 'translateX(-50%)';
+      obstacle.style.zIndex = '50';
+      obstacle.className = 'river-obstacle'; // Add class for mobile styling
+
+      // Add psychedelic glow to good items
+      if (obstacleType.type === 'good') {
+        obstacle.style.textShadow = '0 0 10px #f093fb, 0 0 20px #667eea';
+      }
+
+      riverGame.appendChild(obstacle);
+
+      tubingGameState.obstacles.push({
+        element: obstacle,
+        x: xPosition,
+        y: -50,
+        type: obstacleType.type,
+        points: obstacleType.points,
+        collected: false
+      });
+    }
+
+    function updateTubingGame() {
+      // Update timer
+      tubingGameState.timeLeft -= 0.05;
+      document.getElementById('tubingTime').textContent = Math.ceil(tubingGameState.timeLeft);
+
+      // Move obstacles down
+      tubingGameState.obstacles.forEach((obs, index) => {
+        obs.y += 5; // Move down 5px per frame
+        obs.element.style.top = obs.y + 'px';
+
+        // Check collision with player (at bottom ~20px from bottom, height ~350px)
+        // Player is at playerPosition, collision range ~60px
+        if (obs.y > 270 && obs.y < 330 && !obs.collected) {
+          const distance = Math.abs(obs.x - tubingGameState.playerPosition);
+          if (distance < 60) { // Collision threshold
+            obs.collected = true;
+            if (obs.type === 'good') {
+              // Collected good vibe!
+              tubingGameState.vibesCollected += obs.points;
+              document.getElementById('tubingVibes').textContent = tubingGameState.vibesCollected;
+              obs.element.style.animation = 'pulse 0.3s';
+              obs.element.style.transform = 'translateX(-50%) scale(1.5)';
+              setTimeout(() => obs.element.remove(), 300);
+            } else {
+              // Hit a bummer!
+              tubingGameState.hitsTaken++;
+              document.getElementById('tubingHits').textContent = tubingGameState.hitsTaken;
+              obs.element.style.animation = 'shake 0.3s';
+              obs.element.style.filter = 'brightness(2)';
+
+              if (tubingGameState.hitsTaken >= 3) {
+                endTubing(true); // Game over - bad trip!
+                return;
+              }
+            }
+          }
+        }
+
+        // Remove if off screen
+        if (obs.y > 400) {
+          obs.element.remove();
+          tubingGameState.obstacles.splice(index, 1);
+        }
+      });
+
+      // Check if time is up
+      if (tubingGameState.timeLeft <= 0) {
+        endTubing(false); // Completed successfully!
+      }
+    }
+
+    function endTubing(badTrip) {
+      // Clean up game
+      clearInterval(tubingGameState.gameInterval);
+      clearInterval(tubingGameState.spawnInterval);
+      document.removeEventListener('keydown', tubingGameState.keyHandler);
+
+      // Remove touch handlers
+      const riverGame = document.getElementById('riverGame');
+      riverGame.removeEventListener('click', tubingGameState.touchHandler);
+      riverGame.removeEventListener('touchstart', tubingGameState.touchHandler);
+
+      // Clear obstacles
+      tubingGameState.obstacles.forEach(obs => obs.element.remove());
+
+      hideAllScreens();
+      document.getElementById('gameScreen').classList.remove('hidden');
+
+      if (badTrip) {
+        // Hit too many bummers - bad trip!
+        gameState.resources.vibes = Math.max(0, gameState.resources.vibes - 30);
+
+        showEvent(
+          `<h2 style="color: #ef4444; font-size: 2.5rem; margin-bottom: 1rem;">💥 BAD TRIP, MAN! 💥</h2>` +
+          `You hit too many bummers in the rapids! The vibes went DARK!<br><br>` +
+          `<strong style="color: #ef4444;">Vibes -30</strong><br>` +
+          `<em>Collected ${tubingGameState.vibesCollected} good vibes before the crash...</em><br><br>` +
+          `Everyone's shaken up. That was HEAVY. 😰`,
+          true
+        );
+      } else {
+        // Successfully completed!
+        const vibeBonus = Math.min(50, tubingGameState.vibesCollected);
+        gameState.resources.vibes = Math.min(100, gameState.resources.vibes + vibeBonus);
+
+        // If you did really well (40+ vibes), cure doubts!
+        let doubtMessage = '';
+        if (tubingGameState.vibesCollected >= 40) {
+          gameState.party.forEach(member => {
+            if (!member.abandoned) {
+              member.doubting = false;
+              member.doubt = null;
+            }
+          });
+          doubtMessage = '<br><strong style="color: #4ade80;">✨ The cosmic river washed away all doubts! ✨</strong>';
+        }
+
+        showEvent(
+          `<h2 style="color: #f093fb; font-size: 2.5rem; margin-bottom: 1rem;">🌊 COSMIC RAPIDS CONQUERED! 🌊</h2>` +
+          `Far out! You navigated the psychedelic river and collected ${tubingGameState.vibesCollected} cosmic vibes!<br><br>` +
+          `<strong style="color: #4ade80;">Vibes +${vibeBonus}</strong>${doubtMessage}<br><br>` +
+          `That was TOTALLY GROOVY, man! ☮️✨`,
+          false
+        );
+      }
+
+      advanceTime(1);
+      gameState.currentLocationIndex++;
+      updateUI();
+      setTimeout(showMainMenu, 3500);
+    }
+
+    function skipTubing() {
+      gameState.resources.vibes -= 20;
+      showEvent("You skipped the cosmic river. What a bummer... -20 vibes! 😞", true);
+      advanceTime(0.5);
+      gameState.currentLocationIndex++;
+      updateUI();
+      setTimeout(showMainMenu, 2000);
+    }
+
+    // Repair Mini-game
+    let repairTimeout;
+    let repairTimeLeft = 20;
+    let partsFixed = 0;
+    let currentFlashingPart = null;
+
+    let flashStartTime = 0;
+    let repairAttempts = 0;
+    let repairMisses = 0;
+
+    function startRepairGame() {
+      hideAllScreens();
+      document.getElementById('repairScreen').classList.remove('hidden');
+
+      partsFixed = 0;
+      repairAttempts = 0;
+      repairMisses = 0;
+      currentFlashingPart = null;
+
+      const parts = ['🔧 Spark Plug', '⚙️ Carburetor', '🔩 Fan Belt', '💧 Oil Filter', '⚡ Battery', '🌡️ Radiator'];
+      const container = document.getElementById('repairParts');
+      container.innerHTML = '';
+
+      // Create clickable parts
+      parts.forEach((part, index) => {
+        const div = document.createElement('div');
+        div.id = `part-${index}`;
+        div.style.cssText = 'padding: 1.5rem; background: rgba(255,255,255,0.05); border: 2px solid #8b7355; cursor: pointer; font-size: 1.5rem; touch-action: manipulation; user-select: none;';
+        div.textContent = part;
+
+        // Support both click and touch events
+        const handleInteraction = (e) => {
+          e.preventDefault();
+          fixPart(index);
+        };
+
+        div.onclick = handleInteraction;
+        div.ontouchstart = handleInteraction;
+
+        container.appendChild(div);
+      });
+
+      document.getElementById('repairTimer').textContent = 'Get ready...';
+      document.getElementById('repairCounter').textContent = `Hits: ${partsFixed} / 5 | Misses: ${repairMisses}`;
+
+      // Start flashing after a brief delay
+      setTimeout(() => {
+        flashRandomPart();
+      }, 1000);
+    }
+
+    function flashRandomPart() {
+      // Stop previous flash
+      if (currentFlashingPart !== null) {
+        const prevPart = document.getElementById(`part-${currentFlashingPart}`);
+        if (prevPart) {
+          prevPart.style.background = 'rgba(255,255,255,0.05)';
+          prevPart.style.border = '2px solid #8b7355';
+          prevPart.style.animation = '';
+        }
+      }
+
+      // Check if game is over
+      if (partsFixed >= 5) {
+        endRepair(true);
+        return;
+      }
+
+      if (repairMisses >= 3) {
+        endRepair(false);
+        return;
+      }
+
+      // Pick new random part
+      currentFlashingPart = Math.floor(Math.random() * 6);
+      flashStartTime = Date.now();
+
+      const part = document.getElementById(`part-${currentFlashingPart}`);
+      if (part) {
+        part.style.background = 'rgba(239, 68, 68, 0.8)';
+        part.style.border = '3px solid #ef4444';
+        part.style.animation = 'pulse 0.1s infinite';
+      }
+
+      // Flash disappears after 250ms - must click within this window!
+      clearTimeout(repairTimeout);
+      repairTimeout = setTimeout(() => {
+        // Remove the flash
+        const flashedPart = document.getElementById(`part-${currentFlashingPart}`);
+        if (flashedPart) {
+          flashedPart.style.background = 'rgba(255,255,255,0.05)';
+          flashedPart.style.border = '2px solid #8b7355';
+          flashedPart.style.animation = '';
+        }
+
+        // Mark as miss
+        repairMisses++;
+        document.getElementById('repairCounter').textContent = `Hits: ${partsFixed} / 5 | Misses: ${repairMisses}`;
+        showRepairMessage("TOO SLOW!");
+
+        // Invalidate this flash so clicks after 250ms don't count
+        currentFlashingPart = null;
+
+        if (repairMisses >= 3) {
+          endRepair(false);
+        } else {
+          setTimeout(flashRandomPart, 500);
+        }
+      }, 250);
+    }
+
+    function fixPart(index) {
+      if (index !== currentFlashingPart) {
+        // Wrong part!
+        showRepairMessage("WRONG PART!");
+        return;
+      }
+
+      const reactionTime = Date.now() - flashStartTime;
+
+      // Must click within 250ms
+      if (reactionTime > 250) {
+        return; // Too late, already handled by timeout
+      }
+
+      clearTimeout(repairTimeout);
+      partsFixed++;
+      repairAttempts++;
+
+      // Clear the flash immediately on successful click
+      const part = document.getElementById(`part-${currentFlashingPart}`);
+      if (part) {
+        part.style.background = 'rgba(255,255,255,0.05)';
+        part.style.border = '2px solid #8b7355';
+        part.style.animation = '';
+      }
+
+      document.getElementById('repairCounter').textContent = `Hits: ${partsFixed} / 5 | Misses: ${repairMisses}`;
+
+      if (reactionTime < 150) {
+        showRepairMessage(`LIGHTNING! ${reactionTime}ms! ⚡`);
+      } else {
+        showRepairMessage(`Got it! ${reactionTime}ms`);
+      }
+
+      // Invalidate current flash
+      currentFlashingPart = null;
+
+      // Flash next part
+      setTimeout(flashRandomPart, 500);
+    }
+
+    function showRepairMessage(msg) {
+      document.getElementById('repairInstructions').textContent = msg;
+      setTimeout(() => {
+        document.getElementById('repairInstructions').textContent = 'Click the flashing parts before time runs out!';
+      }, 1000);
+    }
+
+    function endRepair(success) {
+      clearInterval(repairTimeout);
+
+      hideAllScreens();
+      document.getElementById('gameScreen').classList.remove('hidden');
+
+      if (success) {
+        // SUCCESS!
+        gameState.resources.vibes += 20;
+        advanceTime(0.5);
+        showEvent(
+          `🔧 You fixed the bus yourself! Nice work!<br><br>` +
+          `<strong style="color: #4ade80;">+20 Vibes (feeling accomplished!)</strong><br>` +
+          `<strong style="color: #4ade80;">Only took half a day!</strong>`,
+          false
+        );
+      } else {
+        // FAILED - have to pay mechanic
+        gameState.resources.cash -= 80;
+        gameState.resources.vibes -= 15;
+        advanceTime(1);
+        showEvent(
+          `🔧 You couldn't fix it in time... Had to call a mechanic.<br><br>` +
+          `<strong style="color: #ef4444;">-$80</strong><br>` +
+          `<strong style="color: #ef4444;">-15 Vibes (feeling defeated)</strong><br>` +
+          `<strong style="color: #ef4444;">Lost a full day</strong>`,
+          true
+        );
+      }
+
+      updateUI();
+      setTimeout(showMainMenu, 2500);
+    }
+
+    function rest() {
+      gameState.resources.vibes = Math.min(100, gameState.resources.vibes + 30);
+      gameState.resources.food -= 10;
+      advanceTime(2);
+
+      // Resting cures doubts if vibes are restored above 60
+      if (gameState.resources.vibes > 60) {
+        gameState.party.forEach(member => {
+          if (!member.abandoned) {
+            member.doubting = false;
+            member.doubt = null;
+          }
+        });
+      }
+
+      const currentLoc = locations[gameState.currentLocationIndex];
+      showEvent(`Your party rests for 2 days. +30 Vibes! Everyone feels refreshed! 🏕️<br><br>You're still at <strong>${currentLoc.name}</strong>.`, false);
+      updateUI();
+      setTimeout(showMainMenu, 100);
+    }
+
+    // Money-making mini-game
+    function makeMoney() {
+      const currentLoc = locations[gameState.currentLocationIndex];
+
+      showEvent(
+        `<h3 style="color: #4ade80; margin-bottom: 1rem;">💰 Make Some Bread</h3>` +
+        `You need cash, man. What do you wanna do in ${currentLoc.name}?`,
+        false
+      );
+
+      const buttons = document.getElementById('actionButtons');
+
+      // Only show busk option if player has guitar
+      let buskButton = '';
+      if (gameState.items.guitar) {
+        buskButton = '<button onclick="busk()">🎸 Busk with Guitar (3 days, earn $30-60)</button>';
+      }
+
+      buttons.innerHTML = `
+        ${buskButton}
+        <button onclick="sellCrafts()">🌼 Make & Sell Crafts (2 weeks, earn $40-70)</button>
+        <button onclick="oddJobs()">🔧 Odd Jobs (2 days, earn $80-120)</button>
+        <button class="secondary" onclick="showLocationArrival(locations[gameState.currentLocationIndex])">Never Mind</button>
+      `;
+    }
+
+    function busk() {
+      const currentLoc = locations[gameState.currentLocationIndex];
+
+      // Must be in a town/city
+      if (!currentLoc.isTown && !currentLoc.isShop) {
+        showEvent("You need to be in a town or city to busk, man! No audience out here in the wilderness.", true);
+        setTimeout(showMainMenu, 2000);
+        return;
+      }
+
+      // Double-check they have a guitar
+      if (!gameState.items.guitar) {
+        showEvent("You need a guitar to busk, man! Check the general store.", true);
+        setTimeout(() => makeMoney(), 2000);
+        return;
+      }
+
+      const earnings = Math.floor(Math.random() * 31) + 30; // $30-60
+      gameState.resources.cash += earnings;
+      gameState.resources.vibes += 15; // Playing music is groovy!
+      gameState.resources.food -= 20; // Standing on street corners all day is hungry work
+      advanceTime(3); // Takes 3 days to make decent money busking
+
+      showEvent(
+        `🎸 You spend 3 days busking on the street corner, playing groovy tunes!<br><br>` +
+        `People dig your vibe and drop change in your guitar case.<br><br>` +
+        `<strong style="color: #4ade80;">Earned: $${earnings}</strong><br>` +
+        `<strong style="color: #4ade80;">+15 Vibes from jamming!</strong><br>` +
+        `<strong style="color: #ef4444;">-20 Food (standing around all day!)</strong><br><br>` +
+        `You're still at <strong>${currentLoc.name}</strong>.`,
+        false
+      );
+
+      updateUI();
+      setTimeout(showMainMenu, 2500);
+    }
+
+    function sellCrafts() {
+      const currentLoc = locations[gameState.currentLocationIndex];
+
+      // Must be in a town/city
+      if (!currentLoc.isTown && !currentLoc.isShop) {
+        showEvent("You need to be in a town or city to sell crafts, man! No market out here.", true);
+        setTimeout(showMainMenu, 2000);
+        return;
+      }
+
+      const earnings = Math.floor(Math.random() * 31) + 40; // $40-70
+      gameState.resources.cash += earnings;
+      gameState.resources.vibes += 10;
+      advanceTime(14); // 2 weeks
+
+      const crafts = ['friendship bracelets', 'tie-dye shirts', 'beaded necklaces', 'hemp bags', 'painted stones'];
+      const craft = crafts[Math.floor(Math.random() * crafts.length)];
+
+      showEvent(
+        `🌼 You spend the day making ${craft} and sell them at the local market!<br><br>` +
+        `The locals love your handmade goods, man.<br><br>` +
+        `<strong style="color: #4ade80;">Earned: $${earnings}</strong><br>` +
+        `<strong style="color: #4ade80;">+10 Vibes from creating!</strong><br><br>` +
+        `You're still at <strong>${currentLoc.name}</strong>.`,
+        false
+      );
+
+      updateUI();
+      setTimeout(showMainMenu, 2500);
+    }
+
+    function oddJobs() {
+      const currentLoc = locations[gameState.currentLocationIndex];
+
+      // Must be in a town/city
+      if (!currentLoc.isTown && !currentLoc.isShop) {
+        showEvent("You need to be in a town or city to find work, man! No jobs out here in the middle of nowhere.", true);
+        setTimeout(showMainMenu, 2000);
+        return;
+      }
+
+      let baseEarnings = Math.floor(Math.random() * 41) + 80; // $80-120
+
+      // Apply role modifier
+      const roleStats = roleModifiers[gameState.profession];
+      const multiplier = roleStats.jobPayoutMultiplier || 1.0;
+      const earnings = Math.floor(baseEarnings * multiplier);
+
+      gameState.resources.cash += earnings;
+      gameState.resources.vibes -= 10; // Working for the man is a drag
+      gameState.resources.food -= 15; // Hard work uses food
+      advanceTime(2);
+
+      const jobs = [
+        'loading trucks at the docks',
+        'helping at a farm',
+        'painting houses',
+        'moving furniture',
+        'working at a warehouse'
+      ];
+      const job = jobs[Math.floor(Math.random() * jobs.length)];
+
+      let roleNote = '';
+      if (multiplier < 1.0) {
+        roleNote = `<br><em style="color: #fbbf24;">(Starving artists don't get paid as much...)</em>`;
+      }
+
+      showEvent(
+        `🔧 You spend 2 days ${job}.<br><br>` +
+        `It's tough work, but you need the cash!<br><br>` +
+        `<strong style="color: #4ade80;">Earned: $${earnings}</strong>${roleNote}<br>` +
+        `<strong style="color: #ef4444;">-10 Vibes (working is a drag)</strong><br>` +
+        `<strong style="color: #ef4444;">-15 Food (hard work!)</strong><br><br>` +
+        `You're still at <strong>${currentLoc.name}</strong>.`,
+        false
+      );
+
+      updateUI();
+      setTimeout(showMainMenu, 2500);
+    }
+
+    function checkStatus() {
+      const loyalCount = gameState.party.filter(m => !m.abandoned).length;
+      const doubtingCount = gameState.party.filter(m => m.doubting && !m.abandoned).length;
+      const currentLoc = locations[gameState.currentLocationIndex];
+
+      showEvent(
+        `<h3 style="color: #ffd93d; margin-bottom: 1rem;">📋 Status Report</h3>` +
+        `<strong>Profession:</strong> ${gameState.professionName} (${gameState.scoreMultiplier}x score)<br>` +
+        `<strong>Location:</strong> ${currentLoc.name}<br>` +
+        `<strong>Date:</strong> ${gameState.month} ${gameState.day}<br>` +
+        `<strong>Miles to SF:</strong> ${gameState.totalDistance - gameState.distance}<br>` +
+        `<strong>Party still committed:</strong> ${loyalCount}/4<br>` +
+        `<strong>Party having doubts:</strong> ${doubtingCount}<br>` +
+        `<strong>Weather:</strong> ${gameState.weather}<br>` +
+        `<strong>Pace:</strong> ${gameState.pace} | <strong>Rations:</strong> ${gameState.rations}<br>` +
+        `<br>Keep on truckin'! ✌️`,
+        false
+      );
+      setTimeout(showMainMenu, 100);
+    }
+
+    function handleCheckpoint() {
+      const roleStats = roleModifiers[gameState.profession];
+
+      // Dealers have higher chance of negative outcomes
+      let negativeChance = 0.5;
+      if (gameState.profession === 'dealer') {
+        negativeChance = 0.7; // 70% chance for dealers
+      } else if (gameState.profession === 'artist') {
+        negativeChance = 0.4; // 40% chance for artists (cops feel bad)
+      }
+
+      const random = Math.random();
+
+      if (random > negativeChance) {
+        // Positive outcomes
+        const positiveOutcomes = [
+          { message: "The checkpoint cop is a groovy dude! He waves you through with a peace sign! ✌️", effects: { vibes: 10 } },
+          { message: "The cop searches your bus but finds nothing. 'Move along, hippies.' You're free to go!", effects: {} },
+          { message: "The officer sees your peace signs and just laughs. 'Get outta here.' You made it through!", effects: { vibes: 5 } },
+          { message: "They barely glance at your bus. 'You're clean. Drive safe.' Easy! ☮️", effects: {} }
+        ];
+
+        const outcome = positiveOutcomes[Math.floor(Math.random() * positiveOutcomes.length)];
+        showEvent(outcome.message, false);
+
+        // Apply any positive effects
+        if (outcome.effects.vibes) {
+          gameState.resources.vibes = Math.min(100, gameState.resources.vibes + outcome.effects.vibes);
+        }
+      } else {
+        // Negative outcomes - apply role-specific fine multipliers
+        const baseFine1 = Math.floor(-50 * roleStats.fineMultiplier);
+        const baseFine2 = Math.floor(-30 * roleStats.fineMultiplier);
+
+        const negativeOutcomes = [
+          { message: `The fuzz fines you $${Math.abs(baseFine1)} for 'suspicious activity'. What a drag! 🚨`, effects: { cash: baseFine1, vibes: -20 } },
+          { message: "They search the bus for an HOUR. Nothing found, but you lost time and patience! 😤", effects: { days: 0.5, vibes: -15 } },
+          { message: "Cop gives you a lecture about your appearance. 'Get a haircut!' -20 vibes. What a square! 👮", effects: { vibes: -20 } },
+          { message: `They fine you $${Math.abs(baseFine2)} for a 'broken taillight' (it's NOT broken). Pigs! 🐷`, effects: { cash: baseFine2, vibes: -15 } },
+          { message: "Full vehicle inspection! They make you wait 2 hours. Lost time and good vibes. ⏰", effects: { days: 0.3, vibes: -10, gas: -5 } }
+        ];
+
+        const outcome = negativeOutcomes[Math.floor(Math.random() * negativeOutcomes.length)];
+
+        let roleNote = '';
+        if (gameState.profession === 'dealer' && outcome.effects.cash) {
+          roleNote = '<br><em style="color: #ef4444;">(Herbalists pay higher fines!)</em>';
+        } else if (gameState.profession === 'artist' && outcome.effects.cash) {
+          roleNote = '<br><em style="color: #4ade80;">(Cop went easy on you because you\'re broke)</em>';
+        }
+
+        showEvent(outcome.message + roleNote, true);
+
+        // Apply negative effects
+        Object.keys(outcome.effects).forEach(key => {
+          if (key === 'days') {
+            advanceTime(outcome.effects[key]);
+          } else {
+            gameState.resources[key] = Math.max(0, gameState.resources[key] + outcome.effects[key]);
+          }
+        });
+      }
+
+      gameState.currentLocationIndex++;
+      updateUI();
+      setTimeout(showMainMenu, 1500);
+    }
+
+    // Settings
+    function openSettings() {
+      hideAllScreens();
+      document.getElementById('settingsScreen').classList.remove('hidden');
+    }
+
+    function setPace(pace) {
+      gameState.pace = pace;
+      alert(`Pace set to ${pace}!`);
+    }
+
+    function setRations(rations) {
+      gameState.rations = rations;
+      alert(`Rations set to ${rations}!`);
+    }
+
+    function closeSettings() {
+      hideAllScreens();
+      document.getElementById('gameScreen').classList.remove('hidden');
+      updateUI();
+      showMainMenu(false);
+    }
+
+    // Shop
+    function openShop() {
+      document.getElementById('eventContainer').innerHTML = ''; // Clear events when entering shop
+      hideAllScreens();
+      document.getElementById('shopScreen').classList.remove('hidden');
+      document.getElementById('shopLocation').textContent = `Welcome to ${locations[gameState.currentLocationIndex].name}!`;
+      document.getElementById('shopCash').textContent = gameState.resources.cash;
+    }
+
+    function buyItem(type, amount, cost) {
+      if (gameState.resources.cash < cost) {
+        return; // Just don't buy if not enough cash
+      }
+
+      gameState.resources.cash -= cost;
+
+      if (type === 'gas') {
+        gameState.resources.gas = Math.min(100, gameState.resources.gas + amount);
+      } else if (type === 'food') {
+        gameState.resources.food = Math.min(100, gameState.resources.food + amount);
+      } else if (type === 'herbs') {
+        gameState.resources.herbs = Math.min(100, gameState.resources.herbs + amount);
+      } else if (type === 'guitar') {
+        gameState.items.guitar = true;
+        gameState.resources.vibes = 100;
+      } else if (type === 'parts') {
+        gameState.items.parts++;
+      }
+
+      document.getElementById('shopCash').textContent = gameState.resources.cash;
+    }
+
+    function leaveShop() {
+      hideAllScreens();
+      document.getElementById('gameScreen').classList.remove('hidden');
+      document.getElementById('eventContainer').innerHTML = ''; // Clear any old events
+      updateUI();
+      showMainMenu(false);
+    }
+
+    // Gas Station
+    function openGasStation() {
+      const currentLoc = locations[gameState.currentLocationIndex];
+      const currentGas = gameState.resources.gas;
+      const spaceLeft = 100 - currentGas;
+
+      if (spaceLeft <= 0) {
+        showEvent(`Your gas tank is already full, man! (${currentGas}/100)`, false);
+        setTimeout(showMainMenu, 1500);
+        return;
+      }
+
+      showEvent(
+        `<h3 style="color: #ff6b6b; margin-bottom: 1rem;">⛽ Gas Station</h3>` +
+        `<p>Current gas: ${Math.floor(currentGas)}/100</p>` +
+        `<p>Your cash: $${gameState.resources.cash}</p>` +
+        `<br>` +
+        `<p><strong>How much gas do you want?</strong></p>`,
+        false
+      );
+
+      const buttons = document.getElementById('actionButtons');
+      buttons.innerHTML = `
+        <button onclick="buyGas(25, 10)">⛽ 25 units - $10</button>
+        <button onclick="buyGas(50, 18)">⛽ 50 units - $18</button>
+        <button onclick="buyGas(${spaceLeft}, ${Math.ceil(spaceLeft * 0.4)})">⛽ Fill Tank (${spaceLeft} units) - $${Math.ceil(spaceLeft * 0.4)}</button>
+        <button class="secondary" onclick="showLocationArrival(locations[gameState.currentLocationIndex])">Never Mind</button>
+      `;
+    }
+
+    function buyGas(amount, cost) {
+      if (gameState.resources.cash < cost) {
+        return; // Just don't buy if not enough cash
+      }
+
+      gameState.resources.cash -= cost;
+      gameState.resources.gas = Math.min(100, gameState.resources.gas + amount);
+      updateUI();
+
+      // Clear the gas station buttons and return to main menu
+      document.getElementById('actionButtons').innerHTML = '';
+      showMainMenu(false);
+    }
+
+    function checkFailConditions() {
+      const allAbandoned = gameState.party.every(m => m.abandoned);
+
+      if (allAbandoned) {
+        gameOver("Everyone abandoned the trip. You're traveling alone, man. Game over. 👔");
+      } else if (gameState.resources.gas <= 0) {
+        gameOver("Ran out of gas. Stranded on the side of the road.");
+      } else if (gameState.resources.food <= -20) {
+        gameOver("Your party starved. Should've foraged more, dude.");
+      } else if (gameState.resources.vibes <= 0) {
+        // Vibes at 0 = ONE random person abandons, game continues
+        const stillHere = gameState.party.filter(m => !m.abandoned);
+        if (stillHere.length > 0) {
+          const victim = stillHere[Math.floor(Math.random() * stillHere.length)];
+          victim.abandoned = true;
+          const reasons = [
+            'got a job at a bank',
+            'went back to school',
+            'decided to join the army',
+            'sold out to the establishment',
+            'chickened out and went home',
+            'took a corporate job'
+          ];
+          const reason = reasons[Math.floor(Math.random() * reasons.length)];
+
+          // Boost vibes back up a bit after they leave
+          gameState.resources.vibes = 20;
+
+          showEvent(
+            `💔 The vibes hit ZERO. ${victim.name} can't take it anymore.<br><br>` +
+            `They ${reason}.<br><br>` +
+            `The rest of you agree to keep going... but it hurts. 😔<br><br>` +
+            `<strong style="color: #4ade80;">Vibes reset to 20</strong> - time to rebuild the energy.`,
+            true
+          );
+
+          updateUI();
+        }
+      }
+    }
+
+    function gameOver(message) {
+      gameState.alive = false;
+      hideAllScreens();
+      document.getElementById('gameOverScreen').classList.remove('hidden');
+      document.getElementById('gameOverMessage').textContent = message;
+
+      const stillCommitted = gameState.party.filter(m => !m.abandoned).length;
+      document.getElementById('finalStats').innerHTML = `
+        Miles: ${Math.floor(gameState.distance)} / ${gameState.totalDistance}<br>
+        Date: ${gameState.month} ${gameState.day}<br>
+        Still on the trip: ${stillCommitted}/4<br>
+        Cash: $${Math.floor(gameState.resources.cash)}
+      `;
+    }
+
+    function winGame() {
+      hideAllScreens();
+      document.getElementById('winScreen').classList.remove('hidden');
+
+      const stillCommitted = gameState.party.filter(m => !m.abandoned).length;
+      const baseScore = (stillCommitted * 1000) + gameState.resources.cash + (gameState.resources.vibes * 10);
+      const finalScore = Math.floor(baseScore * gameState.scoreMultiplier);
+
+      // Generate epilogue based on journey
+      const epilogue = generateEpilogue(stillCommitted);
+
+      document.getElementById('winStats').innerHTML = `
+        <div style="background: rgba(255, 217, 61, 0.1); border: 2px solid #ffd93d; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
+          <h3 style="color: #ffd93d; font-size: 1.8rem; margin-bottom: 1rem;">Your Story</h3>
+          <p style="font-size: 1.3rem; line-height: 1.6; color: #f0e68c;">${epilogue}</p>
+        </div>
+        <strong style="color: #ff6b6b;">Profession:</strong> ${gameState.professionName}<br>
+        <strong style="color: #ff6b6b;">Multiplier:</strong> ${gameState.scoreMultiplier}x<br>
+        <br>
+        Arrival: ${gameState.month} ${gameState.day}<br>
+        Made it to SF: ${stillCommitted}/4<br>
+        Cash: $${Math.floor(gameState.resources.cash)}<br>
+        Vibes: ${Math.floor(gameState.resources.vibes)}<br>
+        <br>
+        <span style="color: #4ade80;">Base Score: ${Math.floor(baseScore)}</span><br>
+        <span style="color: #ffd93d; font-size: 2rem;">Final Score: ${finalScore}</span>
+      `;
+    }
+
+    function generateEpilogue(stillCommitted) {
+      const vibes = gameState.resources.vibes;
+      const cash = gameState.resources.cash;
+      const hasGuitar = gameState.items.guitar;
+      const profession = gameState.profession;
+
+      // HIGH VIBES + FULL PARTY = Commune/Idealist endings
+      if (vibes >= 80 && stillCommitted === 4) {
+        const communeEndings = [
+          "You and your friends started a commune in the redwoods. Twenty years later, it's still thriving. People come from all over to learn about organic farming and free love. You never stopped believing. ☮️",
+          "The five of you became legends in Haight-Ashbury. Your bus is parked permanently on a corner, turned into a free coffee shop. Locals call you 'the originals.' The spirit lives on. 🌻",
+          "You founded a music collective that toured the country spreading peace. Your story inspired thousands to hit the road. Some say the journey never really ends. 🎸"
+        ];
+        return communeEndings[Math.floor(Math.random() * communeEndings.length)];
+      }
+
+      // HIGH CASH + LOW VIBES = Sold Out endings
+      if (cash >= 300 && vibes < 40) {
+        if (profession === 'dealer') {
+          return "By the 80s, you'd opened a chain of 'organic wellness stores.' You don't talk about the old days much. The VW bus is in your garage, covered in dust. Sometimes you wonder what happened to the dream. 💼";
+        } else if (profession === 'artist') {
+          return "Your 'authentic hippie experience' memoir became a bestseller in 1985. You do book tours in a suit. The irony isn't lost on you. The bus sold at auction for $50,000. 📚";
+        } else {
+          return "You used the trip as a business school essay. MBA, corner office, stock options. The bus is long gone. Your kids think the old photos are Photoshopped. You don't tell them the truth. 🏢";
+        }
+      }
+
+      // LOST PARTY MEMBERS = Bittersweet endings
+      if (stillCommitted <= 2) {
+        return `You made it, but the others drifted away. You stayed in touch for a while - Christmas cards, the occasional phone call. But people change. You still have the photos, though. Sometimes that's enough. ${stillCommitted === 1 ? '💔' : '🥀'}`;
+      }
+
+      // ARTIST PATH = Creative endings
+      if (profession === 'artist') {
+        if (hasGuitar) {
+          return "You never left San Francisco. Busking on street corners turned into coffee shop gigs, then small venues. You're not famous, but you're free. The bus is parked by the ocean. You play music every sunset. 🎸";
+        } else {
+          return "You documented the whole journey in sketches and paintings. A gallery in North Beach gave you your first show. Critics called it 'raw' and 'authentic.' You called it 'Tuesday.' Your art spoke what words couldn't. 🎨";
+        }
+      }
+
+      // DROPOUT PATH = Finding Purpose endings
+      if (profession === 'dropout') {
+        if (vibes >= 60) {
+          return "Turns out, leaving college was the best decision you ever made. You went back eventually - on your own terms - to study environmental science. Now you teach. Your students call you 'the cool professor.' You still have the bus. 🌱";
+        } else {
+          return "You drifted for a few more years after San Francisco. Eventually found your way - just took longer than expected. Looking back, the journey taught you more than any classroom ever could. You don't regret a thing. 🛤️";
+        }
+      }
+
+      // HIGH VIBES = Never Stopped Traveling
+      if (vibes >= 70) {
+        return "San Francisco was just the beginning. You kept going - Mexico, Canada, back across the country. The bus finally died in 1976. You bought another one. They say if you're still searching, you haven't found it yet. They're wrong. The road IS what you found. 🚐";
+      }
+
+      // MEDIUM VIBES = Balanced ending
+      if (vibes >= 50) {
+        return "You stayed in San Francisco for a few years, then moved back east. Got a job, settled down. But every few years, you rent an RV and hit the road again. The spirit never really left you - it just learned to coexist with reality. ✌️";
+      }
+
+      // LOW VIBES = Reflective ending
+      if (vibes < 50) {
+        return "The trip was harder than you expected. But you made it. Years later, you realize it wasn't about the destination - it was about proving to yourself that you could do hard things. The bus is gone, but the lesson remains. 🌅";
+      }
+
+      // DEFAULT = Classic ending
+      return "You made it to San Francisco. The music festival was everything you hoped for and nothing like you expected. Life went on. But sometimes, when you hear a certain song, you're back in that VW bus, wind in your hair, whole life ahead of you. Those were the days. 🌻";
+    }
+  </script>
+</body>
+</html>
+
