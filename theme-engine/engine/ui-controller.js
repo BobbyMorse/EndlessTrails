@@ -143,6 +143,10 @@ class UIController {
       document.getElementById('name4').value || defaults[3] || 'Traveler 4'
     ];
 
+    // Save player name to game state
+    const playerName = document.getElementById('playerName')?.value || 'Anonymous';
+    this.engine.state.playerName = playerName;
+
     this.engine.initializeParty(names);
 
     // Track game session start for analytics
@@ -1730,7 +1734,7 @@ ${mystery.description}
 
     // Save high score
     const { state } = this.engine;
-    const playerName = document.getElementById('playerName')?.value || 'Anonymous';
+    const playerName = state.playerName || 'Anonymous';
     const stillCommitted = state.party.filter(m => !m.abandoned).length;
 
     console.log('Saving Roswell Trail high score:', { theme: this.theme.name, playerName, finalScore });
