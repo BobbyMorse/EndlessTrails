@@ -17,7 +17,7 @@
       "accent": "#4ade80",
       "danger": "#ef4444"
     },
-    "defaultPartyNames": ["Sunshine", "Moonbeam", "Stardust", "River"],
+    "defaultPartyNames": ["Sunshine", "Moonbeam", "Stardust", "River", "Phoenix", "Ziggy", "Willow", "Rainbow", "Sky", "Cosmos", "Luna", "Harmony", "Journey", "Karma", "Freedom", "Peace", "Dharma", "Astral", "Crystal", "Solstice"],
     "statusLabels": {
       "normal": "✌️",
       "doubting": "💭",
@@ -1231,7 +1231,7 @@
   "ui": {
     "title": "The NorCal Trail",
     "subtitle": "San Francisco or Bust! ☮️",
-    "defaultPartyNames": ["Sunshine", "Moonbeam", "Stardust", "River"],
+    "defaultPartyNames": ["Sunshine", "Moonbeam", "Stardust", "River", "Phoenix", "Ziggy", "Willow", "Rainbow", "Sky", "Cosmos", "Luna", "Harmony", "Journey", "Karma", "Freedom", "Peace", "Dharma", "Astral", "Crystal", "Solstice"],
     "statusLabels": {
       "normal": "✌️ Groovy",
       "doubting": "💭",

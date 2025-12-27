@@ -11,7 +11,7 @@
   "ui": {
     "title": "The Roswell Trail",
     "subtitle": "The Truth Is Out There ✨",
-    "defaultPartyNames": ["Fox", "Scully", "Bob", "Art"],
+    "defaultPartyNames": ["Fox", "Scully", "Bob", "Art", "Mulder", "Dana", "Cooper", "Tesla", "Kepler", "Sagan", "Einstein", "Tesla", "Hawking", "Roswell", "Groom", "Agent X", "Cipher", "Echo", "Shadow", "Nexus"],
     "statusLabels": {
       "normal": "🔍 Investigating",
       "doubting": "🤔",
