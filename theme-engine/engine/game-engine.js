@@ -84,6 +84,11 @@ class TrailGameEngine {
       artist: 1.3
     };
     this.state.scoreMultiplier = multipliers[professionId] || 1.0;
+
+    // Give guitar as default item for NorCal Trail
+    if (this.theme.name === 'The NorCal Trail') {
+      this.state.items.guitar = true;
+    }
   }
 
   /**
