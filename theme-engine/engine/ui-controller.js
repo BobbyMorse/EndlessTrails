@@ -404,16 +404,24 @@ ${mystery.description}
     const currentLoc = this.engine.getCurrentLocation();
 
     // Theme-aware forage button text
-    const forageButtonText = this.theme.resources.food.name === 'Evidence'
-      ? 'Search for Evidence 🔍'
-      : 'Forage for Food';
+    let forageButtonText, forageAction;
+    if (this.theme.resources.food.name === 'Evidence') {
+      forageButtonText = 'Search for Evidence 🔍';
+      forageAction = () => this.forage();
+    } else if ((currentLoc.isShop || currentLoc.isTown) && this.theme.name === 'The NorCal Trail') {
+      forageButtonText = 'Street Performance 🎸';
+      forageAction = () => this.startStreetPerformance();
+    } else {
+      forageButtonText = 'Forage for Food';
+      forageAction = () => this.forage();
+    }
 
     const actions = [
       { text: 'Continue Journey', action: () => this.travel() },
       { text: `Buy ${this.theme.resources.fuel.icon} ${this.theme.resources.fuel.name}`, action: () => this.showGasStation(), condition: () => currentLoc.isShop || currentLoc.type === 'checkpoint' },
       { text: 'General Store', action: () => this.showTrade(), condition: () => currentLoc.isShop },
       { text: 'Make Money 💰', action: () => this.showMakeMoney(), condition: () => currentLoc.isShop || currentLoc.type === 'town' },
-      { text: forageButtonText, action: () => this.forage() },
+      { text: forageButtonText, action: forageAction },
       { text: 'Rest', action: () => this.rest() },
       { text: 'Check Supplies', action: () => this.showSupplies() },
       { text: 'Change Pace', action: () => this.showPaceMenu() },
@@ -2338,6 +2346,233 @@ ${mystery.description}
 
     this.updateUI();
     setTimeout(() => this.checkFailAndShowMenu(), 2000);
+  }
+
+  /**
+   * Street Performance Rhythm Game (Guitar Hero style)
+   */
+  startStreetPerformance() {
+    const eventContainer = document.getElementById('eventContainer');
+    const buttonsContainer = document.getElementById('actionButtons');
+
+    this.performanceState = {
+      score: 0,
+      combo: 0,
+      notesHit: 0,
+      notesMissed: 0,
+      timeLeft: 20,
+      interval: null,
+      noteInterval: null,
+      notes: []
+    };
+
+    eventContainer.innerHTML = `
+      <div style="text-align: center; padding: 2rem;">
+        <h2 style="color: #ffd93d; margin-bottom: 1rem;">🎸 STREET PERFORMANCE 🎸</h2>
+        <p style="color: #f0e68c; margin-bottom: 1rem;">Hit the notes as they reach the bottom!</p>
+
+        <div style="margin: 1rem 0;">
+          <span id="perfTimer" style="color: #ff6b6b; font-size: 1.5rem; font-weight: bold;">Time: 20s</span> |
+          <span id="perfScore" style="color: #4ade80; font-size: 1.5rem; font-weight: bold;">Combo: 0x</span>
+        </div>
+
+        <div id="noteHighway" style="position: relative; height: 400px; width: 100%; max-width: 400px; margin: 0 auto; background: rgba(0,0,0,0.5); border: 3px solid #ffd93d; border-radius: 8px; overflow: hidden;">
+          <div id="hitZone" style="position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: linear-gradient(to top, rgba(255, 215, 61, 0.5), transparent); border-top: 3px solid #ffd93d;"></div>
+        </div>
+
+        <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+          <button id="note1Btn" style="font-size: 2rem; padding: 1rem 2rem; background: rgba(255, 107, 107, 0.3); border: 2px solid #ff6b6b;">🎵</button>
+          <button id="note2Btn" style="font-size: 2rem; padding: 1rem 2rem; background: rgba(77, 222, 128, 0.3); border: 2px solid #4ade80;">🎶</button>
+          <button id="note3Btn" style="font-size: 2rem; padding: 1rem 2rem; background: rgba(139, 92, 246, 0.3); border: 2px solid #8b5cf6;">🎸</button>
+        </div>
+      </div>
+    `;
+
+    buttonsContainer.innerHTML = '<button onclick="ui.endPerformance()">Stop Performing</button>';
+
+    // Set up button handlers
+    document.getElementById('note1Btn').onclick = () => this.hitNote(0);
+    document.getElementById('note2Btn').onclick = () => this.hitNote(1);
+    document.getElementById('note3Btn').onclick = () => this.hitNote(2);
+
+    // Start spawning notes
+    this.spawnNote();
+    this.performanceState.noteInterval = setInterval(() => this.spawnNote(), 1200);
+
+    // Start timer
+    this.performanceState.interval = setInterval(() => {
+      this.performanceState.timeLeft--;
+      const timerEl = document.getElementById('perfTimer');
+      if (timerEl) timerEl.textContent = `Time: ${this.performanceState.timeLeft}s`;
+
+      if (this.performanceState.timeLeft <= 0) {
+        this.endPerformance();
+      }
+    }, 1000);
+
+    // Animate existing notes
+    this.animateNotes();
+  }
+
+  spawnNote() {
+    if (!this.performanceState) return;
+
+    const lane = Math.floor(Math.random() * 3);
+    const colors = ['#ff6b6b', '#4ade80', '#8b5cf6'];
+    const icons = ['🎵', '🎶', '🎸'];
+
+    const note = {
+      id: Date.now() + Math.random(),
+      lane: lane,
+      position: 0,
+      color: colors[lane],
+      icon: icons[lane],
+      hit: false
+    };
+
+    this.performanceState.notes.push(note);
+
+    const highway = document.getElementById('noteHighway');
+    if (!highway) return;
+
+    const noteEl = document.createElement('div');
+    noteEl.id = `note-${note.id}`;
+    noteEl.style.cssText = `
+      position: absolute;
+      left: ${33.33 * lane}%;
+      width: 33.33%;
+      top: 0;
+      font-size: 3rem;
+      text-align: center;
+      transition: top 0.05s linear;
+    `;
+    noteEl.textContent = note.icon;
+    highway.appendChild(noteEl);
+  }
+
+  animateNotes() {
+    if (!this.performanceState) return;
+
+    const animate = () => {
+      if (!this.performanceState) return;
+
+      this.performanceState.notes.forEach(note => {
+        if (note.hit) return;
+
+        note.position += 1.5;
+        const noteEl = document.getElementById(`note-${note.id}`);
+        if (noteEl) {
+          noteEl.style.top = `${note.position}%`;
+
+          // Check if missed (past hit zone)
+          if (note.position > 95) {
+            this.missNote(note);
+          }
+        }
+      });
+
+      if (this.performanceState) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    animate();
+  }
+
+  hitNote(lane) {
+    if (!this.performanceState) return;
+
+    // Find closest note in this lane near the hit zone
+    const notesInLane = this.performanceState.notes.filter(n => n.lane === lane && !n.hit && n.position > 75 && n.position < 100);
+
+    if (notesInLane.length === 0) return;
+
+    const closestNote = notesInLane.reduce((closest, note) => {
+      const closestDist = Math.abs(90 - closest.position);
+      const noteDist = Math.abs(90 - note.position);
+      return noteDist < closestDist ? note : closest;
+    });
+
+    closestNote.hit = true;
+    this.performanceState.notesHit++;
+    this.performanceState.combo++;
+    this.performanceState.score += 10 * this.performanceState.combo;
+
+    const noteEl = document.getElementById(`note-${closestNote.id}`);
+    if (noteEl) {
+      noteEl.style.transform = 'scale(1.5)';
+      noteEl.style.opacity = '0';
+      setTimeout(() => noteEl.remove(), 200);
+    }
+
+    // Update score display
+    const scoreEl = document.getElementById('perfScore');
+    if (scoreEl) scoreEl.textContent = `Combo: ${this.performanceState.combo}x`;
+
+    // Flash button
+    const btn = document.getElementById(`note${lane + 1}Btn`);
+    if (btn) {
+      btn.style.transform = 'scale(0.9)';
+      setTimeout(() => btn.style.transform = 'scale(1)', 100);
+    }
+  }
+
+  missNote(note) {
+    if (note.hit) return;
+
+    note.hit = true;
+    this.performanceState.notesMissed++;
+    this.performanceState.combo = 0;
+
+    const noteEl = document.getElementById(`note-${note.id}`);
+    if (noteEl) noteEl.remove();
+
+    // Update combo display
+    const scoreEl = document.getElementById('perfScore');
+    if (scoreEl) scoreEl.textContent = `Combo: 0x`;
+  }
+
+  endPerformance() {
+    if (!this.performanceState) return;
+
+    if (this.performanceState.interval) clearInterval(this.performanceState.interval);
+    if (this.performanceState.noteInterval) clearInterval(this.performanceState.noteInterval);
+
+    const notesHit = this.performanceState.notesHit;
+    const score = this.performanceState.score;
+
+    this.performanceState = null;
+
+    // Calculate rewards based on performance
+    const foodEarned = Math.floor(notesHit * 2.5);
+    const cashEarned = Math.floor(score / 10);
+    const moraleGain = Math.min(20, Math.floor(notesHit / 2));
+
+    this.engine.state.resources.food = Math.min(this.theme.resources.food.max, this.engine.state.resources.food + foodEarned);
+    this.engine.state.resources.currency += cashEarned;
+    this.engine.state.resources.morale = Math.min(this.theme.resources.morale.max, this.engine.state.resources.morale + moraleGain);
+    this.engine.advanceTime(0.5);
+
+    let message = `<h3 style="color: #ffd93d;">🎸 Performance Complete! 🎸</h3>`;
+
+    if (notesHit > 15) {
+      message += `<p style="color: #4ade80; font-size: 1.2rem;">🌟 FAR OUT! The crowd LOVED it! 🌟</p>`;
+    } else if (notesHit > 10) {
+      message += `<p style="color: #ffd93d;">✌️ Groovy performance! ✌️</p>`;
+    } else if (notesHit > 5) {
+      message += `<p>Not bad for a street corner gig!</p>`;
+    } else {
+      message += `<p>Tough crowd... but you tried!</p>`;
+    }
+
+    message += `<p><strong>Notes Hit:</strong> ${notesHit} | <strong>Score:</strong> ${score}</p>`;
+    message += `<p style="color: #4ade80;">+${foodEarned} Food | +$${cashEarned} | +${moraleGain} Vibes</p>`;
+    message += `<p style="color: #fbbf24;">+0.5 day</p>`;
+    message += `<p>People tossed coins and food into your guitar case! 🎸💰🍎</p>`;
+
+    this.showSimpleEvent(message);
+    this.updateUI();
+    setTimeout(() => this.checkFailAndShowMenu(), 3000);
   }
 
   /**
