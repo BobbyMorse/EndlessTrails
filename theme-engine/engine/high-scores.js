@@ -206,8 +206,11 @@ class HighScoreManager {
    * Get all themes that have scores
    */
   async getThemesWithScores() {
+    const supabase = this.initSupabase();
+    if (!supabase) return [];
+
     try {
-      const { data, error } = await this.supabase
+      const { data, error } = await supabase
         .from('high_scores')
         .select('theme_name');
 
@@ -228,8 +231,14 @@ class HighScoreManager {
    * Clear all high scores (admin function)
    */
   async clearAllScores() {
+    const supabase = this.initSupabase();
+    if (!supabase) {
+      alert('Failed to clear scores. Supabase not initialized.');
+      return;
+    }
+
     try {
-      const { error } = await this.supabase
+      const { error } = await supabase
         .from('high_scores')
         .delete()
         .neq('id', 0); // Delete all records
@@ -248,20 +257,32 @@ class HighScoreManager {
    * Get analytics data
    */
   async getAnalytics() {
+    const supabase = this.initSupabase();
+    if (!supabase) {
+      return {
+        totalGames: 0,
+        completedGames: 0,
+        uniquePlayers: 0,
+        uniquePlayersByName: 0,
+        completionRate: '0.0',
+        gamesByTheme: {}
+      };
+    }
+
     try {
       // Total games played
-      const { count: totalGames } = await this.supabase
+      const { count: totalGames } = await supabase
         .from('game_sessions')
         .select('*', { count: 'exact', head: true });
 
       // Completed games
-      const { count: completedGames } = await this.supabase
+      const { count: completedGames } = await supabase
         .from('game_sessions')
         .select('*', { count: 'exact', head: true })
         .not('completed_at', 'is', null);
 
       // Unique players by fingerprint (more accurate than names)
-      const { data: fingerprints } = await this.supabase
+      const { data: fingerprints } = await supabase
         .from('game_sessions')
         .select('player_fingerprint')
         .not('player_fingerprint', 'is', null);
@@ -269,7 +290,7 @@ class HighScoreManager {
       const uniqueFingerprints = new Set(fingerprints.map(p => p.player_fingerprint)).size;
 
       // Also count unique names for comparison
-      const { data: names } = await this.supabase
+      const { data: names } = await supabase
         .from('game_sessions')
         .select('player_name')
         .not('player_name', 'is', null);
@@ -277,7 +298,7 @@ class HighScoreManager {
       const uniqueNames = new Set(names.map(p => p.player_name)).size;
 
       // Games by theme
-      const { data: byTheme } = await this.supabase
+      const { data: byTheme } = await supabase
         .from('game_sessions')
         .select('theme_name')
         .not('completed_at', 'is', null);
