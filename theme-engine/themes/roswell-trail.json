@@ -12,6 +12,7 @@
     "title": "The Roswell Trail",
     "subtitle": "The Truth Is Out There ✨",
     "defaultPartyNames": ["Fox", "Scully", "Bob", "Art", "Mulder", "Dana", "Cooper", "Tesla", "Kepler", "Sagan", "Einstein", "Tesla", "Hawking", "Roswell", "Groom", "Agent X", "Cipher", "Echo", "Shadow", "Nexus"],
+    "groupNames": ["The Truth Seekers", "The X-Files Division", "The Conspiracy Crew", "The Believers", "The Evidence Collectors", "The Whistleblowers", "The Paranormal Investigators", "The Cover-Up Hunters", "The Reality Checkers", "The Deep State Watchers", "The Alien Hunters", "The Free Thinkers", "The Skeptics Turned Believers", "The Document Diggers", "The Shadow Chasers", "The Tinfoil Brigade", "The Truth Squad", "The Secret Keepers", "The Reality Rebels", "The Disclosure Team"],
     "statusLabels": {
       "normal": "🔍 Investigating",
       "doubting": "🤔",

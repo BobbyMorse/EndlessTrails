@@ -18,6 +18,7 @@
       "danger": "#ef4444"
     },
     "defaultPartyNames": ["Sunshine", "Moonbeam", "Stardust", "River", "Phoenix", "Ziggy", "Willow", "Rainbow", "Sky", "Cosmos", "Luna", "Harmony", "Journey", "Karma", "Freedom", "Peace", "Dharma", "Astral", "Crystal", "Solstice"],
+    "groupNames": ["The Cosmic Wanderers", "The Free Spirits", "The Peace Seekers", "The Groovy Gang", "The Liberation Crew", "The Flower Children", "The Dream Chasers", "The Revolution", "The Love Collective", "The Vibes Tribe", "The Road Warriors", "The Nomad Squad", "The Freedom Riders", "The Starlight Express", "The Peaceful Warriors", "The Harmony Seekers", "The Good Vibes Only Crew", "The Psychedelic Travelers", "The Counterculture Collective", "The Far Out Five"],
     "statusLabels": {
       "normal": "✌️",
       "doubting": "💭",
@@ -1232,6 +1233,7 @@
     "title": "The NorCal Trail",
     "subtitle": "San Francisco or Bust! ☮️",
     "defaultPartyNames": ["Sunshine", "Moonbeam", "Stardust", "River", "Phoenix", "Ziggy", "Willow", "Rainbow", "Sky", "Cosmos", "Luna", "Harmony", "Journey", "Karma", "Freedom", "Peace", "Dharma", "Astral", "Crystal", "Solstice"],
+    "groupNames": ["The Cosmic Wanderers", "The Free Spirits", "The Peace Seekers", "The Groovy Gang", "The Liberation Crew", "The Flower Children", "The Dream Chasers", "The Revolution", "The Love Collective", "The Vibes Tribe", "The Road Warriors", "The Nomad Squad", "The Freedom Riders", "The Starlight Express", "The Peaceful Warriors", "The Harmony Seekers", "The Good Vibes Only Crew", "The Psychedelic Travelers", "The Counterculture Collective", "The Far Out Five"],
     "statusLabels": {
       "normal": "✌️ Groovy",
       "doubting": "💭",

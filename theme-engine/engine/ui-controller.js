@@ -147,6 +147,14 @@ class UIController {
     const playerName = document.getElementById('playerName')?.value || 'Anonymous';
     this.engine.state.playerName = playerName;
 
+    // Generate random group name
+    const groupNames = this.theme.ui.groupNames || [];
+    if (groupNames.length > 0) {
+      this.engine.state.groupName = groupNames[Math.floor(Math.random() * groupNames.length)];
+    } else {
+      this.engine.state.groupName = 'The Travelers';
+    }
+
     this.engine.initializeParty(names);
 
     // Track game session start for analytics
@@ -367,14 +375,10 @@ ${mystery.description}
       container.appendChild(div);
     });
 
-    const summaryParts = [];
-    if (groovy > 0) summaryParts.push(`${statusLabels.normal} ${groovy}`);
-    if (doubting > 0) summaryParts.push(`${statusLabels.doubting} ${doubting}`);
-    if (abandoned > 0) summaryParts.push(`${statusLabels.abandoned} ${abandoned}`);
-
     const summaryEl = document.getElementById('partySummary');
     if (summaryEl) {
-      summaryEl.textContent = `(${summaryParts.join(' ')})`;
+      const groupName = this.engine.state.groupName || 'The Travelers';
+      summaryEl.textContent = groupName;
     }
   }
 
