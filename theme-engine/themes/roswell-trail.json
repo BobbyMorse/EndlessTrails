@@ -187,7 +187,7 @@
     "totalDistance": 900,
     "vehicle": {
       "name": "Research RV",
-      "icon": "📡🚐📡",
+      "icon": "🚐",
       "singleIcon": "🚐",
       "description": "Modified RV equipped with satellite dishes, antennas, and detection equipment"
     },
