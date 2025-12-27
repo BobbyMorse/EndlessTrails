@@ -231,6 +231,7 @@ ${mystery.description}
     document.getElementById('foodIcon').textContent = resources.food.icon;
     document.getElementById('moraleIcon').textContent = resources.morale.icon;
     document.getElementById('currencyIcon').textContent = resources.currency.icon;
+    document.getElementById('specialItemIcon').textContent = resources.specialItem.icon;
 
     // Update resource displays
     document.getElementById('fuelValue').textContent = Math.max(0, Math.floor(state.resources.fuel));
@@ -245,6 +246,7 @@ ${mystery.description}
     document.getElementById('quickFood').textContent = Math.max(0, Math.floor(state.resources.food));
     document.getElementById('quickMorale').textContent = Math.max(0, Math.floor(state.resources.morale));
     document.getElementById('quickCurrency').textContent = Math.max(0, Math.floor(state.resources.currency));
+    document.getElementById('quickSpecialItem').textContent = Math.max(0, Math.floor(state.resources.specialItem));
 
     // Color coding
     this.updateResourceColors();
