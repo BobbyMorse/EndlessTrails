@@ -368,9 +368,9 @@ ${mystery.description}
     });
 
     const summaryParts = [];
-    if (groovy > 0) summaryParts.push(`${statusLabels.normal}${groovy}`);
-    if (doubting > 0) summaryParts.push(`${statusLabels.doubting}${doubting}`);
-    if (abandoned > 0) summaryParts.push(`${statusLabels.abandoned}${abandoned}`);
+    if (groovy > 0) summaryParts.push(`${statusLabels.normal} ${groovy}`);
+    if (doubting > 0) summaryParts.push(`${statusLabels.doubting} ${doubting}`);
+    if (abandoned > 0) summaryParts.push(`${statusLabels.abandoned} ${abandoned}`);
 
     const summaryEl = document.getElementById('partySummary');
     if (summaryEl) {
