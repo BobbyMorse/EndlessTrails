@@ -1359,7 +1359,7 @@ ${mystery.description}
       running: true,
       score: 0,
       cities: 6,
-      ammo: 30,
+      ammo: 33,
       missiles: [],      // Enemy missiles (UFOs)
       explosions: [],    // Player missile explosions
       playerMissiles: [], // Player missiles in flight
@@ -1715,7 +1715,7 @@ ${mystery.description}
   /**
    * Show the memory wipe ending sequence
    */
-  showMemoryWipeEnding(score) {
+  async showMemoryWipeEnding(score) {
     const eventContainer = document.getElementById('eventContainer');
     const buttonsContainer = document.getElementById('actionButtons');
 
@@ -1727,6 +1727,26 @@ ${mystery.description}
       bonusPoints = Math.max(0, daysRemaining * this.theme.mystery.bonusPointsPerDay);
     }
     const finalScore = score + bonusPoints;
+
+    // Save high score
+    const { state } = this.engine;
+    const playerName = document.getElementById('playerName')?.value || 'Anonymous';
+    const stillCommitted = state.party.filter(m => !m.abandoned).length;
+
+    console.log('Saving Roswell Trail high score:', { theme: this.theme.name, playerName, finalScore });
+    const scoreResult = await highScoreManager.addScore(
+      this.theme.name,
+      playerName,
+      finalScore,
+      {
+        distance: state.distance,
+        days: state.day,
+        profession: state.professionName,
+        survived: stillCommitted,
+        failed: false
+      }
+    );
+    console.log('High score result:', scoreResult);
 
     // First: Victory at Area 51
     eventContainer.innerHTML = `
