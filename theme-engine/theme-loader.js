@@ -37,10 +37,21 @@ class ThemeLoader {
 
   /**
    * Load multiple themes at once
+   * Uses Promise.allSettled to load all themes even if some fail
    */
   async loadThemes(themePaths) {
-    const promises = themePaths.map(path => this.loadTheme(path));
-    return Promise.all(promises);
+    const results = await Promise.allSettled(
+      themePaths.map(path => this.loadTheme(path))
+    );
+
+    const loaded = results.filter(r => r.status === 'fulfilled').map(r => r.value);
+    const failed = results.filter(r => r.status === 'rejected').map(r => r.reason);
+
+    if (failed.length > 0) {
+      console.warn('Some themes failed to load:', failed.map(e => e.message));
+    }
+
+    return loaded;
   }
 
   /**
@@ -179,7 +190,7 @@ class ThemeLoader {
       </div>
       <div class="theme-card-footer">
         <button class="play-theme-btn" data-theme="${theme.name}">
-          ▶️ Start Your Journey
+          <span class="btn-icon">▶</span> Start Your Journey
         </button>
       </div>
     `;
@@ -281,8 +292,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // This allows users to add custom themes without editing HTML
     try {
       await themeLoader.loadThemes([
-        'themes/roswell-trail.json',
-        'themes/norcal-trail.json'
+        'theme-engine/themes/roswell-trail.json',
+        'theme-engine/themes/norcal-trail.json'
         // Add more bundled themes here
       ]);
     } catch (error) {
