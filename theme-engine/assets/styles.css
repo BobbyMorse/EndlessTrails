@@ -799,15 +799,38 @@
 .play-theme-btn {
   width: 100%;
   margin-top: 0.5rem;
-  animation: pulse-btn 2s ease-in-out infinite;
-  box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
-  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  color: white;
+  border: 3px solid #000;
+  padding: 1rem 2rem;
+  font-family: 'VT323', monospace;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 #000;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.2s;
+}
+
+.play-theme-btn .btn-icon {
+  color: white;
+  font-size: 1.2rem;
+  display: inline-block;
 }
 
 .play-theme-btn:hover {
-  animation: bounce-btn 0.5s ease;
-  box-shadow: 0 0 30px rgba(255, 107, 107, 0.8);
-  transform: scale(1.05);
+  background: linear-gradient(135deg, #ee5a6f 0%, #ff6b6b 100%);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000;
+}
+
+.play-theme-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000;
 }
 
 @keyframes pulse-btn {
@@ -816,15 +839,6 @@
   }
   50% {
     box-shadow: 0 0 30px rgba(255, 107, 107, 0.8);
-  }
-}
-
-@keyframes bounce-btn {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
   }
 }
 
