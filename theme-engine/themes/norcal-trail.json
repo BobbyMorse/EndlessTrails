@@ -216,14 +216,26 @@
       "distance": 650,
       "isShop": true,
       "isTown": true,
-      "hasLandmark": false
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🎓 CAMPUS REVOLUTION 🎓",
+        "art": "      OHIO STATE\n    _______________\n   |  ☮ POWER  |\n   | TO THE    |\n   | PEOPLE! ☮ |\n   |_____________|\n     👥  ✊  👥\n   🌻 STUDENTS 🌻\n     UNITE!",
+        "description": "College town vibes! Students protesting the war, handing out flowers. The youth are rising up! ✊",
+        "moraleBoost": 15
+      }
     },
     {
       "name": "Rainbow Ridge Rest Stop",
       "distance": 750,
       "isShop": true,
       "isTown": false,
-      "hasLandmark": false
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🌈 RAINBOW RIDGE 🌈",
+        "art": "       🌈  RAINBOW  🌈\n        RIDGE STOP\n      ______________\n     |  ⛽  🍔  ☕ |\n     |   REST &   |\n     |   REFUEL   |\n     |_____________|\n     🚐  🌻  🌸  🚐\n       GROOVY VIBES",
+        "description": "A colorful rest stop run by friendly folks. Good vibes and cheap gas! ✌️",
+        "moraleBoost": 10
+      }
     },
     {
       "name": "Indianapolis Checkpoint",
@@ -411,7 +423,13 @@
       "distance": 3100,
       "isShop": false,
       "isTown": true,
-      "hasLandmark": false
+      "hasLandmark": true,
+      "landmarkData": {
+        "title": "🌉 SAN FRANCISCO! 🌉",
+        "art": "           ☮️  ✌️  ☮️\n         GOLDEN GATE\n      ___🌁___🌁___🌁___\n     |  |  |  |  |  |  |\n    🌊 |  |  |  |  |  | 🌊\n       |  |  |  |  |  |\n     ☮️ ☮️ ☮️ ☮️ ☮️ ☮️\n    \n    🏠 HAIGHT-ASHBURY 🏠\n      _______________\n     | ☮ PEACE & ☮ |\n     | ✌ LOVE ✌ |\n     |_______________|\n    🌻 🌸 🌺 🌼 🌷 🌻\n    \n      YOU MADE IT!\n    🎸 ♫ ♪ ✨ ☀️ 🌈",
+        "description": "Far out! You made it to the promised land! Haight-Ashbury awaits with open arms. The summer of love is alive and well! ✌️🌻",
+        "moraleBoost": 200
+      }
     }
   ],
   "events": {

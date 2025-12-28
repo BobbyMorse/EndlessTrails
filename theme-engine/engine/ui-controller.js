@@ -38,8 +38,45 @@ class UIController {
    * Render game title
    */
   renderTitle() {
-    document.getElementById('gameTitle').textContent = this.theme.ui.title;
+    const titleEl = document.getElementById('gameTitle');
+
+    // Add psychedelic ASCII art for NorCal Trail
+    if (this.theme.name === 'The NorCal Trail') {
+      titleEl.innerHTML = `
+        <pre style="font-size: 0.6rem; line-height: 1.2; color: #ff6b6b; text-shadow: 2px 2px #ffd93d, 4px 4px #4ade80;">
+   _____ _            _   _            ___      _   _____          _ _
+  |_   _| |_  ___    | \\ | |___ _ _ __/ __|__ _| | |_   _| _ __ _(_) |
+    | | | ' \\/ -_)   | .\` / _ \\ '_/ __| (__/ _\` | |  | || '_/ _\` | | |
+    |_| |_||_\\___|   |_|\\_\\___/_| \\___\\___\\__,_|_|  |_||_| \\__,_|_|_|
+        </pre>
+        <div style="font-size: 2rem; margin-top: 0.5rem;">✌️ 🌻 ☮️ 🎸 🌈 ☀️</div>
+      `;
+    } else {
+      titleEl.textContent = this.theme.ui.title;
+    }
+
     document.getElementById('gameSubtitle').textContent = this.theme.ui.subtitle;
+  }
+
+  /**
+   * Get decorative border style for event boxes (NorCal Trail only)
+   */
+  getEventBoxDecoration() {
+    if (this.theme.name === 'The NorCal Trail') {
+      const borders = [
+        '🌻 ✌️ 🌻 ✌️ 🌻 ✌️ 🌻 ✌️ 🌻',
+        '☮️ 🌈 ☮️ 🌈 ☮️ 🌈 ☮️ 🌈 ☮️',
+        '🎸 🌺 🎸 🌺 🎸 🌺 🎸 🌺 🎸',
+        '✨ 🌸 ✨ 🌸 ✨ 🌸 ✨ 🌸 ✨',
+        '🌞 🦋 🌞 🦋 🌞 🦋 🌞 🦋 🌞'
+      ];
+      const border = borders[Math.floor(Math.random() * borders.length)];
+      return {
+        top: `<div style="text-align: center; font-size: 1.5rem; margin-bottom: 1rem; letter-spacing: 0.5rem;">${border}</div>`,
+        bottom: `<div style="text-align: center; font-size: 1.5rem; margin-top: 1rem; letter-spacing: 0.5rem;">${border}</div>`
+      };
+    }
+    return { top: '', bottom: '' };
   }
 
   /**
@@ -403,6 +440,23 @@ ${mystery.description}
     container.innerHTML = '';
     const currentLoc = this.engine.getCurrentLocation();
 
+    // Add decorative header for NorCal Trail
+    const eventContainer = document.getElementById('eventContainer');
+    if (this.theme.name === 'The NorCal Trail' && eventContainer && !eventContainer.innerHTML.includes('event-box')) {
+      const decorations = [
+        '✨ ☮️ ✨ What\'s your vibe? ✨ ☮️ ✨',
+        '🌻 ✌️ 🌻 Choose your path 🌻 ✌️ 🌻',
+        '🌈 🎸 🌈 The road awaits 🌈 🎸 🌈',
+        '☀️ 🦋 ☀️ Keep truckin\' ☀️ 🦋 ☀️'
+      ];
+      const decoration = decorations[Math.floor(Math.random() * decorations.length)];
+      eventContainer.innerHTML = `
+        <div style="text-align: center; padding: 1.5rem; font-size: 1.3rem; color: #ffd93d; letter-spacing: 0.2rem;">
+          ${decoration}
+        </div>
+      `;
+    }
+
     // Theme-aware forage button text
     let forageButtonText, forageAction;
     if (this.theme.resources.food.name === 'Evidence') {
@@ -506,19 +560,50 @@ ${mystery.description}
     // Pick a random set from current region
     const selectedSet = currentRegion[Math.floor(Math.random() * currentRegion.length)];
 
+    // Add psychedelic background for NorCal Trail
+    const psychedelicBg = this.theme.name === 'The NorCal Trail'
+      ? `background: linear-gradient(45deg, rgba(255,107,107,0.1) 0%, rgba(255,217,61,0.1) 25%, rgba(74,222,128,0.1) 50%, rgba(139,92,246,0.1) 75%, rgba(255,107,107,0.1) 100%);
+         background-size: 400% 400%;
+         animation: psychedelicShift 10s ease infinite;
+         border-radius: 20px;
+         border: 3px dashed #ffd93d;`
+      : '';
+
     eventContainer.innerHTML = `
-      <div style="text-align: center; padding: 2rem;">
-        <div id="regionItems" style="font-size: 3rem; margin-bottom: 1rem; display: flex; justify-content: center; gap: 2rem;">
-          <span id="regionItem1">${selectedSet[0]}</span>
-          <span id="regionItem2">${selectedSet[1]}</span>
-          <span id="regionItem3">${selectedSet[2]}</span>
+      <div style="text-align: center; padding: 2rem; ${psychedelicBg}">
+        <div id="regionItems" style="font-size: 3rem; margin-bottom: 1rem; display: flex; justify-content: center; gap: 2rem; animation: floatEmoji 3s ease-in-out infinite;">
+          <span id="regionItem1" style="display: inline-block; animation: bounce 2s ease-in-out infinite; animation-delay: 0s;">${selectedSet[0]}</span>
+          <span id="regionItem2" style="display: inline-block; animation: bounce 2s ease-in-out infinite; animation-delay: 0.3s;">${selectedSet[1]}</span>
+          <span id="regionItem3" style="display: inline-block; animation: bounce 2s ease-in-out infinite; animation-delay: 0.6s;">${selectedSet[2]}</span>
         </div>
         <div class="travel-animation" style="font-size: 6rem;">
           <div class="travel-bus"><pre style="display: inline-block; font-size: 6rem; line-height: 1; margin: 0;">${vehicleIcon}</pre></div>
         </div>
-        <div id="travelMessage" style="font-size: 1.5rem; margin-top: 2rem; color: #ffd93d;">Cruising down the highway... ✌️</div>
+        <div id="travelMessage" style="font-size: 1.5rem; margin-top: 2rem; color: #ffd93d; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Cruising down the highway... ✌️</div>
       </div>
     `;
+
+    // Add CSS animations if they don't exist yet
+    if (this.theme.name === 'The NorCal Trail' && !document.getElementById('psychedelicAnimations')) {
+      const style = document.createElement('style');
+      style.id = 'psychedelicAnimations';
+      style.textContent = `
+        @keyframes psychedelicShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes floatEmoji {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0) scale(1); }
+          50% { transform: translateY(-15px) scale(1.1); }
+        }
+      `;
+      document.head.appendChild(style);
+    }
 
     // Cycle through travel messages
     const messages = [
@@ -882,7 +967,8 @@ ${mystery.description}
    */
   showSimpleEvent(text) {
     const container = document.getElementById('eventContainer');
-    container.innerHTML = `<div class="message-box">${text}</div>`;
+    const decoration = this.getEventBoxDecoration();
+    container.innerHTML = `<div class="message-box">${decoration.top}${text}${decoration.bottom}</div>`;
   }
 
   /**
@@ -891,8 +977,9 @@ ${mystery.description}
   showChoiceEvent(event, text) {
     const eventContainer = document.getElementById('eventContainer');
     const buttonsContainer = document.getElementById('actionButtons');
+    const decoration = this.getEventBoxDecoration();
 
-    eventContainer.innerHTML = `<div class="event-box">${text}</div>`;
+    eventContainer.innerHTML = `<div class="event-box">${decoration.top}${text}${decoration.bottom}</div>`;
     buttonsContainer.innerHTML = '';
 
     event.choices.forEach((choice, index) => {
@@ -2825,7 +2912,34 @@ ${mystery.description}
     if (result.type === 'fail') {
       this.hideAllScreens();
       document.getElementById('gameOverScreen').classList.remove('hidden');
-      document.getElementById('gameOverMessage').textContent = messages[result.reason] || 'Game Over';
+
+      // Add hippie peace sign art for NorCal Trail
+      const gameOverEl = document.getElementById('gameOverMessage');
+      if (this.theme.name === 'The NorCal Trail') {
+        gameOverEl.innerHTML = `
+          <pre style="font-size: 0.8rem; line-height: 1.2; color: #ffd93d; margin: 1rem 0;">
+      ☮️  THE TRIP ENDS HERE  ☮️
+
+          ___________
+         /           \\
+        /      |      \\
+       |   ____|____   |
+       |  |         |  |
+       |  |    ☮    |  |
+       |  |         |  |
+       |  |_________|  |
+        \\      |      /
+         \\___________/
+
+    🌻  PEACE & LOVE  🌻
+          </pre>
+          <p style="margin-top: 1rem;">${messages[result.reason] || 'Game Over'}</p>
+          <p style="color: #4ade80; font-size: 1.1rem; margin-top: 1rem;">The journey was groovy while it lasted, man. ✌️</p>
+        `;
+      } else {
+        gameOverEl.textContent = messages[result.reason] || 'Game Over';
+      }
+
       this.currentScreen = 'gameOver';
     } else if (result.type === 'moraleAbandonment') {
       this.showSimpleEvent(
