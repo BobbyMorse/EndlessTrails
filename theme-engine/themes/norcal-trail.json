@@ -8,7 +8,8 @@
     "era": "1960s",
     "difficulty": "medium",
     "playtime": "30-45 mins",
-    "tags": ["hippie", "road-trip", "counterculture", "1960s", "music-festival", "freedom"]
+    "tags": ["hippie", "road-trip", "counterculture", "1960s", "music-festival", "freedom"],
+    "buttonIcon": "✌️"
   },
   "ui": {
     "title": "The NorCal Trail",

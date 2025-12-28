@@ -195,7 +195,7 @@ class ThemeLoader {
       </div>
       <div class="theme-card-footer">
         <button class="play-theme-btn" data-theme="${theme.name}">
-          <span class="btn-icon">▶</span> Start Your Journey
+          <span class="btn-icon">${theme.metadata.buttonIcon || '▶'}</span> Start Your Journey
         </button>
       </div>
     `;

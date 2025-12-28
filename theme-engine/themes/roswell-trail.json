@@ -8,7 +8,8 @@
     "era": "1990s",
     "difficulty": "medium",
     "playtime": "15-30 mins",
-    "tags": ["sci-fi", "conspiracy", "adventure", "aliens", "truth-seeking"]
+    "tags": ["sci-fi", "conspiracy", "adventure", "aliens", "truth-seeking"],
+    "buttonIcon": "🛸"
   },
   "ui": {
     "title": "The Roswell Trail",
