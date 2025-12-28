@@ -23,6 +23,11 @@
       "normal": "✌️",
       "doubting": "💭",
       "abandoned": "👔"
+    },
+    "eventIcons": {
+      "positive": "🌻",
+      "negative": "☀️",
+      "neutral": "🎸"
     }
   },
   "resources": {

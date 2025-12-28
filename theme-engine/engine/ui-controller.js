@@ -460,33 +460,32 @@ ${mystery.description}
     eventContainer.innerHTML = '';
     buttonsContainer.innerHTML = '';
 
-    // Get theme-specific event icons
-    const eventIcons = this.theme.ui?.eventIcons || {
-      positive: '🏈',
-      negative: '👨‍👩‍👧',
-      neutral: '🥶'
-    };
-
     // Region-specific items that appear above the bus
-    // Use theme-configured icons where appropriate
+    // Hippie summer vibes for each region of the journey
     const regionItemSets = {
       east: [
-        [eventIcons.positive, eventIcons.neutral, eventIcons.negative],
-        [eventIcons.neutral, eventIcons.positive, eventIcons.negative],
-        [eventIcons.positive, eventIcons.negative, eventIcons.neutral],
-        [eventIcons.neutral, eventIcons.negative, eventIcons.positive]
+        ['🌻', '✌️', '🌈'],
+        ['🎸', '🌼', '☮️'],
+        ['🌺', '🎵', '🌸'],
+        ['✨', '🌻', '💐'],
+        ['🌞', '🌻', '🦋'],
+        ['🌈', '☀️', '🌻']
       ],
       middle: [
-        [eventIcons.positive, eventIcons.neutral, eventIcons.negative],
-        [eventIcons.neutral, eventIcons.positive, eventIcons.negative],
-        [eventIcons.positive, eventIcons.negative, eventIcons.neutral],
-        [eventIcons.positive, eventIcons.positive, eventIcons.positive]
+        ['🌵', '☀️', '🦅'],
+        ['🏜️', '🌞', '✨'],
+        ['🎸', '🔥', '🌟'],
+        ['⭐', '🌙', '💫'],
+        ['🌺', '🦋', '🌻'],
+        ['🎨', '🌈', '✌️']
       ],
       west: [
-        [eventIcons.positive, eventIcons.neutral, eventIcons.negative],
-        [eventIcons.neutral, eventIcons.positive, eventIcons.negative],
-        [eventIcons.positive, eventIcons.neutral, eventIcons.negative],
-        [eventIcons.neutral, eventIcons.positive, eventIcons.negative]
+        ['🌊', '🌴', '🌅'],
+        ['🏖️', '☀️', '🌺'],
+        ['🌸', '🦋', '🌼'],
+        ['🌞', '🌻', '🎸'],
+        ['✨', '🌈', '☮️'],
+        ['🌺', '💐', '🌷']
       ]
     };
 
