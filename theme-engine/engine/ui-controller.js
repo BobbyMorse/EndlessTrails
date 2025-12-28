@@ -460,7 +460,6 @@ ${mystery.description}
       { text: 'Make Money 💰', action: () => this.showMakeMoney(), condition: () => currentLoc.isShop || currentLoc.type === 'town' },
       { text: forageButtonText, action: forageAction },
       { text: 'Rest', action: () => this.rest() },
-      { text: 'Check Supplies', action: () => this.showSupplies() },
       { text: 'Change Pace', action: () => this.showPaceMenu() },
       // Only show rations for food-based themes (not Evidence)
       { text: 'Change Rations', action: () => this.showRationMenu(), condition: () => this.theme.resources.food.name !== 'Evidence' }
