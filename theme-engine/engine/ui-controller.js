@@ -2528,7 +2528,7 @@ ${mystery.description}
       this.performanceState.notes.forEach(note => {
         if (note.hit) return;
 
-        note.position += 1.5;
+        note.position += 1.0;
         const noteEl = document.getElementById(`note-${note.id}`);
         if (noteEl) {
           noteEl.style.top = `${note.position}%`;
