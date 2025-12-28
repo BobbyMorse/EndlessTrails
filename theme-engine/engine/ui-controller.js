@@ -1081,7 +1081,7 @@ ${mystery.description}
       eventContainer.innerHTML = `
         <div class="event-box">
           <h2 style="color: #ff6b6b;">🔧 BUS REPAIR MINI-GAME</h2>
-          <p>Click the flashing part FAST! (within 250ms)</p>
+          <p>Click the flashing part FAST! (within 800ms)</p>
           <div style="font-size: 1.5rem; margin: 1rem 0; color: #fbbf24;">Time: <span id="repairTimer">${timeLeft}</span>s</div>
           <div style="font-size: 1.5rem; margin: 1rem 0; color: #4ade80;">Fixed: <span id="repairFixed">${fixedParts}</span>/6</div>
           <div id="repairFeedback" style="font-size: 1.2rem; margin: 0.5rem 0; min-height: 1.5rem;"></div>
@@ -1136,8 +1136,8 @@ ${mystery.description}
       const reactionTime = Date.now() - flashStartTime;
       const feedbackEl = document.getElementById('repairFeedback');
 
-      if (part === currentPart && reactionTime <= 250) {
-        // SUCCESS - clicked correct part within 250ms
+      if (part === currentPart && reactionTime <= 800) {
+        // SUCCESS - clicked correct part within 800ms
         fixedParts++;
         const fixedEl = document.getElementById('repairFixed');
         if (fixedEl) fixedEl.textContent = fixedParts;
@@ -1154,8 +1154,8 @@ ${mystery.description}
             flashNextPart();
           }, 400);
         }
-      } else if (part === currentPart && reactionTime > 250) {
-        // TOO SLOW - clicked correct part but after 250ms
+      } else if (part === currentPart && reactionTime > 800) {
+        // TOO SLOW - clicked correct part but after 800ms
         timeLeft = Math.max(0, timeLeft - 2);
         if (feedbackEl) {
           feedbackEl.innerHTML = `<span style="color: #ff6b6b;">✗ TOO SLOW! (${reactionTime}ms) -2s</span>`;
