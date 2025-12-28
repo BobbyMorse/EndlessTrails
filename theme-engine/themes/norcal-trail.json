@@ -1,6 +1,7 @@
 {
   "name": "The NorCal Trail",
   "version": "1.0.0",
+  "sortOrder": 2,
   "metadata": {
     "author": "Original NorCal Trail Game",
     "description": "A psychedelic journey from Boston to San Francisco in a VW bus during the 1960s counterculture movement",

@@ -1,6 +1,7 @@
 {
   "name": "The Roswell Trail",
   "version": "1.0.1",
+  "sortOrder": 1,
   "metadata": {
     "author": "Theme Engine",
     "description": "A conspiracy theorist's road trip from Roswell to Area 51",

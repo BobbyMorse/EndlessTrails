@@ -102,10 +102,14 @@ class ThemeLoader {
   }
 
   /**
-   * Get all loaded themes
+   * Get all loaded themes (sorted by sortOrder)
    */
   getThemes() {
-    return Array.from(this.themes.values());
+    return Array.from(this.themes.values()).sort((a, b) => {
+      const orderA = a.sortOrder || 999;
+      const orderB = b.sortOrder || 999;
+      return orderA - orderB;
+    });
   }
 
   /**
@@ -172,7 +176,6 @@ class ThemeLoader {
         <div class="theme-tags">
           ${theme.metadata.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
         </div>
-        <div class="theme-author">by ${theme.metadata.author}</div>
       </div>
       <div class="theme-card-footer">
         <button class="play-theme-btn" data-theme="${theme.name}">
