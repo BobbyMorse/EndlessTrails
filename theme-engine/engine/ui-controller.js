@@ -2119,7 +2119,7 @@ ${mystery.description}
         <p id="forageInstructions">${forageInstruction}</p>
         <div style="font-size: 1.5rem; margin: 1rem 0; color: #fbbf24;" id="forageTimer">Time: ${timeLeft}s</div>
         <div id="forageCounter" style="font-size: 1.8rem; margin-bottom: 1rem;">${forageCounter}</div>
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1rem 0;" id="forageItems"></div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin: 1rem 0; max-width: 100%;" id="forageItems"></div>
       </div>
     `;
 
@@ -2216,11 +2216,11 @@ ${mystery.description}
 
     container.innerHTML = '';
 
-    // Generate random items
-    for (let i = 0; i < 12; i++) {
+    // Generate random items (3x3 grid = 9 items for mobile-friendly layout)
+    for (let i = 0; i < 9; i++) {
       const item = items[Math.floor(Math.random() * items.length)];
       const div = document.createElement('div');
-      div.style.cssText = 'font-size: 3rem; cursor: pointer; padding: 1rem; background: rgba(76, 175, 80, 0.2); border: 2px solid #4caf50; border-radius: 8px; text-align: center; transition: all 0.2s;';
+      div.style.cssText = 'font-size: 2.5rem; cursor: pointer; padding: 0.75rem; background: rgba(76, 175, 80, 0.2); border: 2px solid #4caf50; border-radius: 8px; text-align: center; transition: all 0.2s;';
       div.textContent = item;
       div.onclick = () => this.collectForageItem(div, item);
       container.appendChild(div);
