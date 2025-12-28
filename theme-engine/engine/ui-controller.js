@@ -2605,11 +2605,18 @@ ${mystery.description}
     // Calculate rewards based on performance
     const foodEarned = Math.floor(notesHit * 2.5);
     const cashEarned = Math.floor(score / 10);
-    const moraleGain = Math.min(20, Math.floor(notesHit / 2));
+
+    // Only give morale boost for good performances (10+ notes)
+    let moraleGain = 0;
+    if (notesHit >= 10) {
+      moraleGain = Math.min(20, Math.floor(notesHit / 2));
+    }
 
     this.engine.state.resources.food = Math.min(this.theme.resources.food.max, this.engine.state.resources.food + foodEarned);
     this.engine.state.resources.currency += cashEarned;
-    this.engine.state.resources.morale = Math.min(this.theme.resources.morale.max, this.engine.state.resources.morale + moraleGain);
+    if (moraleGain > 0) {
+      this.engine.state.resources.morale = Math.min(this.theme.resources.morale.max, this.engine.state.resources.morale + moraleGain);
+    }
     this.engine.advanceTime(0.5);
 
     let message = `<h3 style="color: #ffd93d;">🎸 Performance Complete! 🎸</h3>`;
@@ -2621,11 +2628,17 @@ ${mystery.description}
     } else if (notesHit > 5) {
       message += `<p>Not bad for a street corner gig!</p>`;
     } else {
-      message += `<p>Tough crowd... but you tried!</p>`;
+      message += `<p style="color: #ff6b6b;">Tough crowd... people walked away. 😕</p>`;
     }
 
     message += `<p><strong>Notes Hit:</strong> ${notesHit} | <strong>Score:</strong> ${score}</p>`;
-    message += `<p style="color: #4ade80;">+${foodEarned} Food | +$${cashEarned} | +${moraleGain} Vibes</p>`;
+
+    let rewardsText = `<p style="color: #4ade80;">+${foodEarned} Food 🍎 | +$${cashEarned} 💰`;
+    if (moraleGain > 0) {
+      rewardsText += ` | +${moraleGain} ${this.theme.resources.morale.name} ${this.theme.resources.morale.icon}`;
+    }
+    rewardsText += `</p>`;
+    message += rewardsText;
     message += `<p style="color: #fbbf24;">+0.5 day</p>`;
     message += `<p>People tossed coins and food into your guitar case! 🎸💰🍎</p>`;
 
