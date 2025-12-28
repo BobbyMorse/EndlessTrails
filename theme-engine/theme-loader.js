@@ -297,8 +297,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // This allows users to add custom themes without editing HTML
     try {
       await themeLoader.loadThemes([
-        'theme-engine/themes/roswell-trail.json',
-        'theme-engine/themes/norcal-trail.json'
+        'themes/roswell-trail.json',
+        'themes/norcal-trail.json'
         // Add more bundled themes here
       ]);
     } catch (error) {
