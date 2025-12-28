@@ -179,7 +179,7 @@ class ThemeLoader {
       </div>
       <div class="theme-card-footer">
         <button class="play-theme-btn" data-theme="${theme.name}">
-          🎮 Start Your Journey
+          ▶️ Start Your Journey
         </button>
       </div>
     `;

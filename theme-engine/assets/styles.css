@@ -799,6 +799,33 @@
 .play-theme-btn {
   width: 100%;
   margin-top: 0.5rem;
+  animation: pulse-btn 2s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+  transition: all 0.3s ease;
+}
+
+.play-theme-btn:hover {
+  animation: bounce-btn 0.5s ease;
+  box-shadow: 0 0 30px rgba(255, 107, 107, 0.8);
+  transform: scale(1.05);
+}
+
+@keyframes pulse-btn {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 107, 107, 0.8);
+  }
+}
+
+@keyframes bounce-btn {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
 
 /* Name inputs to match legacy look */
