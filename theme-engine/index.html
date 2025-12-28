@@ -1252,10 +1252,10 @@
 
     // Initialize marketplace
     window.addEventListener('DOMContentLoaded', async () => {
-      // Wait for themes to load
+      // Wait for themes to load (we expect 2 themes: Roswell and NorCal)
       await new Promise(resolve => {
         const checkThemes = setInterval(() => {
-          if (themeLoader.getThemes().length > 0) {
+          if (themeLoader.getThemes().length >= 2) {
             clearInterval(checkThemes);
             resolve();
           }
