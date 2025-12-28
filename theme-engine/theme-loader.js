@@ -40,6 +40,7 @@ class ThemeLoader {
    * Uses Promise.allSettled to load all themes even if some fail
    */
   async loadThemes(themePaths) {
+    console.log('Loading themes from paths:', themePaths);
     const results = await Promise.allSettled(
       themePaths.map(path => this.loadTheme(path))
     );
@@ -48,9 +49,13 @@ class ThemeLoader {
     const failed = results.filter(r => r.status === 'rejected').map(r => r.reason);
 
     if (failed.length > 0) {
-      console.warn('Some themes failed to load:', failed.map(e => e.message));
+      console.error('THEMES FAILED TO LOAD:', failed.map(e => e.message));
+      failed.forEach((err, i) => {
+        console.error(`Theme ${themePaths[i]} error:`, err);
+      });
     }
 
+    console.log('Successfully loaded:', loaded.map(t => t.name));
     return loaded;
   }
 
