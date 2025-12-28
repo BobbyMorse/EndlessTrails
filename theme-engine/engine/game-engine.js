@@ -742,6 +742,10 @@ class TrailGameEngine {
     // Advance time
     this.advanceTime(days);
 
+    // Improve morale a bit from resting
+    const moraleBoost = 10;
+    this.state.resources.morale = Math.min(this.theme.resources.morale.max, this.state.resources.morale + moraleBoost);
+
     // Cure doubts if vibes > 60
     if (this.state.resources.morale > 60) {
       this.state.party.forEach(member => {
@@ -752,7 +756,7 @@ class TrailGameEngine {
 
     return {
       success: true,
-      message: `You rest for ${days} days. ${this.state.resources.morale > 60 ? 'Everyone feels refreshed and doubts fade away!' : 'The rest helps a bit.'}`
+      message: `You rest for ${days} days. ${this.state.resources.morale > 60 ? 'Everyone feels refreshed and doubts fade away!' : 'The rest helps a bit.'} +${moraleBoost} ${this.theme.resources.morale.name} ${this.theme.resources.morale.icon}`
     };
   }
 

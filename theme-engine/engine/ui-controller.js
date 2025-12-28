@@ -444,8 +444,9 @@ ${mystery.description}
       { text: 'Continue Journey', action: () => this.travel() },
       { text: `Buy ${this.theme.resources.fuel.icon} ${this.theme.resources.fuel.name}`, action: () => this.showGasStation(), condition: () => currentLoc.isShop || currentLoc.type === 'checkpoint' },
       { text: 'General Store', action: () => this.showTrade(), condition: () => currentLoc.isShop },
-      { text: 'Make Money 💰', action: () => this.showMakeMoney(), condition: () => currentLoc.isShop || currentLoc.type === 'town' },
-      // Street Performance for NorCal Trail (replaces forage)
+      // Make Money only for non-NorCal themes (NorCal uses Street Performance)
+      { text: 'Make Money 💰', action: () => this.showMakeMoney(), condition: () => (currentLoc.isShop || currentLoc.type === 'town') && this.theme.name !== 'The NorCal Trail' },
+      // Street Performance for NorCal Trail (replaces forage and busking)
       { text: 'Street Performance 🎸', action: () => this.startStreetPerformance(), condition: () => this.theme.name === 'The NorCal Trail' },
       // Search for Evidence for Roswell Trail (replaces forage)
       { text: 'Search for Evidence 🔍', action: () => this.forage(), condition: () => this.theme.resources.food.name === 'Evidence' },
@@ -2517,7 +2518,7 @@ ${mystery.description}
       this.performanceState.notes.forEach(note => {
         if (note.hit) return;
 
-        note.position += 1.0;
+        note.position += 0.6;
         const noteEl = document.getElementById(`note-${note.id}`);
         if (noteEl) {
           noteEl.style.top = `${note.position}%`;
