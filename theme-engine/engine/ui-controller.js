@@ -440,25 +440,15 @@ ${mystery.description}
     container.innerHTML = '';
     const currentLoc = this.engine.getCurrentLocation();
 
-    // Theme-aware forage button text
-    let forageButtonText, forageAction;
-    if (this.theme.resources.food.name === 'Evidence') {
-      forageButtonText = 'Search for Evidence 🔍';
-      forageAction = () => this.forage();
-    } else if ((currentLoc.isShop || currentLoc.isTown) && this.theme.name === 'The NorCal Trail') {
-      forageButtonText = 'Street Performance 🎸';
-      forageAction = () => this.startStreetPerformance();
-    } else {
-      forageButtonText = 'Forage for Food';
-      forageAction = () => this.forage();
-    }
-
     const actions = [
       { text: 'Continue Journey', action: () => this.travel() },
       { text: `Buy ${this.theme.resources.fuel.icon} ${this.theme.resources.fuel.name}`, action: () => this.showGasStation(), condition: () => currentLoc.isShop || currentLoc.type === 'checkpoint' },
       { text: 'General Store', action: () => this.showTrade(), condition: () => currentLoc.isShop },
       { text: 'Make Money 💰', action: () => this.showMakeMoney(), condition: () => currentLoc.isShop || currentLoc.type === 'town' },
-      { text: forageButtonText, action: forageAction },
+      // Street Performance for NorCal Trail (replaces forage)
+      { text: 'Street Performance 🎸', action: () => this.startStreetPerformance(), condition: () => this.theme.name === 'The NorCal Trail' },
+      // Search for Evidence for Roswell Trail (replaces forage)
+      { text: 'Search for Evidence 🔍', action: () => this.forage(), condition: () => this.theme.resources.food.name === 'Evidence' },
       { text: 'Rest', action: () => this.rest() },
       { text: 'Change Pace', action: () => this.showPaceMenu() },
       // Only show rations for food-based themes (not Evidence)
