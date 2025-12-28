@@ -440,23 +440,6 @@ ${mystery.description}
     container.innerHTML = '';
     const currentLoc = this.engine.getCurrentLocation();
 
-    // Add decorative header for NorCal Trail
-    const eventContainer = document.getElementById('eventContainer');
-    if (this.theme.name === 'The NorCal Trail' && eventContainer && !eventContainer.innerHTML.includes('event-box')) {
-      const decorations = [
-        '✨ ☮️ ✨ What\'s your vibe? ✨ ☮️ ✨',
-        '🌻 ✌️ 🌻 Choose your path 🌻 ✌️ 🌻',
-        '🌈 🎸 🌈 The road awaits 🌈 🎸 🌈',
-        '☀️ 🦋 ☀️ Keep truckin\' ☀️ 🦋 ☀️'
-      ];
-      const decoration = decorations[Math.floor(Math.random() * decorations.length)];
-      eventContainer.innerHTML = `
-        <div style="text-align: center; padding: 1.5rem; font-size: 1.3rem; color: #ffd93d; letter-spacing: 0.2rem;">
-          ${decoration}
-        </div>
-      `;
-    }
-
     // Theme-aware forage button text
     let forageButtonText, forageAction;
     if (this.theme.resources.food.name === 'Evidence') {
