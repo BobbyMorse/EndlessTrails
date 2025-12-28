@@ -487,33 +487,11 @@ ${mystery.description}
     eventContainer.innerHTML = '';
     buttonsContainer.innerHTML = '';
 
-    // Region-specific items that appear above the bus
-    // Hippie summer vibes for each region of the journey
-    const regionItemSets = {
-      east: [
-        ['🌻', '✌️', '🌈'],
-        ['🎸', '🌼', '☮️'],
-        ['🌺', '🎵', '🌸'],
-        ['✨', '🌻', '💐'],
-        ['🌞', '🌻', '🦋'],
-        ['🌈', '☀️', '🌻']
-      ],
-      middle: [
-        ['🌵', '☀️', '🦅'],
-        ['🏜️', '🌞', '✨'],
-        ['🎸', '🔥', '🌟'],
-        ['⭐', '🌙', '💫'],
-        ['🌺', '🦋', '🌻'],
-        ['🎨', '🌈', '✌️']
-      ],
-      west: [
-        ['🌊', '🌴', '🌅'],
-        ['🏖️', '☀️', '🌺'],
-        ['🌸', '🦋', '🌼'],
-        ['🌞', '🌻', '🎸'],
-        ['✨', '🌈', '☮️'],
-        ['🌺', '💐', '🌷']
-      ]
+    // Region-specific items that appear above the bus - use theme configuration
+    const regionItemSets = this.theme.ui?.travelEmojis || {
+      east: [['🚗', '🛣️', '🌳']],
+      middle: [['🏜️', '🌵', '☀️']],
+      west: [['🏔️', '🌲', '⛰️']]
     };
 
     // Determine current region based on distance
