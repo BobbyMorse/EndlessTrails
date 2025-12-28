@@ -167,6 +167,7 @@ class ThemeLoader {
         <div class="theme-meta">
           <span class="theme-era">${theme.metadata.era}</span>
           <span class="theme-difficulty">${theme.metadata.difficulty}</span>
+          ${theme.metadata.playtime ? `<span class="theme-playtime">⏱️ ${theme.metadata.playtime}</span>` : ''}
         </div>
         <div class="theme-tags">
           ${theme.metadata.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
@@ -277,8 +278,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // This allows users to add custom themes without editing HTML
     try {
       await themeLoader.loadThemes([
-        'themes/norcal-trail.json',
-        'themes/roswell-trail.json'
+        'themes/roswell-trail.json',
+        'themes/norcal-trail.json'
         // Add more bundled themes here
       ]);
     } catch (error) {

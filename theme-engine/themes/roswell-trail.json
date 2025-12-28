@@ -6,6 +6,7 @@
     "description": "A conspiracy theorist's road trip from Roswell to Area 51",
     "era": "1990s",
     "difficulty": "medium",
+    "playtime": "15-30 mins",
     "tags": ["sci-fi", "conspiracy", "adventure", "aliens", "truth-seeking"]
   },
   "ui": {
