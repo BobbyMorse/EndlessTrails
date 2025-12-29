@@ -120,9 +120,9 @@
       "startingCurrency": 700,
       "modifiers": {
         "vibeDrainByPhase": {
-          "early": 12,
-          "middle": 18,
-          "late": 25
+          "early": 9,
+          "middle": 13,
+          "late": 18
         },
         "doubtThreshold": 45,
         "antagonistTargetChance": 0.7,
@@ -138,9 +138,9 @@
       "startingCurrency": 450,
       "modifiers": {
         "vibeDrainByPhase": {
-          "early": 14,
-          "middle": 20,
-          "late": 28
+          "early": 10,
+          "middle": 15,
+          "late": 20
         },
         "doubtThreshold": 55,
         "antagonistTargetChance": 0,
@@ -156,9 +156,9 @@
       "startingCurrency": 250,
       "modifiers": {
         "vibeDrainByPhase": {
-          "early": 16,
-          "middle": 24,
-          "late": 32
+          "early": 12,
+          "middle": 17,
+          "late": 23
         },
         "doubtThreshold": 50,
         "antagonistTargetChance": 0,
