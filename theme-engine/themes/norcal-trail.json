@@ -757,23 +757,99 @@
         ]
       },
       {
-        "text": "Some swell folks share home cooking! Far out!",
-        "effects": {
-          "food": 25,
-          "morale": 15
-        }
+        "id": "home_cooking",
+        "text": "🍲 Sweet old lady: 'You kids look hungry! I made too much casserole!' It smells AMAZING.",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🍽️ 'Yes please! We're starving!'",
+            "effects": {
+              "food": 30,
+              "morale": 25
+            },
+            "message": "Best meal you've had in WEEKS! She packs you leftovers! 'You remind me of my grandkids!' 😭💕"
+          },
+          {
+            "text": "🎸 'Only if we can play you a song!'",
+            "effects": {
+              "food": 35,
+              "morale": 35,
+              "days": 0.5
+            },
+            "message": "You eat AND perform! She claps along! 'You kids are alright!' She gives you $20! Best gig ever! 🎵"
+          },
+          {
+            "text": "🌿 'We're cool, thanks though!'",
+            "effects": {
+              "morale": -5
+            },
+            "message": "Everyone glares at you. Moonbeam: 'WHY DID YOU SAY NO?!' You drove past FREE FOOD. Idiot."
+          }
+        ]
       },
       {
-        "text": "You find a Beatles album in a trash bin! Still plays! The bee's knees!",
-        "effects": {
-          "morale": 30
-        }
+        "id": "beatles_album",
+        "text": "📀 SCORE! Someone threw out a Beatles album! 'Abbey Road'! Vinyl looks perfect!",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🎵 'Play it NOW!'",
+            "effects": {
+              "morale": 40,
+              "days": 0.3
+            },
+            "message": "You blast it for HOURS! Singing every word! Dancing in the bus! 'Come Together' never sounded so good! 🎸"
+          },
+          {
+            "text": "💰 'Sell it! This could be worth money!'",
+            "effects": {
+              "currency": 25,
+              "morale": -15
+            },
+            "message": "You sell it for $25. Everyone's mad. Stardust: 'We sold HAPPINESS for gas money.' Oof."
+          },
+          {
+            "text": "🎁 'Give it to that cool record store guy!'",
+            "effects": {
+              "morale": 30,
+              "food": 20
+            },
+            "message": "Record store dude is STOKED! 'You're beautiful people!' Gives you free snacks! Karma works! ✌️"
+          }
+        ]
       },
       {
-        "text": "Camp under the stars. Outta sight.",
-        "effects": {
-          "morale": 15
-        }
+        "id": "stargazing",
+        "text": "⭐ Perfect night for stargazing! Sky is INSANE! Milky Way looks like someone spilled glitter!",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🌌 'Let's stay up ALL night watching!'",
+            "effects": {
+              "morale": 35,
+              "days": 0.5,
+              "specialItem": -20
+            },
+            "message": "You see THREE shooting stars! Deep talks about life! This is why you're ALIVE! Magic! ✨🌠"
+          },
+          {
+            "text": "🎸 'Play acoustic under the stars!'",
+            "effects": {
+              "morale": 40
+            },
+            "message": "'Blackbird' never sounded better. You're in HEAVEN. This moment is EVERYTHING. 🎵⭐"
+          },
+          {
+            "text": "😴 'Nah, let's crash. Long day.'",
+            "effects": {
+              "morale": 5
+            },
+            "message": "You sleep fine. But you missed something INCREDIBLE. River: 'That was a once-in-a-lifetime sky, man.'"
+          }
+        ]
       },
       {
         "text": "The bus overheats! Gotta let it cool down. Drag city.",
@@ -783,56 +859,162 @@
         }
       },
       {
-        "text": "You meet traveling musicians who jam with you! Real keen cats!",
-        "effects": {
-          "morale": 35
-        }
+        "id": "traveling_band",
+        "text": "🎸 Traveling band pulled over! They've got bongos, harmonicas, a BANJO! 'Wanna jam?!'",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🎵 'YEAH! Let's make music!'",
+            "effects": {
+              "morale": 45,
+              "days": 0.5
+            },
+            "message": "EPIC JAM SESSION! 3 hours of pure musical JOY! They teach you new songs! This is LIVING! 🎶✨"
+          },
+          {
+            "text": "🎤 'Can we perform TOGETHER?!'",
+            "effects": {
+              "morale": 50,
+              "currency": 40,
+              "days": 1
+            },
+            "message": "You form a SUPERGROUP! Play a gig in the next town! Make $40! Crowd goes WILD! LEGENDARY! 🎸💥"
+          },
+          {
+            "text": "📸 'Just gonna listen!'",
+            "effects": {
+              "morale": 25
+            },
+            "message": "Still awesome! You soak it in. But you could've BEEN part of it. Stardust: 'Next time, man!'"
+          }
+        ]
       },
       {
-        "text": "Someone paints a peace sign on your bus! Groovy!",
-        "effects": {
-          "morale": 20
-        }
+        "id": "peace_sign_painter",
+        "text": "☮️ Street artist: 'Your bus needs DECORATION! I got spraypaint!' He's already shaking the can!",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🎨 'Paint it ALL! Make it GROOVY!'",
+            "effects": {
+              "morale": 40,
+              "specialItem": -15
+            },
+            "message": "MASSIVE peace signs! Flowers! RAINBOWS! Your bus is now a WORK OF ART! People CHEER as you drive by! ☮️🌈"
+          },
+          {
+            "text": "✌️ 'Just a peace sign is perfect!'",
+            "effects": {
+              "morale": 25
+            },
+            "message": "Simple but beautiful! Perfect-sized peace sign on the side! You look like REAL hippies now! Far out! ☮️"
+          },
+          {
+            "text": "😬 'Uh, no thanks...'",
+            "effects": {
+              "morale": -10
+            },
+            "message": "He looks hurt. Everyone's disappointed. River: 'Are we REALLY hippies if we're scared of paint?'"
+          }
+        ]
       },
       {
-        "text": "Radio plays 'Sittin' On The Dock of the Bay'. Everyone sings along! Solid!",
-        "effects": {
-          "morale": 25
-        }
+        "id": "radio_singalong",
+        "text": "📻 Radio plays 'Dock of the Bay'! River: 'THIS IS MY JAM!' Everyone knows the words!",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🎤 'FULL VOLUME! SING LOUD!'",
+            "effects": {
+              "morale": 40
+            },
+            "message": "You're SCREAMING the lyrics! Strangers in other cars join in! Pure JOY! This is WHY you live! 🎵💕"
+          },
+          {
+            "text": "🎸 'Stop the bus! Let's play it LIVE!'",
+            "effects": {
+              "morale": 50,
+              "days": 0.3
+            },
+            "message": "Roadside concert! You NAIL it! Passing cars honk! Someone throws you $5! BEAUTIFUL moment! 🎸✨"
+          },
+          {
+            "text": "🙂 Just enjoy it quietly.",
+            "effects": {
+              "morale": 15
+            },
+            "message": "Nice song. But you could've made it a MEMORY. Moonbeam: 'Sometimes I worry about you, man.'"
+          }
+        ]
       },
       {
-        "text": "You discover a secret swimming hole. Skinny dipping time! It's the cat's pajamas!",
-        "effects": {
-          "morale": 20
-        },
-        "weight": 2
+        "id": "swimming_hole",
+        "text": "🏊 SECRET SWIMMING HOLE! Crystal clear! Rope swing! Locals say it's the BEST spot for miles!",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "💦 'CANNONBALL TIME!'",
+            "effects": {
+              "morale": 45,
+              "days": 0.5,
+              "specialItem": -25
+            },
+            "message": "BEST. DAY. EVER! Rope swing! Diving! Splashing! You're kids again! This is FREEDOM! 🌊✨"
+          },
+          {
+            "text": "🌿 'Skinny dipping! Go NATURAL!'",
+            "effects": {
+              "morale": 50,
+              "specialItem": -30,
+              "days": 0.5
+            },
+            "message": "LIBERATED! No inhibitions! Pure hippie vibes! Everyone feels ALIVE and FREE! Far OUT! 🌺☮️"
+          },
+          {
+            "text": "🚐 'Nah, let's keep moving.'",
+            "effects": {
+              "morale": -20
+            },
+            "message": "Everyone's FURIOUS. Stardust: 'We passed PARADISE for WHAT?!' You messed up big time."
+          }
+        ]
       },
       {
-        "text": "A commune invites you to stay the night! Free food and some real hip folks.",
-        "effects": {
-          "food": 30,
-          "morale": 20,
-          "days": 1
-        }
-      },
-      {
-        "text": "Someone gifts you a tie-dye shirt! You look like the real deal now!",
-        "effects": {
-          "morale": 20
-        }
-      },
-      {
-        "text": "You find wild berries growing by the roadside! Neato!",
-        "effects": {
-          "food": 15,
-          "morale": 10
-        }
-      },
-      {
-        "text": "🎪 You pass a carnival. The Ferris wheel looks rad!",
-        "effects": {
-          "morale": 15
-        }
+        "id": "carnival_stop",
+        "text": "🎡 CARNIVAL! Ferris wheel! Cotton candy! Game booths! Calliope music! It's CALLING you!",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🎪 'Let's spend the whole day here!'",
+            "effects": {
+              "morale": 55,
+              "currency": -30,
+              "food": 20,
+              "days": 1
+            },
+            "message": "MAGICAL day! Win stuffed animals! Ride EVERYTHING! Eat way too much! Worth EVERY penny! 🎡🍭"
+          },
+          {
+            "text": "🎯 'Just a few games!'",
+            "effects": {
+              "morale": 30,
+              "currency": -10
+            },
+            "message": "You win a goldfish! (It dies in 2 days but whatever!) Fun times! Good memories! 🐠"
+          },
+          {
+            "text": "💰 'Too expensive. Keep driving.'",
+            "effects": {
+              "morale": -25
+            },
+            "message": "Everyone's depressed for 50 miles. Moonbeam cries a little. River: 'Money isn't EVERYTHING, man.'"
+          }
+        ]
       },
       {
         "text": "🚗 Some squares in a station wagon give you dirty looks.",
@@ -1008,32 +1190,32 @@
       },
       {
         "id": "draft_letter",
-        "text": "📬 Mail call in a small town. River got a draft letter. His face goes pale. 'I... I can't go to Vietnam.'",
+        "text": "📬 Mail call! River got a letter. 'Oh man... draft notice.' Everyone goes quiet. Then Moonbeam: 'Road trip to Canada?'",
         "isChoice": true,
-        "weight": 3,
+        "weight": 2,
         "choices": [
           {
-            "text": "✊ 'Burn it. We're heading to Canada if we have to.'",
+            "text": "🔥 'Burn it! You're with US now!'",
             "effects": {
-              "morale": 20,
+              "morale": 30,
               "specialItem": -15
             },
-            "message": "River tears up the letter. 'You guys... thank you.' The vibe is heavy but united. This is what freedom means. ✌️"
+            "message": "River rips it up! 'YEAH! Screw the Man!' You all cheer! Someone plays 'Born to Be Wild' on guitar. FREEDOM! 🎸✌️"
           },
           {
-            "text": "🎓 'Maybe college deferment? Can you enroll somewhere?'",
+            "text": "🎓 'College is always an option, brother!'",
             "effects": {
-              "morale": -10,
-              "currency": -100
+              "morale": 15,
+              "currency": -50
             },
-            "message": "You pool money for application fees. River's stressed but hopeful. 'I just want to LIVE, man.' College or the jungle. What a choice."
+            "message": "You pool $50 for app fees. River: 'Maybe I'll study philosophy! Stick it to the System THAT way!' Smart move! 📚"
           },
           {
-            "text": "😔 'It's your choice, man. We support you either way.'",
+            "text": "🎸 'Play some music. We'll figure it out.'",
             "effects": {
-              "morale": 5
+              "morale": 20
             },
-            "message": "River nods slowly. He folds the letter carefully. Nobody knows what he'll do. The war hangs over everything like a dark cloud."
+            "message": "Guitar comes out. You jam for hours. The letter sits there, but right now? You're LIVING. Music > war. ☮️"
           }
         ]
       },
