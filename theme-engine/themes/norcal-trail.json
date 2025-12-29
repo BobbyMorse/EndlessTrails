@@ -2129,7 +2129,7 @@
         "isChoice": true,
         "weight": 1,
         "highMoraleEvent": true,
-        "moraleThreshold": 140,
+        "moraleThreshold": 110,
         "choices": [
           {
             "text": "🌟 'Tell us about transcendence!'",
@@ -2218,7 +2218,7 @@
         "description": "That guru we met... he really UNDERSTOOD me. Maybe he's right about everything...",
         "moraleDrain": 0,
         "highMoraleRisk": true,
-        "moraleThreshold": 150,
+        "moraleThreshold": 100,
         "abandonReason": "joined The Children of the Eternal Light cult in New Mexico"
       }
     ]

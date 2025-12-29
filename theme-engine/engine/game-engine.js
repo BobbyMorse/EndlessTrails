@@ -287,16 +287,20 @@ class TrailGameEngine {
     const nonAbandonedParty = this.state.party.filter(m => !m.abandoned);
 
     // HIGH MORALE CULT RISK: If vibes are too high, risk cult recruitment
-    if (vibes > 150) {
+    // Sweet spot is 75-100, anything above 100 increases cult risk
+    if (vibes > 100) {
       const cultDoubts = this.theme.events.doubts.filter(d => d.highMoraleRisk === true);
-      if (cultDoubts.length > 0 && Math.random() < 0.3) {
-        // 30% chance each turn to assign cult doubt to someone
-        const nonDoubting = nonAbandonedParty.filter(m => !m.doubting);
-        if (nonDoubting.length > 0) {
-          const luckyMember = nonDoubting[Math.floor(Math.random() * nonDoubting.length)];
-          luckyMember.doubting = true;
-          const cultDoubt = cultDoubts[Math.floor(Math.random() * cultDoubts.length)];
-          luckyMember.doubt = cultDoubt.name;
+      if (cultDoubts.length > 0) {
+        // Cult risk increases with vibes: 10% at 101, 20% at 120, 40% at 150+
+        const riskChance = Math.min(0.4, (vibes - 100) * 0.01);
+        if (Math.random() < riskChance) {
+          const nonDoubting = nonAbandonedParty.filter(m => !m.doubting);
+          if (nonDoubting.length > 0) {
+            const luckyMember = nonDoubting[Math.floor(Math.random() * nonDoubting.length)];
+            luckyMember.doubting = true;
+            const cultDoubt = cultDoubts[Math.floor(Math.random() * cultDoubts.length)];
+            luckyMember.doubt = cultDoubt.name;
+          }
         }
       }
     }
