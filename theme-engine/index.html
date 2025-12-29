@@ -163,6 +163,7 @@
         <div id="highScoresList"></div>
       </div>
       <button onclick="showMarketplace()">Back to Themes</button>
+      <button class="secondary" onclick="clearAllHighScores()" style="background: #ef4444;">Clear All Scores</button>
     </div>
   </div>
 
@@ -1369,9 +1370,10 @@
       container.innerHTML = html;
     }
 
-    async function clearHighScores() {
-      if (confirm('Are you sure you want to clear ALL high scores? This cannot be undone!')) {
+    async function clearAllHighScores() {
+      if (confirm('⚠️ WARNING: This will delete ALL high scores for ALL themes!\n\nThis will fix the contamination issue but cannot be undone.\n\nAre you sure?')) {
         await highScoreManager.clearAllScores();
+        alert('All high scores cleared! The database is now clean.');
         await renderHighScores();
       }
     }
