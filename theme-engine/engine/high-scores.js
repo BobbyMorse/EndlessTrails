@@ -111,6 +111,12 @@ class HighScoreManager {
     }
 
     try {
+      console.log('💾 Saving score to database:', {
+        theme_name: themeName,
+        player_name: playerName.trim(),
+        score: score
+      });
+
       // Save to Supabase
       const { data, error } = await supabase
         .from('high_scores')
@@ -174,6 +180,8 @@ class HighScoreManager {
     const supabase = this.initSupabase();
     if (!supabase) return [];
 
+    console.log('📊 Fetching scores for theme:', themeName);
+
     try {
       const { data, error } = await supabase
         .from('high_scores')
@@ -185,6 +193,11 @@ class HighScoreManager {
       if (error) {
         console.error('Error fetching scores:', error);
         return [];
+      }
+
+      console.log(`  ✓ Found ${data.length} scores for "${themeName}"`);
+      if (data.length > 0) {
+        console.log('  First score theme_name:', data[0].theme_name);
       }
 
       return data.map(score => ({
