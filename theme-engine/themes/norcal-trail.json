@@ -1005,9 +1005,199 @@
           "currency": 50,
           "morale": 10
         }
+      },
+      {
+        "id": "draft_letter",
+        "text": "📬 Mail call in a small town. River got a draft letter. His face goes pale. 'I... I can't go to Vietnam.'",
+        "isChoice": true,
+        "weight": 3,
+        "choices": [
+          {
+            "text": "✊ 'Burn it. We're heading to Canada if we have to.'",
+            "effects": {
+              "morale": 20,
+              "specialItem": -15
+            },
+            "message": "River tears up the letter. 'You guys... thank you.' The vibe is heavy but united. This is what freedom means. ✌️"
+          },
+          {
+            "text": "🎓 'Maybe college deferment? Can you enroll somewhere?'",
+            "effects": {
+              "morale": -10,
+              "currency": -100
+            },
+            "message": "You pool money for application fees. River's stressed but hopeful. 'I just want to LIVE, man.' College or the jungle. What a choice."
+          },
+          {
+            "text": "😔 'It's your choice, man. We support you either way.'",
+            "effects": {
+              "morale": 5
+            },
+            "message": "River nods slowly. He folds the letter carefully. Nobody knows what he'll do. The war hangs over everything like a dark cloud."
+          }
+        ]
+      },
+      {
+        "id": "protest_choice",
+        "text": "✊ ANTI-WAR PROTEST ahead! Thousands marching! 'Hell no, we won't go!' Signs everywhere. Do you join?",
+        "isChoice": true,
+        "weight": 3,
+        "choices": [
+          {
+            "text": "✊ 'This is WHY we're traveling! Join the march!'",
+            "effects": {
+              "morale": 40,
+              "days": 1,
+              "specialItem": -20
+            },
+            "message": "You march for HOURS. Chanting, singing, connecting with thousands who feel the same. This is HISTORY. This is what MATTERS. ✌️🕊️"
+          },
+          {
+            "text": "📸 'Let's document this. The world needs to see.'",
+            "effects": {
+              "morale": 25,
+              "days": 0.5
+            },
+            "message": "You take photos, talk to protesters, soak it all in. Moonbeam: 'We're witnessing a revolution.' You'll never forget this day."
+          },
+          {
+            "text": "🚐 'Too risky. The fuzz might crack down.'",
+            "effects": {
+              "morale": -20,
+              "specialItem": 10
+            },
+            "message": "You drive past. Everyone's silent. River mutters, 'When did we get so scared?' The guilt lingers for miles."
+          }
+        ]
+      },
+      {
+        "id": "veteran_encounter",
+        "text": "🎖️ At a diner, a young vet sits alone. Thousand-yard stare. His hands shake as he drinks coffee. He's maybe 22.",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🤝 Sit with him. Listen.",
+            "effects": {
+              "morale": -15,
+              "food": -10,
+              "days": 0.5
+            },
+            "message": "He talks for an hour. The horrors. The lies. The friends he lost. You buy him breakfast. He thanks you. 'Just... don't let them send more kids.'"
+          },
+          {
+            "text": "💐 Offer him a flower. 'Peace, brother.'",
+            "effects": {
+              "morale": 10
+            },
+            "message": "He takes it, confused at first. Then he almost smiles. 'Peace,' he whispers. Small gesture. Huge meaning."
+          },
+          {
+            "text": "😔 Leave him be.",
+            "effects": {
+              "morale": -5
+            },
+            "message": "You eat in silence. The weight of the war sits heavy on every table. There's no escaping it, even 5000 miles from Vietnam."
+          }
+        ]
+      },
+      {
+        "id": "work_vs_freedom",
+        "text": "📰 Stardust sees a Help Wanted sign. 'Mechanic needed. Good pay.' She's quiet. 'I could... settle down. Get a real job.'",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🌻 'The ROAD is your job! Don't give up the dream!'",
+            "effects": {
+              "morale": 25,
+              "currency": -30
+            },
+            "message": "Stardust grins. 'You're right! Screw the Man! Let's keep rolling!' The freedom is worth the empty wallet. Far out! 🚐✌️"
+          },
+          {
+            "text": "💼 'Hey, if you need to work, we understand.'",
+            "effects": {
+              "morale": -20,
+              "days": 2
+            },
+            "message": "She thinks hard. Finally: 'No. Not yet. I'm not ready for the cage.' But you can tell she's torn. The System pulls hard."
+          },
+          {
+            "text": "🤷 'Your call, sister. We'll support you.'",
+            "effects": {
+              "morale": 5
+            },
+            "message": "She stays quiet for 50 miles. The question lingers: how long can you run from 'real life'? Is freedom just postponing the inevitable?"
+          }
+        ]
+      },
+      {
+        "id": "commune_decision",
+        "text": "🏡 You find a COMMUNE! 40 people living together, farming, sharing everything. 'Stay! Join us!' they offer. Tempting...",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🌻 'This is the DREAM! Let's stay a while!'",
+            "effects": {
+              "morale": 50,
+              "food": 60,
+              "days": 7,
+              "specialItem": -40
+            },
+            "message": "You stay for a week. Working the land. Sharing meals. Real community. It's BEAUTIFUL. But the road calls. You leave with full hearts & bellies. ☮️"
+          },
+          {
+            "text": "🚐 'Love the idea, but we gotta keep moving.'",
+            "effects": {
+              "morale": 10,
+              "food": 20
+            },
+            "message": "They pack you food and give you flowers. 'The road is a commune too,' they say. 'Safe travels, family.' ✌️"
+          },
+          {
+            "text": "😬 'Too weird for us. Let's bounce.'",
+            "effects": {
+              "morale": -15
+            },
+            "message": "Moonbeam: 'Too weird? WE'RE hippies!' Everyone argues for 30 miles. Maybe you're not as free-spirited as you thought."
+          }
+        ]
       }
     ],
     "late": [
+      {
+        "id": "california_dream",
+        "text": "🌅 You're CLOSE now. California. The dream. But Stardust is quiet. 'What happens when we GET there? Then what?'",
+        "isChoice": true,
+        "weight": 3,
+        "choices": [
+          {
+            "text": "🌈 'We'll figure it out! That's the beauty of it!'",
+            "effects": {
+              "morale": 30
+            },
+            "message": "River: 'EXACTLY! We're not about PLANS, man! We're about LIVING!' The vibe lifts. This is about the journey, not the destination. ✌️"
+          },
+          {
+            "text": "💭 'Honestly? I don't know. And that's scary.'",
+            "effects": {
+              "morale": -10,
+              "specialItem": 15
+            },
+            "message": "The truth hangs there. Nobody has answers. But at least you're all uncertain TOGETHER. That counts for something."
+          },
+          {
+            "text": "🎸 'We'll start a band! Live on the beach!'",
+            "effects": {
+              "morale": 40,
+              "specialItem": -10
+            },
+            "message": "Everyone laughs. Making music, making memories. That's the dream. That's ALL that matters. Let's GOOOO! 🎵🌊"
+          }
+        ]
+      },
       {
         "text": "🌵 Desert heat is brutal. You're all sweating buckets.",
         "effects": {
