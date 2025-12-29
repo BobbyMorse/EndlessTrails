@@ -351,12 +351,31 @@ class TrailGameEngine {
       }
     }
 
-    // Remove doubters if vibes improve
-    if (vibes > 75 && currentDoubters > 0) {
+    // Remove doubters if vibes improve (but NOT cult doubts - those persist at high vibes!)
+    if (vibes > 75 && vibes <= 100 && currentDoubters > 0) {
       nonAbandonedParty.forEach(member => {
         if (member.doubting) {
-          member.doubting = false;
-          member.doubt = null;
+          // Check if this is a cult doubt
+          const doubt = this.theme.events.doubts.find(d => d.name === member.doubt);
+          if (!doubt || !doubt.highMoraleRisk) {
+            // Only clear non-cult doubts
+            member.doubting = false;
+            member.doubt = null;
+          }
+        }
+      });
+    }
+
+    // Clear cult doubts if vibes drop back to safe zone
+    if (vibes <= 100 && currentDoubters > 0) {
+      nonAbandonedParty.forEach(member => {
+        if (member.doubting) {
+          const doubt = this.theme.events.doubts.find(d => d.name === member.doubt);
+          if (doubt && doubt.highMoraleRisk) {
+            // Clear cult doubt when vibes normalize
+            member.doubting = false;
+            member.doubt = null;
+          }
         }
       });
     }
@@ -493,6 +512,13 @@ class TrailGameEngine {
     availableEvents = availableEvents.filter(event => {
       if (!event.condition) return true;
       return this.checkEventCondition(event.condition);
+    });
+
+    // Filter high morale events - only show if vibes above threshold
+    availableEvents = availableEvents.filter(event => {
+      if (!event.highMoraleEvent) return true;
+      const threshold = event.moraleThreshold || 100;
+      return this.state.resources.morale >= threshold;
     });
 
     // Apply cop targeting modifier
