@@ -2417,10 +2417,10 @@ ${mystery.description}
           <div id="hitZone" style="position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: linear-gradient(to top, rgba(255, 215, 61, 0.5), transparent); border-top: 3px solid #ffd93d;"></div>
         </div>
 
-        <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-          <button id="note1Btn" style="font-size: 2rem; padding: 1rem 2rem; background: rgba(255, 107, 107, 0.3); border: 2px solid #ff6b6b;">🎵</button>
-          <button id="note2Btn" style="font-size: 2rem; padding: 1rem 2rem; background: rgba(77, 222, 128, 0.3); border: 2px solid #4ade80;">🎶</button>
-          <button id="note3Btn" style="font-size: 2rem; padding: 1rem 2rem; background: rgba(139, 92, 246, 0.3); border: 2px solid #8b5cf6;">🎸</button>
+        <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 0.5rem; align-items: center;">
+          <button id="note1Btn" style="font-size: 2rem; padding: 1rem 1.5rem; background: rgba(255, 107, 107, 0.3); border: 2px solid #ff6b6b; flex: 0 0 auto;">🎵</button>
+          <button id="note2Btn" style="font-size: 2rem; padding: 1rem 1.5rem; background: rgba(77, 222, 128, 0.3); border: 2px solid #4ade80; flex: 0 0 auto;">🎶</button>
+          <button id="note3Btn" style="font-size: 2rem; padding: 1rem 1.5rem; background: rgba(139, 92, 246, 0.3); border: 2px solid #8b5cf6; flex: 0 0 auto;">🎸</button>
         </div>
       </div>
     `;
