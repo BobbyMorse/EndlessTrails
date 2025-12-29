@@ -1316,49 +1316,52 @@
       const container = document.getElementById('highScoresList');
       container.innerHTML = '<p style="text-align: center; color: #888;">Loading high scores...</p>';
 
-      const themesWithScores = await highScoreManager.getThemesWithScores();
-
-      if (themesWithScores.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: #888;">No high scores yet! Play a game to set a record!</p>';
+      // Only show scores for the current theme
+      if (!gameEngine || !gameEngine.theme) {
+        container.innerHTML = '<p style="text-align: center; color: #888;">No theme selected!</p>';
         return;
       }
 
-      let html = '';
-      for (const themeName of themesWithScores) {
-        const scores = await highScoreManager.getScoresForTheme(themeName);
-        html += `
-          <div style="margin-bottom: 30px;">
-            <h3 style="color: #4ade80; margin-bottom: 15px;">${themeName}</h3>
-            <table style="width: 100%; border-collapse: collapse;">
-              <thead>
-                <tr style="border-bottom: 2px solid #444;">
-                  <th style="text-align: left; padding: 8px;">Rank</th>
-                  <th style="text-align: left; padding: 8px;">Player</th>
-                  <th style="text-align: right; padding: 8px;">Score</th>
-                  <th style="text-align: right; padding: 8px;">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-        `;
+      const themeName = gameEngine.theme.name;
+      const scores = await highScoreManager.getScoresForTheme(themeName);
 
-        scores.forEach((score, index) => {
-          const rankEmoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
-          html += `
-            <tr style="border-bottom: 1px solid #333;">
-              <td style="padding: 8px;">${rankEmoji} ${index + 1}</td>
-              <td style="padding: 8px;">${score.playerName}</td>
-              <td style="padding: 8px; text-align: right; font-weight: bold; color: #ffd93d;">${highScoreManager.formatScore(score.score)}</td>
-              <td style="padding: 8px; text-align: right; font-size: 0.9rem; color: #888;">${highScoreManager.formatDate(score.date)}</td>
-            </tr>
-          `;
-        });
-
-        html += `
-              </tbody>
-            </table>
-          </div>
-        `;
+      if (scores.length === 0) {
+        container.innerHTML = `<p style="text-align: center; color: #888;">No high scores yet for ${themeName}! Play a game to set a record!</p>`;
+        return;
       }
+
+      let html = `
+        <div style="margin-bottom: 30px;">
+          <h3 style="color: #4ade80; margin-bottom: 15px;">${themeName}</h3>
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 2px solid #444;">
+                <th style="text-align: left; padding: 8px;">Rank</th>
+                <th style="text-align: left; padding: 8px;">Player</th>
+                <th style="text-align: right; padding: 8px;">Score</th>
+                <th style="text-align: right; padding: 8px;">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      scores.forEach((score, index) => {
+        const rankEmoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
+        html += `
+          <tr style="border-bottom: 1px solid #333;">
+            <td style="padding: 8px;">${rankEmoji} ${index + 1}</td>
+            <td style="padding: 8px;">${score.playerName}</td>
+            <td style="padding: 8px; text-align: right; font-weight: bold; color: #ffd93d;">${highScoreManager.formatScore(score.score)}</td>
+            <td style="padding: 8px; text-align: right; font-size: 0.9rem; color: #888;">${highScoreManager.formatDate(score.date)}</td>
+          </tr>
+        `;
+      });
+
+      html += `
+            </tbody>
+          </table>
+        </div>
+      `;
 
       container.innerHTML = html;
     }
