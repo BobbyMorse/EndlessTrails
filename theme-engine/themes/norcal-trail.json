@@ -2036,52 +2036,58 @@
     ],
     "doubts": [
       {
-        "name": "thinking about college",
-        "description": "Maybe I should be in school...",
+        "name": "missing their girlfriend back home",
+        "description": "She wrote me a letter. Says she misses me...",
         "moraleDrain": 2,
-        "abandonReason": "went back to college"
+        "abandonReason": "went back home to marry their girlfriend"
       },
       {
-        "name": "considering a job offer",
-        "description": "That accounting firm DID offer good money...",
+        "name": "thinking about college acceptance letter",
+        "description": "Berkeley accepted me. Full scholarship. It's still on the table...",
         "moraleDrain": 2,
-        "abandonReason": "took a job at a bank"
+        "abandonReason": "enrolled at UC Berkeley to study philosophy"
       },
       {
-        "name": "missing home",
-        "description": "What am I even doing out here?",
+        "name": "considering that job offer",
+        "description": "Dad says his firm is still hiring. $15k a year. Benefits...",
         "moraleDrain": 2,
-        "abandonReason": "went home to family"
+        "abandonReason": "took a sales job at their dad's company"
       },
       {
-        "name": "thinking about the army",
-        "description": "At least the military has structure...",
+        "name": "worrying about the draft",
+        "description": "I keep thinking about that draft notice. What if I'm next?",
         "moraleDrain": 3,
-        "abandonReason": "joined the army"
+        "abandonReason": "joined the Coast Guard to avoid Vietnam"
       },
       {
-        "name": "feeling like a sellout",
-        "description": "Am I just running away from responsibility?",
+        "name": "missing their ex-boyfriend",
+        "description": "He called. Said he's changed. Wants me back...",
+        "moraleDrain": 2,
+        "abandonReason": "went back to their ex in Boston"
+      },
+      {
+        "name": "doubting the whole hippie thing",
+        "description": "Is this just a phase? Am I fooling myself?",
+        "moraleDrain": 2,
+        "abandonReason": "got a corporate job and cut their hair"
+      },
+      {
+        "name": "thinking about law school",
+        "description": "I could actually change the System from the inside...",
         "moraleDrain": 3,
-        "abandonReason": "decided to get serious about life"
+        "abandonReason": "enrolled at Harvard Law to 'fight the Man legally'"
       },
       {
-        "name": "doubting the whole scene",
-        "description": "Is this hippie stuff even real?",
+        "name": "missing their sick mother",
+        "description": "Mom's not doing well. She needs me...",
         "moraleDrain": 2,
-        "abandonReason": "sold out to the establishment"
+        "abandonReason": "went home to take care of their mother"
       },
       {
-        "name": "afraid of failing",
-        "description": "What if San Francisco is just as bad?",
-        "moraleDrain": 2,
-        "abandonReason": "chickened out and went home"
-      },
-      {
-        "name": "missing their ex",
-        "description": "Maybe breaking up was a mistake...",
-        "moraleDrain": 2,
-        "abandonReason": "went back to their ex"
+        "name": "afraid they're wasting their life",
+        "description": "Everyone else is building careers. What am I doing?",
+        "moraleDrain": 3,
+        "abandonReason": "went back to 'real life' and got serious"
       }
     ]
   },
