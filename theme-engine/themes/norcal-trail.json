@@ -122,7 +122,7 @@
       "name": "Vibes",
       "icon": "✌️",
       "startValue": 100,
-      "max": 100
+      "max": 200
     },
     "currency": {
       "name": "Cash",
@@ -1380,6 +1380,38 @@
             "message": "Silent driving for 100 miles. Awkward. River: 'The polka would've been better than THIS.' 😐"
           }
         ]
+      },
+      {
+        "id": "cult_encounter_early",
+        "text": "🕉️ Roadside compound with a HUGE sign: 'THE CHILDREN OF THE ETERNAL LIGHT - Free Love, Free Food, Free Your Mind!' A smiling guru waves.",
+        "isChoice": true,
+        "weight": 1,
+        "choices": [
+          {
+            "text": "🌻 'Let's check it out! Sounds groovy!'",
+            "effects": {
+              "morale": 20,
+              "food": 30,
+              "days": 1
+            },
+            "message": "You spend the day. The guru is MAGNETIC. Talks about consciousness, unity, liberation. One of your crew is REALLY into it. Eyes glazed. 'Maybe we should stay longer...?' 😵‍💫"
+          },
+          {
+            "text": "🤨 'Free lunch, then we bounce.'",
+            "effects": {
+              "morale": 10,
+              "food": 20
+            },
+            "message": "You eat the food (it's AMAZING), nod politely at the sermon, and leave. One of your crew keeps looking back. 'That guru was... intense.' 👀"
+          },
+          {
+            "text": "🚫 'CULT VIBES. Let's GO.'",
+            "effects": {
+              "morale": -5
+            },
+            "message": "You drive past. One of your crew: 'How is that different from what WE'RE doing?' Good question. Uncomfortable silence. 😬"
+          }
+        ]
       }
     ],
     "middle": [
@@ -1747,6 +1779,38 @@
             "message": "Moonbeam: 'Too weird? WE'RE hippies!' Everyone argues for 30 miles. Maybe you're not as free-spirited as you thought."
           }
         ]
+      },
+      {
+        "id": "cult_recruiter",
+        "text": "🧘 Gas station. A woman in white robes approaches. 'You all have such BEAUTIFUL energy. The Master wants to meet you. We have a ranch 20 miles north.'",
+        "isChoice": true,
+        "weight": 1,
+        "choices": [
+          {
+            "text": "🌟 'The Master? Tell us more!'",
+            "effects": {
+              "morale": 20,
+              "days": 2,
+              "currency": -50
+            },
+            "message": "You visit the 'ranch.' It's... nice? Too nice. Everyone's TOO happy. They ask for 'donations.' One of your crew is FASCINATED. Keeps talking about 'The Awakening.' 😵‍💫"
+          },
+          {
+            "text": "🤝 'We're good, thanks.'",
+            "effects": {
+              "morale": 5
+            },
+            "message": "She smiles serenely. 'The universe will guide you back to us when you're ready.' She gives you a pamphlet. One of your crew pockets it. 👀"
+          },
+          {
+            "text": "🏃 'NOPE. We gotta go. NOW.'",
+            "effects": {
+              "morale": -10,
+              "fuel": -5
+            },
+            "message": "You speed out of there. River: 'That was CREEPY.' But one of your crew is quiet. 'She was kinda right about the energy thing...'"
+          }
+        ]
       }
     ],
     "late": [
@@ -2058,6 +2122,40 @@
           "currency": 50,
           "morale": 10
         }
+      },
+      {
+        "id": "cult_final_temptation",
+        "text": "🕉️ Desert rest stop. The Children of the Eternal Light are HERE. The guru recognizes you. 'You've returned! The universe guided you back! One of you is READY for transcendence...'",
+        "isChoice": true,
+        "weight": 1,
+        "highMoraleEvent": true,
+        "moraleThreshold": 140,
+        "choices": [
+          {
+            "text": "🌟 'Tell us about transcendence!'",
+            "effects": {
+              "morale": 20,
+              "days": 3,
+              "currency": -100
+            },
+            "message": "You stay for THREE DAYS. Meditation. Chanting. The guru's words feel PROFOUND. When you leave, one of your crew won't stop talking about The Light. Their eyes are... different. 😵‍💫⚠️"
+          },
+          {
+            "text": "🚐 'We're headed to San Francisco.'",
+            "effects": {
+              "morale": 0
+            },
+            "message": "The guru nods. 'San Francisco is an illusion. But go. You'll return when you understand.' One of your crew looks TORN. 'What if he's right...?'"
+          },
+          {
+            "text": "🏃 'Get in the bus. NOW.'",
+            "effects": {
+              "morale": -15,
+              "fuel": -10
+            },
+            "message": "You floor it. River: 'That was TOO close.' But one of your crew is FURIOUS. 'You don't understand! He SEES things!' Bad tension."
+          }
+        ]
       }
     ],
     "doubts": [
@@ -2114,6 +2212,14 @@
         "description": "Everyone else is building careers. What am I doing?",
         "moraleDrain": 3,
         "abandonReason": "went back to 'real life' and got serious"
+      },
+      {
+        "name": "obsessed with The Children of the Eternal Light",
+        "description": "That guru we met... he really UNDERSTOOD me. Maybe he's right about everything...",
+        "moraleDrain": 0,
+        "highMoraleRisk": true,
+        "moraleThreshold": 150,
+        "abandonReason": "joined The Children of the Eternal Light cult in New Mexico"
       }
     ]
   },
