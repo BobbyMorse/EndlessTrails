@@ -1017,79 +1017,357 @@
         ]
       },
       {
-        "text": "🚗 Some squares in a station wagon give you dirty looks.",
-        "effects": {
-          "morale": -5
-        }
+        "id": "squares_confrontation",
+        "text": "🚗 Station wagon full of squares pulls up. Dad yells: 'Get a JOB, hippies!' His kids are staring.",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "✌️ 'Peace and love, brother!'",
+            "effects": {
+              "morale": 20
+            },
+            "message": "You smile and wave! One kid waves back! Dad looks confused! You WIN with kindness! ☮️"
+          },
+          {
+            "text": "🤬 'At least we're LIVING, square!'",
+            "effects": {
+              "morale": -20,
+              "specialItem": 15
+            },
+            "message": "Screaming match! His kids look scared! You feel BAD now! That wasn't groovy at all! 😔"
+          },
+          {
+            "text": "🎸 Crank the music LOUD!",
+            "effects": {
+              "morale": 15
+            },
+            "message": "Hendrix at FULL BLAST! They speed away! River: 'Music always wins!' 🎵"
+          }
+        ]
       },
       {
-        "text": "⛽ You find a gas station with cheaper prices! Score!",
-        "effects": {
-          "morale": 10
-        }
+        "id": "cheap_gas",
+        "text": "⛽ Gas station says 'CHEAP GAS!' But the owner looks sketchy. Really sketchy.",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "💰 'Fill it up! Can't pass this up!'",
+            "effects": {
+              "fuel": 50,
+              "currency": -15
+            },
+            "message": "SCORE! You save $10! The gas smells weird but whatever! Bargain! 🎉",
+            "risk": 0.3,
+            "failEffects": {
+              "fuel": -20,
+              "currency": -15,
+              "morale": -25,
+              "days": 1
+            },
+            "failMessage": "The gas was WATERED DOWN! Bus sputters and dies! Takes a DAY to fix! YOU GOT SCAMMED! 😡"
+          },
+          {
+            "text": "🤔 'Just $5 worth. Testing it.'",
+            "effects": {
+              "fuel": 15,
+              "currency": -5
+            },
+            "message": "Smart move! Gas seems OK! You don't trust him enough to fill up though."
+          },
+          {
+            "text": "🚐 'Nah, bad vibes. Let's bounce.'",
+            "effects": {
+              "morale": 10
+            },
+            "message": "You drive away. Two miles later you see a cop car at that station! DODGED A BULLET! ✨"
+          }
+        ]
       },
       {
-        "text": "🎵 Radio plays a Hendrix solo. Everyone air guitars for 10 minutes.",
-        "effects": {
-          "morale": 20
-        }
+        "id": "hendrix_solo",
+        "text": "🎸 Radio plays a LEGENDARY Hendrix solo! River: 'Turn it UP! This is CHURCH!'",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🔊 'MAX VOLUME!'",
+            "effects": {
+              "morale": 35
+            },
+            "message": "Your EARS are RINGING! You don't CARE! THIS IS LIVING! JIMI FOREVER! 🎸⚡"
+          },
+          {
+            "text": "🎸 'Pull over! Air guitar time!'",
+            "effects": {
+              "morale": 45,
+              "days": 0.3
+            },
+            "message": "EPIC air guitar session! Cars honk as they pass! You're ALL Hendrix right now! LEGENDARY! 🎸✨"
+          },
+          {
+            "text": "😐 'It's cool but not THAT cool.'",
+            "effects": {
+              "morale": -15
+            },
+            "message": "Everyone STARES at you in horror. River: 'Did you just... diss HENDRIX?!' Vibes RUINED."
+          }
+        ]
       },
       {
-        "text": "💩 Someone ate bad gas station food. The bus smells TERRIBLE for 100 miles.",
-        "effects": {
-          "morale": -15
-        }
+        "id": "bad_food",
+        "text": "🌭 Gas station hot dog been spinning for DAYS. Moonbeam: 'I'm starving!' She's reaching for it...",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🛑 'DON'T! We'll find real food!'",
+            "effects": {
+              "morale": 10,
+              "currency": -10
+            },
+            "message": "You buy her a sandwich instead. She's grateful! Smart move! That hot dog looked LETHAL! 🥪"
+          },
+          {
+            "text": "🤷 'Your stomach, your choice.'",
+            "effects": {
+              "morale": -30,
+              "days": 1
+            },
+            "message": "She eats it. 2 hours later: DISASTER. Bus smells AWFUL. She's SICK. You're stopped for a DAY. 🤢"
+          },
+          {
+            "text": "😈 'I'll eat it! I got an iron stomach!'",
+            "effects": {
+              "morale": -35,
+              "food": -15,
+              "days": 1.5
+            },
+            "message": "HUGE MISTAKE. You're VIOLENTLY ILL for a day and a half. Everyone's mad. Stardust: 'IDIOT.' 💀"
+          }
+        ]
       },
       {
-        "text": "🦅 A hawk lands on your hood. It stares at you. Then flies away. Wild.",
-        "effects": {
-          "morale": 10
-        }
+        "id": "hawk_encounter",
+        "text": "🦅 HUGE hawk lands on your hood! Majestic! It stares RIGHT AT YOU. Doesn't move.",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "📸 'Stay still! This is MAGICAL!'",
+            "effects": {
+              "morale": 35,
+              "days": 0.3
+            },
+            "message": "10 minutes of pure AWE! It flies away slowly! You all feel BLESSED! That was a SIGN! 🦅✨"
+          },
+          {
+            "text": "🍞 'Throw it some bread!'",
+            "effects": {
+              "morale": 25,
+              "food": -5
+            },
+            "message": "It eats! Then flies off! River: 'We just fed a SPIRIT ANIMAL!' Beautiful moment! ☮️"
+          },
+          {
+            "text": "📢 'Honk! Scare it off!'",
+            "effects": {
+              "morale": -25
+            },
+            "message": "It flies away fast! Everyone's FURIOUS! Moonbeam: 'That was a GIFT and you RUINED IT!' 😡"
+          }
+        ]
       },
       {
-        "text": "🏠 You drive past identical suburban houses. Gives everyone the creeps.",
-        "effects": {
-          "morale": -10
-        }
+        "id": "suburbia_dread",
+        "text": "🏠 Endless identical houses. Perfect lawns. No people. Stardust: 'This is my NIGHTMARE.'",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🎸 'Play music! Fight the conformity!'",
+            "effects": {
+              "morale": 25
+            },
+            "message": "Bob Dylan LOUD! You're singing about FREEDOM! The houses can't touch you! WIN! 🎵✌️"
+          },
+          {
+            "text": "😨 'Floor it! Get us OUT of here!'",
+            "effects": {
+              "morale": 10,
+              "fuel": -10
+            },
+            "message": "You BURN rubber escaping! Everyone breathes again! River: 'Never going back to THAT life!' 🚐💨"
+          },
+          {
+            "text": "💭 'My parents live like this...'",
+            "effects": {
+              "morale": -20,
+              "specialItem": 20
+            },
+            "message": "Heavy silence for 50 miles. Everyone's thinking about the lives they left. Dark vibes. 😔"
+          }
+        ]
       },
       {
-        "text": "🎨 Someone paints 'LOVE' on the side of the bus. It's crooked but nice.",
-        "effects": {
-          "morale": 15
-        }
+        "id": "yarn_ball_billboard",
+        "text": "🎪 'WORLD'S LARGEST BALL OF YARN - NEXT EXIT!' Stardust: 'That's the STUPIDEST thing ever!'",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🧶 'Let's see it! Could be HILARIOUS!'",
+            "effects": {
+              "morale": 40,
+              "currency": -5,
+              "days": 0.5
+            },
+            "message": "It's MASSIVE! And totally absurd! You take goofy photos! Laughing for HOURS! Worth it! 😂"
+          },
+          {
+            "text": "🚗 'That's tourist trap garbage!'",
+            "effects": {
+              "morale": 5
+            },
+            "message": "You drive past. Probably the right call. Still... you're a LITTLE curious."
+          },
+          {
+            "text": "🎨 'We should STEAL some yarn!'",
+            "effects": {
+              "morale": -15,
+              "currency": -20
+            },
+            "message": "Caught immediately! They make you PAY for it! River: 'Smooth criminal, you are NOT.' 🤦"
+          }
+        ]
       },
       {
-        "text": "🎪 You see a billboard: 'See the World's Largest Ball of Yarn!' Nobody cares.",
-        "effects": {
-          "morale": 0
-        }
+        "id": "squirrel_swerve",
+        "text": "🐿️ SQUIRREL darts in front! You have 1 second to react!",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🚗 SWERVE! Save the squirrel!",
+            "effects": {
+              "morale": 25,
+              "fuel": -5
+            },
+            "message": "You swerve HARD! The squirrel makes it! Everyone CHEERS! River: 'ALL life is sacred!' ✨🐿️"
+          },
+          {
+            "text": "😬 Just hit the brakes!",
+            "effects": {
+              "morale": 5,
+              "fuel": -3
+            },
+            "message": "You stop just in time! Squirrel scampers away! Close call! Everyone breathes again. Phew! 😅"
+          },
+          {
+            "text": "😈 'It's just a squirrel, keep going!'",
+            "effects": {
+              "morale": -25
+            },
+            "message": "THUMP. Everyone goes silent. Moonbeam won't talk to you for 50 miles. Stardust: 'Murderer.' BAD karma. 😢"
+          }
+        ]
       },
       {
-        "text": "🐿️ A squirrel runs across the road. You swerve. Everyone screams. You're fine.",
-        "effects": {
-          "morale": -5
-        }
+        "id": "skunk_disaster",
+        "text": "🦨 Dead skunk in the road! You see it at the LAST second!",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🚗 SWERVE HARD!",
+            "effects": {
+              "morale": 15,
+              "fuel": -5
+            },
+            "message": "You miss it by INCHES! Everyone cheers! River: 'Nice reflexes!' Crisis averted! ✨"
+          },
+          {
+            "text": "😬 Just... hope for the best?",
+            "effects": {
+              "morale": -30,
+              "days": 0.5
+            },
+            "message": "You hit it DEAD CENTER. The SMELL. Oh god the SMELL. It won't leave. You stop for HOURS trying to air out. NIGHTMARE. 🤢💀"
+          },
+          {
+            "text": "🌿 'Roll up the windows!'",
+            "effects": {
+              "morale": -15
+            },
+            "message": "You hit it but the smell is MINIMAL! Smart thinking! Still not GREAT but could be WAY worse!"
+          }
+        ]
       },
       {
-        "text": "🦨 You ran over a skunk. The smell won't leave. Everyone's gagging.",
-        "effects": {
-          "morale": -25
-        },
-        "weight": 2
-      },
-      {
-        "text": "📻 Radio picks up a station playing only polka. Nobody knows how to change it.",
-        "effects": {
-          "morale": -10
-        }
+        "id": "polka_station",
+        "text": "📻 Radio is STUCK on polka music! Accordion! Tuba! Oom-pah-pah! It WON'T CHANGE!",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "💃 'Let's DANCE to it!'",
+            "effects": {
+              "morale": 35,
+              "days": 0.3
+            },
+            "message": "You pull over and have a POLKA DANCE PARTY! It's HILARIOUS! Laughing for miles! Best bad decision ever! 🎺💃"
+          },
+          {
+            "text": "🎸 'Just play guitar instead!'",
+            "effects": {
+              "morale": 20
+            },
+            "message": "You drown out the polka with your OWN music! Problem solved! Teamwork! 🎸",
+            "condition": "hasGuitar"
+          },
+          {
+            "text": "😤 'Turn it OFF! I can't take it!'",
+            "effects": {
+              "morale": -15
+            },
+            "message": "Silent driving for 100 miles. Awkward. River: 'The polka would've been better than THIS.' 😐"
+          }
+        ]
       }
     ],
     "middle": [
       {
-        "text": "🌽 Cows blocking the road. You wait 20 minutes. One moos at you.",
-        "effects": {
-          "morale": 5
-        }
+        "id": "cow_blockade",
+        "text": "🐄 Entire herd of cows blocking the road! They're NOT moving! It's been 20 minutes!",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "📸 'This is HILARIOUS! Photo time!'",
+            "effects": {
+              "morale": 30,
+              "days": 0.5
+            },
+            "message": "You take AMAZING photos with the cows! One licks Moonbeam's face! Laughing so hard you CRY! Worth the delay! 🐄📷"
+          },
+          {
+            "text": "🎸 'Play music! Maybe they'll move!'",
+            "effects": {
+              "morale": 25,
+              "days": 0.3
+            },
+            "message": "You play guitar for the COWS! They seem to enjoy it! One actually moos along! Eventually they wander off! MAGIC! 🎵🐄"
+          },
+          {
+            "text": "📢 'HONK! Get them OUT of here!'",
+            "effects": {
+              "morale": -10,
+              "days": 0.2
+            },
+            "message": "They scatter fast! But everyone's mad at you. River: 'Why do you have to HARSH everything?' 😤"
+          }
+        ]
       },
       {
         "text": "🌾 Endless corn fields stretch to the horizon. It's beautiful but monotonous.",
@@ -1169,24 +1447,101 @@
         }
       },
       {
-        "text": "🎸 You pass a music store. Someone wants to buy new strings ($15).",
-        "effects": {
-          "currency": -15,
-          "morale": 10
-        }
+        "id": "music_store",
+        "text": "🎸 Music store! Moonbeam: 'Can we get new guitar strings?! And look at that BONGO!' ($30 for both)",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🎵 'Get BOTH! Music is LIFE!'",
+            "effects": {
+              "currency": -30,
+              "morale": 40,
+              "days": 0.5
+            },
+            "message": "NEW STRINGS! BONGOS! You jam in the parking lot for HOURS! A crowd gathers! Someone throws $20! LEGENDARY! 🎸🥁"
+          },
+          {
+            "text": "🎸 'Just the strings ($15)'",
+            "effects": {
+              "currency": -15,
+              "morale": 15
+            },
+            "message": "The strings sound AMAZING! Worth every penny! Guitar sounds NEW! River is in heaven! 🎵"
+          },
+          {
+            "text": "💰 'We can't afford it...'",
+            "effects": {
+              "morale": -15
+            },
+            "message": "Everyone's disappointed. Stardust: 'We can afford GAS but not MUSIC? What are we DOING?!' 😔"
+          }
+        ]
       },
       {
-        "text": "Rainstorm soaks your sleeping bags. Everyone's morale takes a hit.",
-        "effects": {
-          "morale": -20
-        }
+        "id": "rainstorm_disaster",
+        "text": "⛈️ MASSIVE rainstorm! Everything's getting SOAKED! Sleeping bags! Clothes! Everything!",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "💃 'RAIN DANCE! Embrace it!'",
+            "effects": {
+              "morale": 25,
+              "food": -10,
+              "days": 0.5
+            },
+            "message": "You all run out and DANCE in the rain! Soaked to the BONE! Laughing like MANIACS! This is LIVING! 🌧️💃"
+          },
+          {
+            "text": "🏃 'Quick! Save what we can!'",
+            "effects": {
+              "morale": -10
+            },
+            "message": "You frantically grab stuff! Most things stay dry! Smart move! Still a bit wet but manageable! 😅"
+          },
+          {
+            "text": "😤 'Screw it. Let it rain.'",
+            "effects": {
+              "morale": -30,
+              "food": -15,
+              "days": 1
+            },
+            "message": "EVERYTHING is soaked. Sleeping bags RUINED. You spend a DAY trying to dry out. Stardust: 'REALLY?!' 💀"
+          }
+        ]
       },
       {
-        "text": "You find $50 in an old jacket! Far out!",
-        "effects": {
-          "currency": 50,
-          "morale": 10
-        }
+        "id": "jacket_money",
+        "text": "💵 You find $50 in an old jacket! Stardust: 'That's MY jacket!' River: 'Finders keepers!'",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🤝 'It's Stardust's jacket, it's her money!'",
+            "effects": {
+              "morale": 30,
+              "currency": 50
+            },
+            "message": "Stardust: 'You're a REAL one!' She buys everyone ice cream with it! Good karma ALWAYS wins! 🍦✨"
+          },
+          {
+            "text": "🎉 'Split it! Everyone gets $10!'",
+            "effects": {
+              "morale": 35,
+              "currency": 50
+            },
+            "message": "Everybody wins! You all celebrate! River: 'This is what community MEANS!' Perfect solution! ☮️"
+          },
+          {
+            "text": "💰 'Finders keepers! It's mine!'",
+            "effects": {
+              "morale": -25,
+              "currency": 50
+            },
+            "message": "Awkward silence. Stardust glares at you for 100 miles. River: 'That's not groovy, man.' Bad vibes. 😤"
+          }
+        ]
       },
       {
         "id": "draft_letter",
@@ -1418,23 +1773,99 @@
         }
       },
       {
-        "text": "You discover a secret swimming hole in the desert. Skinny dipping time! It's the cat's pajamas!",
-        "effects": {
-          "morale": 20
-        },
-        "weight": 2
+        "id": "desert_oasis",
+        "text": "💦 Secret desert OASIS! Crystal clear water! Moonbeam: 'This is a MIRACLE!' Nobody around for MILES!",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🌊 'CANNONBALL CONTEST!'",
+            "effects": {
+              "morale": 45,
+              "specialItem": -25,
+              "days": 0.5
+            },
+            "message": "EPIC water day! Diving! Splashing! Best day of the TRIP! You feel REBORN! This is PARADISE! 💦✨"
+          },
+          {
+            "text": "🌿 'Skinny dipping! Go NATURAL!'",
+            "effects": {
+              "morale": 50,
+              "specialItem": -30,
+              "days": 0.5
+            },
+            "message": "TOTAL FREEDOM! No clothes! No rules! Pure hippie vibes! This is what it's ALL ABOUT! 🌺☮️"
+          },
+          {
+            "text": "🚐 'Looks kinda dirty... let's go.'",
+            "effects": {
+              "morale": -20
+            },
+            "message": "Everyone's FURIOUS. River: 'We're in the DESERT and you passed WATER?!' Massive regret for 100 miles. 😤"
+          }
+        ]
       },
       {
-        "text": "Someone paints a peace sign on your bus! Groovy!",
-        "effects": {
-          "morale": 20
-        }
+        "id": "bus_painter",
+        "text": "🎨 Artist at rest stop: 'Your bus needs ART! Can I paint it?!' He's got TONS of paint!",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🌈 'Paint the WHOLE THING!'",
+            "effects": {
+              "morale": 45,
+              "days": 1,
+              "specialItem": -20
+            },
+            "message": "He paints for HOURS! Flowers! Peace signs! RAINBOWS! Your bus is a MASTERPIECE! Everyone takes photos! LEGENDARY! 🎨✨"
+          },
+          {
+            "text": "☮️ 'Just a peace sign!'",
+            "effects": {
+              "morale": 25
+            },
+            "message": "Perfect peace sign on the side! Simple and beautiful! River: 'Now we look like REAL hippies!' ☮️"
+          },
+          {
+            "text": "🚫 'Nah, we like it plain.'",
+            "effects": {
+              "morale": -15
+            },
+            "message": "Artist looks sad. Everyone's disappointed. Moonbeam: 'We're supposed to be about EXPRESSION!' 😔"
+          }
+        ]
       },
       {
-        "text": "Radio plays 'California Dreamin'. Everyone sings along LOUD! We're almost there!",
-        "effects": {
-          "morale": 35
-        }
+        "id": "california_dreamin",
+        "text": "📻 'CALIFORNIA DREAMIN' comes on! THE perfect song! THE perfect moment! Everyone FEELS it!",
+        "isChoice": true,
+        "weight": 3,
+        "choices": [
+          {
+            "text": "🎤 'FULL VOLUME! EVERYBODY SING!'",
+            "effects": {
+              "morale": 50
+            },
+            "message": "You're ALL singing at the TOP of your lungs! Tears streaming! This is IT! This is EVERYTHING! 🎵💕"
+          },
+          {
+            "text": "🚐 'Pull over! Dance in the desert!'",
+            "effects": {
+              "morale": 55,
+              "days": 0.5,
+              "specialItem": -15
+            },
+            "message": "You stop and DANCE! Under the desert sun! To THIS song! This moment is FOREVER! PURE MAGIC! 💃✨"
+          },
+          {
+            "text": "😐 'It's just a song...'",
+            "effects": {
+              "morale": -20
+            },
+            "message": "Dead silence. River turns off the radio. Nobody talks for an hour. You RUINED the moment. 😤"
+          }
+        ]
       },
       {
         "text": "A commune in the desert invites you to stay! Free food and cosmic vibes.",
@@ -1445,18 +1876,68 @@
         }
       },
       {
-        "text": "Someone gifts you a tie-dye shirt! You look like the real deal now!",
-        "effects": {
-          "morale": 20
-        }
+        "id": "tiedye_gift",
+        "text": "👕 Hippie at rest stop: 'I make tie-dye! Pick one! Free! Spread the love!' SO MANY COLORS!",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🌈 'We'll take FIVE! One for everyone!'",
+            "effects": {
+              "morale": 40,
+              "currency": -20
+            },
+            "message": "You offer $20! He's touched! 'You didn't have to!' Matching shirts! You look LEGENDARY! Group photo! 📷✨"
+          },
+          {
+            "text": "💕 'Just one! Thank you so much!'",
+            "effects": {
+              "morale": 25
+            },
+            "message": "Beautiful rainbow shirt! You wear it with PRIDE! River: 'Now you're a TRUE hippie!' ☮️"
+          },
+          {
+            "text": "😬 'Nah, not our style...'",
+            "effects": {
+              "morale": -10
+            },
+            "message": "He looks confused. 'But... you're hippies?' Moonbeam: 'Seriously? FREE tie-dye?!' 🤦"
+          }
+        ]
       },
       {
-        "text": "🌮 Authentic California taco stand. Best tacos you've ever had, man.",
-        "effects": {
-          "food": 20,
-          "morale": 20,
-          "currency": -5
-        }
+        "id": "taco_stand",
+        "text": "🌮 California TACO STAND! Smells INCREDIBLE! Guy says: 'Best tacos west of the Mississippi!'",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🎉 'Tacos for EVERYONE! ($20)'",
+            "effects": {
+              "food": 40,
+              "morale": 40,
+              "currency": -20
+            },
+            "message": "You get like 15 tacos! They're AMAZING! Best food of the TRIP! Everyone's in heaven! Worth EVERY penny! 🌮💕"
+          },
+          {
+            "text": "🌮 'Just a few tacos ($5)'",
+            "effects": {
+              "food": 20,
+              "morale": 25,
+              "currency": -5
+            },
+            "message": "SO GOOD! You immediately regret not getting MORE! But still amazing! Welcome to California! 🌮"
+          },
+          {
+            "text": "💰 'Too expensive. Let's go.'",
+            "effects": {
+              "morale": -15,
+              "food": -5
+            },
+            "message": "The smell haunts you for MILES. Everyone's hungry AND mad. Stardust: 'We're in CALIFORNIA and skipping TACOS?!' 😤"
+          }
+        ]
       },
       {
         "text": "🦅 An eagle soars overhead. A sign! California awaits!",
@@ -1465,17 +1946,65 @@
         }
       },
       {
-        "text": "🎨 Someone paints 'ALMOST THERE!' on the side of the bus.",
-        "effects": {
-          "morale": 25
-        }
+        "id": "almost_there_paint",
+        "text": "🎨 Street kid with spraypaint: 'Your bus needs a message! What should I write?!'",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🌈 'ALMOST THERE!'",
+            "effects": {
+              "morale": 35
+            },
+            "message": "He paints it HUGE on the side! Everyone who passes HONKS and CHEERS! The energy is INSANE! 🎨✨"
+          },
+          {
+            "text": "☮️ 'PEACE & LOVE!'",
+            "effects": {
+              "morale": 40
+            },
+            "message": "Perfect message! People WAVE at you! Old lady gives you a thumbs up! Spreading the VIBE! ☮️💕"
+          },
+          {
+            "text": "🚫 'Actually, let's keep it clean.'",
+            "effects": {
+              "morale": -10
+            },
+            "message": "Kid shrugs and walks away. River: 'When did you become so BORING?' Missed opportunity. 😐"
+          }
+        ]
       },
       {
-        "text": "You find wild berries growing by the roadside! Neato!",
-        "effects": {
-          "food": 15,
-          "morale": 10
-        }
+        "id": "wild_berries",
+        "text": "🫐 WILD BERRIES everywhere! Bushes LOADED! Moonbeam: 'Are these... safe to eat?'",
+        "isChoice": true,
+        "weight": 2,
+        "choices": [
+          {
+            "text": "🍇 'They look good! Pick EVERYTHING!'",
+            "effects": {
+              "food": 30,
+              "morale": 25,
+              "days": 0.5
+            },
+            "message": "You pick for HOURS! SO MANY berries! Fresh food! Nature provides! This is LIVING! 🫐✨"
+          },
+          {
+            "text": "🤔 'Just pick a few. Be safe.'",
+            "effects": {
+              "food": 15,
+              "morale": 10
+            },
+            "message": "You pick carefully. They're DELICIOUS! Should've gotten more but at least you're safe! 🍓"
+          },
+          {
+            "text": "☠️ 'Might be poisonous. Don't risk it.'",
+            "effects": {
+              "morale": -10
+            },
+            "message": "You drive past. A family is picking them happily. They wave. Stardust: 'We're so PARANOID.' 😐"
+          }
+        ]
       },
       {
         "text": "You find $50 in an old jacket! Far out!",
