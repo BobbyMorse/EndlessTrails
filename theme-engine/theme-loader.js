@@ -306,6 +306,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     console.log('Themes loaded:', themeLoader.getThemes().map(t => t.name));
+
+    // Dispatch event that themes are ready
+    const event = new CustomEvent('themesReady', {
+      detail: { themes: themeLoader.getThemes() }
+    });
+    document.dispatchEvent(event);
   } catch (error) {
     console.error('Failed to load themes:', error);
   }

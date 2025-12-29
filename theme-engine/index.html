@@ -1251,22 +1251,9 @@
     let gameEngine = null;
     let ui = null;
 
-    // Initialize marketplace
-    window.addEventListener('DOMContentLoaded', async () => {
-      // Wait for theme-loader to finish (max 5 seconds)
-      await new Promise(resolve => {
-        let elapsed = 0;
-        const checkThemes = setInterval(() => {
-          const themes = themeLoader.getThemes();
-          elapsed += 100;
-          // Show after we have themes OR timeout after 5 seconds
-          if (themes.length > 0 || elapsed >= 5000) {
-            clearInterval(checkThemes);
-            console.log('Rendering marketplace with', themes.length, 'theme(s)');
-            resolve();
-          }
-        }, 100);
-      });
+    // Initialize marketplace - wait for themes to load
+    document.addEventListener('themesReady', (e) => {
+      console.log('Themes ready event received:', e.detail.themes.map(t => t.name));
       showMarketplace();
     });
 
