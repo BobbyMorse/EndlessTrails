@@ -8,55 +8,75 @@
     "era": "1960s",
     "difficulty": "medium",
     "playtime": "30-45 mins",
-    "tags": ["hippie", "road-trip", "counterculture", "1960s", "music-festival", "freedom"],
+    "tags": [
+      "hippie",
+      "road-trip",
+      "counterculture",
+      "1960s",
+      "music-festival",
+      "freedom"
+    ],
     "buttonIcon": "✌️"
   },
   "ui": {
     "title": "The NorCal Trail",
-    "subtitle": "Boston to San Francisco, 1969",
+    "subtitle": "San Francisco or Bust! ☮️",
+    "defaultPartyNames": [
+      "Sunshine",
+      "Moonbeam",
+      "Stardust",
+      "River",
+      "Phoenix",
+      "Ziggy",
+      "Willow",
+      "Rainbow",
+      "Sky",
+      "Cosmos",
+      "Luna",
+      "Harmony",
+      "Journey",
+      "Karma",
+      "Freedom",
+      "Peace",
+      "Dharma",
+      "Astral",
+      "Crystal",
+      "Solstice"
+    ],
+    "groupNames": [
+      "The Cosmic Wanderers",
+      "The Free Spirits",
+      "The Peace Seekers",
+      "The Groovy Gang",
+      "The Liberation Crew",
+      "The Flower Children",
+      "The Dream Chasers",
+      "The Revolution",
+      "The Love Collective",
+      "The Vibes Tribe",
+      "The Road Warriors",
+      "The Nomad Squad",
+      "The Freedom Riders",
+      "The Starlight Express",
+      "The Peaceful Warriors",
+      "The Harmony Seekers",
+      "The Good Vibes Only Crew",
+      "The Psychedelic Travelers",
+      "The Counterculture Collective",
+      "The Far Out Five"
+    ],
+    "statusLabels": {
+      "normal": "✌️ Groovy",
+      "doubting": "💭",
+      "abandoned": "👔 Sold Out"
+    },
     "colorScheme": {
       "primary": "#ff6b6b",
       "secondary": "#ffd93d",
-      "accent": "#4ade80",
-      "danger": "#ef4444"
-    },
-    "defaultPartyNames": ["Sunshine", "Moonbeam", "Stardust", "River", "Phoenix", "Ziggy", "Willow", "Rainbow", "Sky", "Cosmos", "Luna", "Harmony", "Journey", "Karma", "Freedom", "Peace", "Dharma", "Astral", "Crystal", "Solstice"],
-    "groupNames": ["The Cosmic Wanderers", "The Free Spirits", "The Peace Seekers", "The Groovy Gang", "The Liberation Crew", "The Flower Children", "The Dream Chasers", "The Revolution", "The Love Collective", "The Vibes Tribe", "The Road Warriors", "The Nomad Squad", "The Freedom Riders", "The Starlight Express", "The Peaceful Warriors", "The Harmony Seekers", "The Good Vibes Only Crew", "The Psychedelic Travelers", "The Counterculture Collective", "The Far Out Five"],
-    "statusLabels": {
-      "normal": "✌️",
-      "doubting": "💭",
-      "abandoned": "👔"
-    },
-    "eventIcons": {
-      "positive": "🌻",
-      "negative": "☀️",
-      "neutral": "🎸"
-    },
-    "travelEmojis": {
-      "east": [
-        ["🌻", "✌️", "🌈"],
-        ["🎸", "🌼", "☮️"],
-        ["🌺", "🎵", "🌸"],
-        ["✨", "🌻", "💐"],
-        ["🌞", "🌻", "🦋"],
-        ["🌈", "☀️", "🌻"]
-      ],
-      "middle": [
-        ["🌵", "☀️", "🦅"],
-        ["🏜️", "🌞", "✨"],
-        ["🎸", "🔥", "🌟"],
-        ["⭐", "🌙", "💫"],
-        ["🌺", "🦋", "🌻"],
-        ["🎨", "🌈", "✌️"]
-      ],
-      "west": [
-        ["🌊", "🌴", "🌅"],
-        ["🏖️", "☀️", "🌺"],
-        ["🌸", "🦋", "🌼"],
-        ["🌞", "🌻", "🎸"],
-        ["✨", "🌈", "☮️"],
-        ["🌺", "💐", "🌷"]
-      ]
+      "accent": "#8b7355",
+      "danger": "#ef4444",
+      "background": "#2c1810",
+      "text": "#f0e68c"
     }
   },
   "resources": {
@@ -480,7 +500,7 @@
           {
             "text": "🌿 Pick them up for herbs",
             "effects": {
-              "morale": 30,
+              "morale": 20,
               "food": 5
             },
             "message": "'Ass, Grass, or Gas!' They contribute to the herb collection! The vibes are EXCELLENT! ✌️"
@@ -552,7 +572,7 @@
           {
             "text": "🎸 Jam with the bands!",
             "effects": {
-              "morale": 40,
+              "morale": 20,
               "days": 1,
               "food": 5
             },
@@ -562,7 +582,7 @@
           {
             "text": "💃 Dance all day!",
             "effects": {
-              "morale": 35,
+              "morale": 20,
               "food": -10,
               "days": 1
             },
@@ -571,7 +591,7 @@
           {
             "text": "🌿 Chill and enjoy",
             "effects": {
-              "morale": 30,
+              "morale": 20,
               "food": -5,
               "specialItem": -10
             },
@@ -610,7 +630,7 @@
             "risk": 0.3,
             "failEffects": {
               "currency": -60,
-              "morale": -25
+              "morale": -20
             },
             "failMessage": "He's not interested in your philosophy. He writes you TWO tickets out of spite."
           },
@@ -618,13 +638,13 @@
             "text": "🏃 Floor it!",
             "effects": {
               "fuel": -20,
-              "morale": -30
+              "morale": -20
             },
             "message": "You peel out. Your VW bus goes 0-60 in... never. He doesn't even bother chasing you. But now you're paranoid for 200 miles.",
             "risk": 0.7,
             "failEffects": {
               "currency": -100,
-              "morale": -40,
+              "morale": -20,
               "days": 2
             },
             "failMessage": "He catches you immediately. Your bus tops out at 40mph. Now you're getting arrested. This takes DAYS to sort out."
@@ -658,7 +678,7 @@
           {
             "text": "🎵 Play for tips",
             "effects": {
-              "morale": 25,
+              "morale": 20,
               "currency": 20,
               "food": 15
             },
@@ -684,7 +704,7 @@
           {
             "text": "📸 'Everyone get in frame!'",
             "effects": {
-              "morale": 40
+              "morale": 20
             },
             "message": "You set up the camera on the roof. Timer goes off. PERFECT sunset photo with everyone! This is going on the wall! 📷✨"
           },
@@ -692,14 +712,14 @@
             "text": "🌿 Herbs and silence",
             "effects": {
               "specialItem": -10,
-              "morale": 45
+              "morale": 20
             },
             "message": "You share the herbs in total silence. The colors! The VIBES! This is why you're out here! 🌄💫"
           },
           {
             "text": "🧘 Just be present",
             "effects": {
-              "morale": 35
+              "morale": 20
             },
             "message": "No photos. No words. Just experiencing it. When it's over, everyone exhales. Perfect moment. ☮️"
           },
@@ -766,7 +786,7 @@
             "text": "🍽️ 'Yes please! We're starving!'",
             "effects": {
               "food": 30,
-              "morale": 25
+              "morale": 20
             },
             "message": "Best meal you've had in WEEKS! She packs you leftovers! 'You remind me of my grandkids!' 😭💕"
           },
@@ -774,7 +794,7 @@
             "text": "🎸 'Only if we can play you a song!'",
             "effects": {
               "food": 35,
-              "morale": 35,
+              "morale": 20,
               "days": 0.5
             },
             "message": "You eat AND perform! She claps along! 'You kids are alright!' She gives you $20! Best gig ever! 🎵"
@@ -797,7 +817,7 @@
           {
             "text": "🎵 'Play it NOW!'",
             "effects": {
-              "morale": 40,
+              "morale": 20,
               "days": 0.3
             },
             "message": "You blast it for HOURS! Singing every word! Dancing in the bus! 'Come Together' never sounded so good! 🎸"
@@ -813,7 +833,7 @@
           {
             "text": "🎁 'Give it to that cool record store guy!'",
             "effects": {
-              "morale": 30,
+              "morale": 20,
               "food": 20
             },
             "message": "Record store dude is STOKED! 'You're beautiful people!' Gives you free snacks! Karma works! ✌️"
@@ -829,7 +849,7 @@
           {
             "text": "🌌 'Let's stay up ALL night watching!'",
             "effects": {
-              "morale": 35,
+              "morale": 20,
               "days": 0.5,
               "specialItem": -20
             },
@@ -838,7 +858,7 @@
           {
             "text": "🎸 'Play acoustic under the stars!'",
             "effects": {
-              "morale": 40
+              "morale": 20
             },
             "message": "'Blackbird' never sounded better. You're in HEAVEN. This moment is EVERYTHING. 🎵⭐"
           },
@@ -867,7 +887,7 @@
           {
             "text": "🎵 'YEAH! Let's make music!'",
             "effects": {
-              "morale": 45,
+              "morale": 20,
               "days": 0.5
             },
             "message": "EPIC JAM SESSION! 3 hours of pure musical JOY! They teach you new songs! This is LIVING! 🎶✨"
@@ -875,7 +895,7 @@
           {
             "text": "🎤 'Can we perform TOGETHER?!'",
             "effects": {
-              "morale": 50,
+              "morale": 20,
               "currency": 40,
               "days": 1
             },
@@ -884,7 +904,7 @@
           {
             "text": "📸 'Just gonna listen!'",
             "effects": {
-              "morale": 25
+              "morale": 20
             },
             "message": "Still awesome! You soak it in. But you could've BEEN part of it. Stardust: 'Next time, man!'"
           }
@@ -899,7 +919,7 @@
           {
             "text": "🎨 'Paint it ALL! Make it GROOVY!'",
             "effects": {
-              "morale": 40,
+              "morale": 20,
               "specialItem": -15
             },
             "message": "MASSIVE peace signs! Flowers! RAINBOWS! Your bus is now a WORK OF ART! People CHEER as you drive by! ☮️🌈"
@@ -907,7 +927,7 @@
           {
             "text": "✌️ 'Just a peace sign is perfect!'",
             "effects": {
-              "morale": 25
+              "morale": 20
             },
             "message": "Simple but beautiful! Perfect-sized peace sign on the side! You look like REAL hippies now! Far out! ☮️"
           },
@@ -929,14 +949,14 @@
           {
             "text": "🎤 'FULL VOLUME! SING LOUD!'",
             "effects": {
-              "morale": 40
+              "morale": 20
             },
             "message": "You're SCREAMING the lyrics! Strangers in other cars join in! Pure JOY! This is WHY you live! 🎵💕"
           },
           {
             "text": "🎸 'Stop the bus! Let's play it LIVE!'",
             "effects": {
-              "morale": 50,
+              "morale": 20,
               "days": 0.3
             },
             "message": "Roadside concert! You NAIL it! Passing cars honk! Someone throws you $5! BEAUTIFUL moment! 🎸✨"
@@ -959,7 +979,7 @@
           {
             "text": "💦 'CANNONBALL TIME!'",
             "effects": {
-              "morale": 45,
+              "morale": 20,
               "days": 0.5,
               "specialItem": -25
             },
@@ -968,7 +988,7 @@
           {
             "text": "🌿 'Skinny dipping! Go NATURAL!'",
             "effects": {
-              "morale": 50,
+              "morale": 20,
               "specialItem": -30,
               "days": 0.5
             },
@@ -992,7 +1012,7 @@
           {
             "text": "🎪 'Let's spend the whole day here!'",
             "effects": {
-              "morale": 55,
+              "morale": 20,
               "currency": -30,
               "food": 20,
               "days": 1
@@ -1002,7 +1022,7 @@
           {
             "text": "🎯 'Just a few games!'",
             "effects": {
-              "morale": 30,
+              "morale": 20,
               "currency": -10
             },
             "message": "You win a goldfish! (It dies in 2 days but whatever!) Fun times! Good memories! 🐠"
@@ -1010,7 +1030,7 @@
           {
             "text": "💰 'Too expensive. Keep driving.'",
             "effects": {
-              "morale": -25
+              "morale": -20
             },
             "message": "Everyone's depressed for 50 miles. Moonbeam cries a little. River: 'Money isn't EVERYTHING, man.'"
           }
@@ -1063,7 +1083,7 @@
             "failEffects": {
               "fuel": -20,
               "currency": -15,
-              "morale": -25,
+              "morale": -20,
               "days": 1
             },
             "failMessage": "The gas was WATERED DOWN! Bus sputters and dies! Takes a DAY to fix! YOU GOT SCAMMED! 😡"
@@ -1094,14 +1114,14 @@
           {
             "text": "🔊 'MAX VOLUME!'",
             "effects": {
-              "morale": 35
+              "morale": 20
             },
             "message": "Your EARS are RINGING! You don't CARE! THIS IS LIVING! JIMI FOREVER! 🎸⚡"
           },
           {
             "text": "🎸 'Pull over! Air guitar time!'",
             "effects": {
-              "morale": 45,
+              "morale": 20,
               "days": 0.3
             },
             "message": "EPIC air guitar session! Cars honk as they pass! You're ALL Hendrix right now! LEGENDARY! 🎸✨"
@@ -1132,7 +1152,7 @@
           {
             "text": "🤷 'Your stomach, your choice.'",
             "effects": {
-              "morale": -30,
+              "morale": -20,
               "days": 1
             },
             "message": "She eats it. 2 hours later: DISASTER. Bus smells AWFUL. She's SICK. You're stopped for a DAY. 🤢"
@@ -1140,7 +1160,7 @@
           {
             "text": "😈 'I'll eat it! I got an iron stomach!'",
             "effects": {
-              "morale": -35,
+              "morale": -20,
               "food": -15,
               "days": 1.5
             },
@@ -1157,7 +1177,7 @@
           {
             "text": "📸 'Stay still! This is MAGICAL!'",
             "effects": {
-              "morale": 35,
+              "morale": 20,
               "days": 0.3
             },
             "message": "10 minutes of pure AWE! It flies away slowly! You all feel BLESSED! That was a SIGN! 🦅✨"
@@ -1165,7 +1185,7 @@
           {
             "text": "🍞 'Throw it some bread!'",
             "effects": {
-              "morale": 25,
+              "morale": 20,
               "food": -5
             },
             "message": "It eats! Then flies off! River: 'We just fed a SPIRIT ANIMAL!' Beautiful moment! ☮️"
@@ -1173,7 +1193,7 @@
           {
             "text": "📢 'Honk! Scare it off!'",
             "effects": {
-              "morale": -25
+              "morale": -20
             },
             "message": "It flies away fast! Everyone's FURIOUS! Moonbeam: 'That was a GIFT and you RUINED IT!' 😡"
           }
@@ -1188,7 +1208,7 @@
           {
             "text": "🎸 'Play music! Fight the conformity!'",
             "effects": {
-              "morale": 25
+              "morale": 20
             },
             "message": "Bob Dylan LOUD! You're singing about FREEDOM! The houses can't touch you! WIN! 🎵✌️"
           },
@@ -1219,7 +1239,7 @@
           {
             "text": "🧶 'Let's see it! Could be HILARIOUS!'",
             "effects": {
-              "morale": 40,
+              "morale": 20,
               "currency": -5,
               "days": 0.5
             },
@@ -1251,7 +1271,7 @@
           {
             "text": "🚗 SWERVE! Save the squirrel!",
             "effects": {
-              "morale": 25,
+              "morale": 20,
               "fuel": -5
             },
             "message": "You swerve HARD! The squirrel makes it! Everyone CHEERS! River: 'ALL life is sacred!' ✨🐿️"
@@ -1267,7 +1287,7 @@
           {
             "text": "😈 'It's just a squirrel, keep going!'",
             "effects": {
-              "morale": -25
+              "morale": -20
             },
             "message": "THUMP. Everyone goes silent. Moonbeam won't talk to you for 50 miles. Stardust: 'Murderer.' BAD karma. 😢"
           }
@@ -1290,7 +1310,7 @@
           {
             "text": "😬 Just... hope for the best?",
             "effects": {
-              "morale": -30,
+              "morale": -20,
               "days": 0.5
             },
             "message": "You hit it DEAD CENTER. The SMELL. Oh god the SMELL. It won't leave. You stop for HOURS trying to air out. NIGHTMARE. 🤢💀"
@@ -1313,7 +1333,7 @@
           {
             "text": "💃 'Let's DANCE to it!'",
             "effects": {
-              "morale": 35,
+              "morale": 20,
               "days": 0.3
             },
             "message": "You pull over and have a POLKA DANCE PARTY! It's HILARIOUS! Laughing for miles! Best bad decision ever! 🎺💃"
@@ -1346,7 +1366,7 @@
           {
             "text": "📸 'This is HILARIOUS! Photo time!'",
             "effects": {
-              "morale": 30,
+              "morale": 20,
               "days": 0.5
             },
             "message": "You take AMAZING photos with the cows! One licks Moonbeam's face! Laughing so hard you CRY! Worth the delay! 🐄📷"
@@ -1354,7 +1374,7 @@
           {
             "text": "🎸 'Play music! Maybe they'll move!'",
             "effects": {
-              "morale": 25,
+              "morale": 20,
               "days": 0.3
             },
             "message": "You play guitar for the COWS! They seem to enjoy it! One actually moos along! Eventually they wander off! MAGIC! 🎵🐄"
@@ -1384,13 +1404,13 @@
       {
         "text": "⛰️ The view from this mountain is outta sight! Far out!",
         "effects": {
-          "morale": 25
+          "morale": 20
         }
       },
       {
         "text": "🌄 Rocky Mountain sunrise. Everyone's speechless. Worth getting up early.",
         "effects": {
-          "morale": 30
+          "morale": 20
         }
       },
       {
@@ -1429,13 +1449,13 @@
       {
         "text": "You meet traveling musicians who jam with you! Real keen cats!",
         "effects": {
-          "morale": 35
+          "morale": 20
         }
       },
       {
         "text": "🌈 RAINBOW over the Rockies! Everyone loses their minds. It's beautiful, man.",
         "effects": {
-          "morale": 30
+          "morale": 20
         }
       },
       {
@@ -1456,7 +1476,7 @@
             "text": "🎵 'Get BOTH! Music is LIFE!'",
             "effects": {
               "currency": -30,
-              "morale": 40,
+              "morale": 20,
               "days": 0.5
             },
             "message": "NEW STRINGS! BONGOS! You jam in the parking lot for HOURS! A crowd gathers! Someone throws $20! LEGENDARY! 🎸🥁"
@@ -1487,7 +1507,7 @@
           {
             "text": "💃 'RAIN DANCE! Embrace it!'",
             "effects": {
-              "morale": 25,
+              "morale": 20,
               "food": -10,
               "days": 0.5
             },
@@ -1503,7 +1523,7 @@
           {
             "text": "😤 'Screw it. Let it rain.'",
             "effects": {
-              "morale": -30,
+              "morale": -20,
               "food": -15,
               "days": 1
             },
@@ -1520,7 +1540,7 @@
           {
             "text": "🤝 'It's Stardust's jacket, it's her money!'",
             "effects": {
-              "morale": 30,
+              "morale": 20,
               "currency": 50
             },
             "message": "Stardust: 'You're a REAL one!' She buys everyone ice cream with it! Good karma ALWAYS wins! 🍦✨"
@@ -1528,7 +1548,7 @@
           {
             "text": "🎉 'Split it! Everyone gets $10!'",
             "effects": {
-              "morale": 35,
+              "morale": 20,
               "currency": 50
             },
             "message": "Everybody wins! You all celebrate! River: 'This is what community MEANS!' Perfect solution! ☮️"
@@ -1536,7 +1556,7 @@
           {
             "text": "💰 'Finders keepers! It's mine!'",
             "effects": {
-              "morale": -25,
+              "morale": -20,
               "currency": 50
             },
             "message": "Awkward silence. Stardust glares at you for 100 miles. River: 'That's not groovy, man.' Bad vibes. 😤"
@@ -1552,7 +1572,7 @@
           {
             "text": "🔥 'Burn it! You're with US now!'",
             "effects": {
-              "morale": 30,
+              "morale": 20,
               "specialItem": -15
             },
             "message": "River rips it up! 'YEAH! Screw the Man!' You all cheer! Someone plays 'Born to Be Wild' on guitar. FREEDOM! 🎸✌️"
@@ -1583,7 +1603,7 @@
           {
             "text": "✊ 'This is WHY we're traveling! Join the march!'",
             "effects": {
-              "morale": 40,
+              "morale": 20,
               "days": 1,
               "specialItem": -20
             },
@@ -1592,7 +1612,7 @@
           {
             "text": "📸 'Let's document this. The world needs to see.'",
             "effects": {
-              "morale": 25,
+              "morale": 20,
               "days": 0.5
             },
             "message": "You take photos, talk to protesters, soak it all in. Moonbeam: 'We're witnessing a revolution.' You'll never forget this day."
@@ -1647,7 +1667,7 @@
           {
             "text": "🌻 'The ROAD is your job! Don't give up the dream!'",
             "effects": {
-              "morale": 25,
+              "morale": 20,
               "currency": -30
             },
             "message": "Stardust grins. 'You're right! Screw the Man! Let's keep rolling!' The freedom is worth the empty wallet. Far out! 🚐✌️"
@@ -1678,7 +1698,7 @@
           {
             "text": "🌻 'This is the DREAM! Let's stay a while!'",
             "effects": {
-              "morale": 50,
+              "morale": 20,
               "food": 60,
               "days": 7,
               "specialItem": -40
@@ -1713,7 +1733,7 @@
           {
             "text": "🌈 'We'll figure it out! That's the beauty of it!'",
             "effects": {
-              "morale": 30
+              "morale": 20
             },
             "message": "River: 'EXACTLY! We're not about PLANS, man! We're about LIVING!' The vibe lifts. This is about the journey, not the destination. ✌️"
           },
@@ -1728,7 +1748,7 @@
           {
             "text": "🎸 'We'll start a band! Live on the beach!'",
             "effects": {
-              "morale": 40,
+              "morale": 20,
               "specialItem": -10
             },
             "message": "Everyone laughs. Making music, making memories. That's the dream. That's ALL that matters. Let's GOOOO! 🎵🌊"
@@ -1757,19 +1777,19 @@
       {
         "text": "🌄 Sierra Nevada peaks in the distance! Almost to California!",
         "effects": {
-          "morale": 40
+          "morale": 20
         }
       },
       {
         "text": "🌊 You can SMELL the ocean! San Francisco is close!",
         "effects": {
-          "morale": 35
+          "morale": 20
         }
       },
       {
         "text": "🌲 Redwood forest! These trees are ANCIENT. Mind-blowing.",
         "effects": {
-          "morale": 30
+          "morale": 20
         }
       },
       {
@@ -1781,7 +1801,7 @@
           {
             "text": "🌊 'CANNONBALL CONTEST!'",
             "effects": {
-              "morale": 45,
+              "morale": 20,
               "specialItem": -25,
               "days": 0.5
             },
@@ -1790,7 +1810,7 @@
           {
             "text": "🌿 'Skinny dipping! Go NATURAL!'",
             "effects": {
-              "morale": 50,
+              "morale": 20,
               "specialItem": -30,
               "days": 0.5
             },
@@ -1814,7 +1834,7 @@
           {
             "text": "🌈 'Paint the WHOLE THING!'",
             "effects": {
-              "morale": 45,
+              "morale": 20,
               "days": 1,
               "specialItem": -20
             },
@@ -1823,7 +1843,7 @@
           {
             "text": "☮️ 'Just a peace sign!'",
             "effects": {
-              "morale": 25
+              "morale": 20
             },
             "message": "Perfect peace sign on the side! Simple and beautiful! River: 'Now we look like REAL hippies!' ☮️"
           },
@@ -1845,14 +1865,14 @@
           {
             "text": "🎤 'FULL VOLUME! EVERYBODY SING!'",
             "effects": {
-              "morale": 50
+              "morale": 20
             },
             "message": "You're ALL singing at the TOP of your lungs! Tears streaming! This is IT! This is EVERYTHING! 🎵💕"
           },
           {
             "text": "🚐 'Pull over! Dance in the desert!'",
             "effects": {
-              "morale": 55,
+              "morale": 20,
               "days": 0.5,
               "specialItem": -15
             },
@@ -1871,7 +1891,7 @@
         "text": "A commune in the desert invites you to stay! Free food and cosmic vibes.",
         "effects": {
           "food": 30,
-          "morale": 25,
+          "morale": 20,
           "days": 1
         }
       },
@@ -1884,7 +1904,7 @@
           {
             "text": "🌈 'We'll take FIVE! One for everyone!'",
             "effects": {
-              "morale": 40,
+              "morale": 20,
               "currency": -20
             },
             "message": "You offer $20! He's touched! 'You didn't have to!' Matching shirts! You look LEGENDARY! Group photo! 📷✨"
@@ -1892,7 +1912,7 @@
           {
             "text": "💕 'Just one! Thank you so much!'",
             "effects": {
-              "morale": 25
+              "morale": 20
             },
             "message": "Beautiful rainbow shirt! You wear it with PRIDE! River: 'Now you're a TRUE hippie!' ☮️"
           },
@@ -1915,7 +1935,7 @@
             "text": "🎉 'Tacos for EVERYONE! ($20)'",
             "effects": {
               "food": 40,
-              "morale": 40,
+              "morale": 20,
               "currency": -20
             },
             "message": "You get like 15 tacos! They're AMAZING! Best food of the TRIP! Everyone's in heaven! Worth EVERY penny! 🌮💕"
@@ -1924,7 +1944,7 @@
             "text": "🌮 'Just a few tacos ($5)'",
             "effects": {
               "food": 20,
-              "morale": 25,
+              "morale": 20,
               "currency": -5
             },
             "message": "SO GOOD! You immediately regret not getting MORE! But still amazing! Welcome to California! 🌮"
@@ -1954,14 +1974,14 @@
           {
             "text": "🌈 'ALMOST THERE!'",
             "effects": {
-              "morale": 35
+              "morale": 20
             },
             "message": "He paints it HUGE on the side! Everyone who passes HONKS and CHEERS! The energy is INSANE! 🎨✨"
           },
           {
             "text": "☮️ 'PEACE & LOVE!'",
             "effects": {
-              "morale": 40
+              "morale": 20
             },
             "message": "Perfect message! People WAVE at you! Old lady gives you a thumbs up! Spreading the VIBE! ☮️💕"
           },
@@ -1984,7 +2004,7 @@
             "text": "🍇 'They look good! Pick EVERYTHING!'",
             "effects": {
               "food": 30,
-              "morale": 25,
+              "morale": 20,
               "days": 0.5
             },
             "message": "You pick for HOURS! SO MANY berries! Fresh food! Nature provides! This is LIVING! 🫐✨"
@@ -2069,12 +2089,55 @@
     "foraging": {
       "name": "Foraging for Food",
       "description": "Click the good food items! Avoid the trash!",
-      "goodItems": ["🍎", "🥕", "🍓", "🍄", "🌰", "🥦", "🐟", "🍇", "🌽", "🥔", "🍊", "🥑", "🍋", "🌵", "🍞"],
-      "badItems": ["🗑️"],
+      "goodItems": [
+        "🍎",
+        "🥕",
+        "🍓",
+        "🍄",
+        "🌰",
+        "🥦",
+        "🐟",
+        "🍇",
+        "🌽",
+        "🥔",
+        "🍊",
+        "🥑",
+        "🍋",
+        "🌵",
+        "🍞"
+      ],
+      "badItems": [
+        "🗑️"
+      ],
       "regionalItems": {
-        "early": ["🍎", "🍓", "🥕", "🍄", "🌰", "🥦", "🐟", "🍇"],
-        "middle": ["🌽", "🥔", "🍄", "🌰", "🥕", "🐟", "🍇"],
-        "late": ["🍊", "🥑", "🍋", "🌵", "🍄", "🐟", "🌰"]
+        "early": [
+          "🍎",
+          "🍓",
+          "🥕",
+          "🍄",
+          "🌰",
+          "🥦",
+          "🐟",
+          "🍇"
+        ],
+        "middle": [
+          "🌽",
+          "🥔",
+          "🍄",
+          "🌰",
+          "🥕",
+          "🐟",
+          "🍇"
+        ],
+        "late": [
+          "🍊",
+          "🥑",
+          "🍋",
+          "🌵",
+          "🍄",
+          "🐟",
+          "🌰"
+        ]
       }
     },
     "rapids": {
@@ -2119,7 +2182,14 @@
     "repair": {
       "name": "Bus Repair",
       "description": "Click the flashing parts before time runs out!",
-      "parts": ["🔧 Spark Plug", "⚙️ Carburetor", "🔩 Fan Belt", "💧 Oil Filter", "⚡ Battery", "🌡️ Radiator"]
+      "parts": [
+        "🔧 Spark Plug",
+        "⚙️ Carburetor",
+        "🔩 Fan Belt",
+        "💧 Oil Filter",
+        "⚡ Battery",
+        "🌡️ Radiator"
+      ]
     }
   },
   "shop": {
@@ -2182,29 +2252,12 @@
       }
     ]
   },
-  "ui": {
-    "title": "The NorCal Trail",
-    "subtitle": "San Francisco or Bust! ☮️",
-    "defaultPartyNames": ["Sunshine", "Moonbeam", "Stardust", "River", "Phoenix", "Ziggy", "Willow", "Rainbow", "Sky", "Cosmos", "Luna", "Harmony", "Journey", "Karma", "Freedom", "Peace", "Dharma", "Astral", "Crystal", "Solstice"],
-    "groupNames": ["The Cosmic Wanderers", "The Free Spirits", "The Peace Seekers", "The Groovy Gang", "The Liberation Crew", "The Flower Children", "The Dream Chasers", "The Revolution", "The Love Collective", "The Vibes Tribe", "The Road Warriors", "The Nomad Squad", "The Freedom Riders", "The Starlight Express", "The Peaceful Warriors", "The Harmony Seekers", "The Good Vibes Only Crew", "The Psychedelic Travelers", "The Counterculture Collective", "The Far Out Five"],
-    "statusLabels": {
-      "normal": "✌️ Groovy",
-      "doubting": "💭",
-      "abandoned": "👔 Sold Out"
-    },
-    "colorScheme": {
-      "primary": "#ff6b6b",
-      "secondary": "#ffd93d",
-      "accent": "#8b7355",
-      "danger": "#ef4444",
-      "background": "#2c1810",
-      "text": "#f0e68c"
-    }
-  },
   "epilogues": [
     {
       "condition": {
-        "morale": { "min": 80 },
+        "morale": {
+          "min": 80
+        },
         "partySize": 4
       },
       "endings": [
@@ -2215,8 +2268,12 @@
     },
     {
       "condition": {
-        "currency": { "min": 300 },
-        "morale": { "max": 39 }
+        "currency": {
+          "min": 300
+        },
+        "morale": {
+          "max": 39
+        }
       },
       "professionEndings": {
         "dealer": "By the 80s, you'd opened a chain of 'organic wellness stores.' You don't talk about the old days much. The VW bus is in your garage, covered in dust. Sometimes you wonder what happened to the dream. 💼",
@@ -2226,7 +2283,9 @@
     },
     {
       "condition": {
-        "partySize": { "max": 2 }
+        "partySize": {
+          "max": 2
+        }
       },
       "template": "You made it, but the others drifted away. You stayed in touch for a while - Christmas cards, the occasional phone call. But people change. You still have the photos, though. Sometimes that's enough. {{partySizeIcon}}"
     },
@@ -2250,19 +2309,26 @@
     },
     {
       "condition": {
-        "morale": { "min": 70 }
+        "morale": {
+          "min": 70
+        }
       },
       "ending": "San Francisco was just the beginning. You kept going - Mexico, Canada, back across the country. The bus finally died in 1976. You bought another one. They say if you're still searching, you haven't found it yet. They're wrong. The road IS what you found. 🚐"
     },
     {
       "condition": {
-        "morale": { "min": 50, "max": 69 }
+        "morale": {
+          "min": 50,
+          "max": 69
+        }
       },
       "ending": "You stayed in San Francisco for a few years, then moved back east. Got a job, settled down. But every few years, you rent an RV and hit the road again. The spirit never really left you - it just learned to coexist with reality. ✌️"
     },
     {
       "condition": {
-        "morale": { "max": 49 }
+        "morale": {
+          "max": 49
+        }
       },
       "ending": "The trip was harder than you expected. But you made it. Years later, you realize it wasn't about the destination - it was about proving to yourself that you could do hard things. The bus is gone, but the lesson remains. 🌅"
     },
@@ -2272,5 +2338,3 @@
     }
   ]
 }
-
-

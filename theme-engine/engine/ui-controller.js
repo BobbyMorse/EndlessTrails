@@ -308,7 +308,7 @@ ${mystery.description}
 
     // Date
     const monthNames = ['Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
-    document.getElementById('dateValue').textContent = `${monthNames[state.month]} ${state.day}`;
+    document.getElementById('dateValue').textContent = `${monthNames[state.month]} ${Math.floor(state.day)}`;
   }
 
   /**
@@ -1215,7 +1215,7 @@ ${mystery.description}
     const epilogue = this.generateEpilogue(stillCommitted, state);
 
     const monthNames = ['March', 'April', 'May', 'June', 'July', 'August', 'September'];
-    const arrivalDate = `${monthNames[state.month]} ${state.day}`;
+    const arrivalDate = `${monthNames[state.month]} ${Math.floor(state.day)}`;
 
     let highScoreMessage = '';
     if (scoreResult.madeTopTen) {
